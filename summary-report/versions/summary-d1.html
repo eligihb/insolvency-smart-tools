@@ -1,113 +1,183 @@
-<iframe src="https://eligihb.github.io/insolvency-smart-tools/payment-order/versions/payment-order-a1.html" 
-        style="width: 100%; height: 320px; border: none; max-width: 100%; overflow: hidden;">
-</iframe>
-
-<style>
-  /* 1. התאמת גודל המחשבון */
-  iframe {
-    max-width: 100%;  /* שלא יחרוג מהדף */
-    height: 320px;    /* גובה קבוע */
-    border: none;
-    overflow: hidden; /* מניעת חריגה מעבר לגבולות */
-  }
-
-  /* 2. צמצום שדות טופס */
-  .short {
-    width: 80px;      /* גודל קטן לשדות */
-  }
-
-  .medium {
-    width: 120px;     /* גודל בינוני לשדות */
-  }
-
-  .long {
-    width: 160px;     /* גודל ארוך לשדות */
-  }
-
-  .tiny {
-    width: 50px;      /* גודל קטן מאוד לשדות */
-  }
-
-  /* 3. עיצוב אחיד שדות */
-  input[type="text"], input[type="number"], input[type="date"], select, textarea {
-    font-family: inherit;
-    font-size: 11px;
-    padding: 3px 6px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    background: var(--bg-input);
-    color: #000;
-    transition: all 0.2s;
-    width: 100%;      /* מתאם את השדות לגודל הדף */
-  }
-
-  /* 4. התאמת שדות תאריך */
-  input[type="date"] {
-    width: 120px;      /* גודל אחיד לשדות תאריך */
-  }
-
-  /* 5. שדות קריאה בלבד */
-  input:disabled, select:disabled, input[readonly] {
-    background: #f1f5f9;
-    color: #64748b;
-    cursor: not-allowed;
-    border-color: #e2e8f0;
-  }
-
-  /* 6. הצגת הערות הנאמן וההוצאות באותו שדה */
-  .flex-1 {
-    flex: 1;
-  }
-
-  /* 7. התאמת שדות הכנסות והוצאות */
-  .currency-input {
-    font-weight: 700;
-    color: #1e3a8a; /* צבע כחול להוצאות */
-  }
-  .text-green {
-    color: var(--success); /* צבע ירוק להכנסות */
-    font-weight: 800;
-  }
-  .text-red {
-    color: var(--danger); /* צבע אדום לפיגורים */
-    font-weight: 800;
-  }
-
-  /* 8. התאמת כל השדות שיהיו באותו גובה */
-  .row {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;  /* שלא יחרגו מהשורה */
-  }
-
-  /* 9. התאמת הגדרת רוחב למטרת הדפסה */
-  @media print {
-    iframe {
-      width: 100%;
-      height: 320px;
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>דו"ח מסכם לדיון צו שיקום</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --primary: #0f766e;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --bg-input: #ffffff;
+      --bg-readonly: #f1f5f9;
+      --danger: #ef4444;
+      --success: #15803d;
+      --focus-glow: rgba(15, 118, 110, 0.2);
     }
+
+    * { box-sizing: border-box; outline: none; }
+
     body {
-      background: white;
-      color: black;
-    }
-    .top-bar, .btn {
-      display: none !important;
-    }
-    .page {
-      padding: 0;
-      box-shadow: none;
-      max-width: 100%;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      direction: rtl;
+      text-align: right;
       margin: 0;
-      border: none;
+      background: #f8fafc;
+      color: var(--text);
+      font-size: 12px;
     }
+
+    .top-bar {
+      background: var(--primary);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .page {
+      max-width: 210mm;
+      margin: 10px auto;
+      background: white;
+      padding: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      border-radius: 4px;
+    }
+
     .card {
-      border: none;
-      border-bottom: 1px solid #000;
-      padding: 2px 0;
-      margin-bottom: 4px;
-      border-radius: 0;
-      box-shadow: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      background: white;
     }
-  }
-</style>
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--primary);
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 3px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sub-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #334155;
+      margin: 6px 0 2px;
+      text-decoration: underline;
+      text-decoration-color: var(--primary);
+    }
+
+    /* --- Inputs & Rows --- */
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+
+    label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #475569;
+      white-space: nowrap;
+    }
+
+    input[type="text"], input[type="number"], input[type="date"], select, textarea {
+      font-family: inherit;
+      font-size: 11px;
+      padding: 3px 6px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg-input);
+      color: #000;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    /* --- Specific Field Sizes --- */
+    .tiny { width: 40px; text-align: center; }
+    .short { width: 80px; }
+    .medium { width: 110px; }
+    .long { width: 160px; }
+    .flex-1 { flex: 1; }
+
+    /* --- Utility Classes --- */
+    .currency-input { font-weight: 700; color: #1e3a8a; }
+    .text-green { color: var(--success); font-weight: 800; }
+    .text-red { color: var(--danger); font-weight: 800; }
+
+    /* --- Grid Layouts --- */
+    .grid-2-col {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    /* --- Iframe Styles (For the calculator) --- */
+    iframe {
+      max-width: 100%;
+      height: 320px;
+      border: none;
+      overflow: hidden;
+    }
+
+    /* --- PRINT STYLES --- */
+    @media print {
+      @page { size: A4 portrait; margin: 6mm; }
+      body { background: white; font-size: 10.5px; }
+      .top-bar, .btn { display: none !important; }
+      .page { padding: 0; box-shadow: none; max-width: 100%; margin: 0; border: none; }
+      .card { border: none; border-bottom: 1px solid #000; padding: 2px 0; margin-bottom: 4px; border-radius: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div style="max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+      <span>דו"ח מסכם לדיון צו שיקום (טופס 1000)</span>
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-print" onclick="window.print()">🖨 הדפסה</button>
+        <button class="btn btn-reset" onclick="document.getElementById('mainForm').reset()">↺ איפוס</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <form id="mainForm">
+      <!-- חלקי הדף המלאים -->
+      
+      <div class="card">
+        <div class="section-title">פרטי תיק וצו תשלומים</div>
+        <!-- שדות אחרים ... -->
+      </div>
+
+      <!-- הטמעת המחשבון כאן -->
+      <div class="card">
+        <div class="section-title">מחשבון עזר</div>
+        <iframe src="https://eligihb.github.io/insolvency-smart-tools/payment-order/versions/payment-order-a1.html"></iframe>
+      </div>
+      
+      <!-- שדות נוספים ... -->
+    </form>
+  </div>
+
+  <script>
+    // כאן תוכל להוסיף את הפונקציות שלך, כמו חישוב הכנסות/הוצאות או כל לוגיקה אחרת שתצטרך
+  </script>
+</body>
+</html>
