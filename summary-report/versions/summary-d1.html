@@ -95,7 +95,11 @@
       white-space: nowrap;
     }
 
-    input[type="text"], input[type="number"], input[type="date"], select, textarea {
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
       font-family: inherit;
       font-size: 11px;
       padding: 3px 6px;
@@ -106,6 +110,13 @@
       transition: all 0.2s;
       width: 100%;
     }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--focus-glow);
+    }
+
+    textarea { resize: vertical; min-height: 30px; width: 100%; }
 
     /* --- Specific Field Sizes --- */
     .tiny { width: 40px; text-align: center; }
@@ -119,14 +130,6 @@
     .text-green { color: var(--success); font-weight: 800; }
     .text-red { color: var(--danger); font-weight: 800; }
 
-    /* --- Grid Layouts --- */
-    .grid-2-col {
-      display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: 10px;
-      align-items: start;
-    }
-
     /* --- Iframe Styles (For the calculator) --- */
     iframe {
       max-width: 100%;
@@ -135,10 +138,18 @@
       overflow: hidden;
     }
 
-    /* --- PRINT STYLES --- */
+    /* --- GRID LAYOUTS --- */
+    .grid-2-col {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    /* --- Print Styles --- */
     @media print {
       @page { size: A4 portrait; margin: 6mm; }
-      body { background: white; font-size: 10.5px; }
+      body { background: white; font-size: 10.5px; -webkit-print-color-adjust: exact; }
       .top-bar, .btn { display: none !important; }
       .page { padding: 0; box-shadow: none; max-width: 100%; margin: 0; border: none; }
       .card { border: none; border-bottom: 1px solid #000; padding: 2px 0; margin-bottom: 4px; border-radius: 0; box-shadow: none; }
@@ -159,25 +170,56 @@
 
   <div class="page">
     <form id="mainForm">
-      <!-- חלקי הדף המלאים -->
-      
+      <!-- Card: פרטי תיק וצו תשלומים -->
       <div class="card">
         <div class="section-title">פרטי תיק וצו תשלומים</div>
-        <!-- שדות אחרים ... -->
+        <div style="display: flex; gap: 15px; justify-content: space-between;">
+          <div style="flex: 1;">
+            <div class="row">
+              <label>תיק ממונה:</label> <input type="text" class="short" maxlength="10">
+              <label>תיק ביהמ"ש:</label> <input type="text" class="short">
+              <label>שם החייב:</label> <input type="text" class="medium">
+            </div>
+            <div class="row">
+              <label>שם הנאמן:</label> <input type="text" class="medium">
+              <label>תאריך צו כינוס:</label> <input type="date" id="orderDate" class="medium">
+            </div>
+          </div>
+
+          <div style="flex: 1.2; border-right: 1px solid var(--border); padding-right: 10px;">
+            <div class="row">
+              <label>תשלום חודשי:</label>  
+              <input type="text" id="monthlyPayment" class="short currency-input" placeholder="₪">
+              <label>נכון ליום:</label>  
+              <input type="date" id="calcDate" class="medium">
+            </div>
+
+            <div class="row">
+              <label>תשלום מדורג:</label>  
+              <input type="text" id="gradedPayment" class="short currency-input" placeholder="₪">
+              <label>למשך:</label>  
+              <input type="number" id="gradedMonths" class="tiny" value="3" min="1">
+              <span>חודשים (מיום הצו)</span>
+            </div>
+
+            <div class="row" style="background: #f0f9ff; padding: 4px; border-radius: 4px; border: 1px solid #bae6fd;">
+              <label class="text-green">סה"כ לתשלום:</label>  
+              <input type="text" id="totalToPay" class="short currency-input" readonly>
+              <label>חודשים מהצו:</label>  
+              <input type="text" id="monthsSinceOrder" class="tiny" readonly>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- הטמעת המחשבון כאן -->
+      <!-- Iframe for the Calculator -->
       <div class="card">
         <div class="section-title">מחשבון עזר</div>
         <iframe src="https://eligihb.github.io/insolvency-smart-tools/payment-order/versions/payment-order-a1.html"></iframe>
       </div>
-      
-      <!-- שדות נוספים ... -->
+
     </form>
   </div>
 
-  <script>
-    // כאן תוכל להוסיף את הפונקציות שלך, כמו חישוב הכנסות/הוצאות או כל לוגיקה אחרת שתצטרך
-  </script>
 </body>
 </html>
