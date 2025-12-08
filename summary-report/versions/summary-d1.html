@@ -1,687 +1,113 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <title>דו"ח מסכם לדיון צו שיקום</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    :root {
-      --primary: #0f766e;
-      --border: #cbd5e1;
-      --text: #0f172a;
-      --bg-input: #ffffff;
-      --bg-readonly: #f1f5f9;
-      --danger: #ef4444;
-      --success: #15803d;
-      --focus-glow: rgba(15, 118, 110, 0.2);
+<iframe src="https://eligihb.github.io/insolvency-smart-tools/payment-order/versions/payment-order-a1.html" 
+        style="width: 100%; height: 320px; border: none; max-width: 100%; overflow: hidden;">
+</iframe>
+
+<style>
+  /* 1. התאמת גודל המחשבון */
+  iframe {
+    max-width: 100%;  /* שלא יחרוג מהדף */
+    height: 320px;    /* גובה קבוע */
+    border: none;
+    overflow: hidden; /* מניעת חריגה מעבר לגבולות */
+  }
+
+  /* 2. צמצום שדות טופס */
+  .short {
+    width: 80px;      /* גודל קטן לשדות */
+  }
+
+  .medium {
+    width: 120px;     /* גודל בינוני לשדות */
+  }
+
+  .long {
+    width: 160px;     /* גודל ארוך לשדות */
+  }
+
+  .tiny {
+    width: 50px;      /* גודל קטן מאוד לשדות */
+  }
+
+  /* 3. עיצוב אחיד שדות */
+  input[type="text"], input[type="number"], input[type="date"], select, textarea {
+    font-family: inherit;
+    font-size: 11px;
+    padding: 3px 6px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg-input);
+    color: #000;
+    transition: all 0.2s;
+    width: 100%;      /* מתאם את השדות לגודל הדף */
+  }
+
+  /* 4. התאמת שדות תאריך */
+  input[type="date"] {
+    width: 120px;      /* גודל אחיד לשדות תאריך */
+  }
+
+  /* 5. שדות קריאה בלבד */
+  input:disabled, select:disabled, input[readonly] {
+    background: #f1f5f9;
+    color: #64748b;
+    cursor: not-allowed;
+    border-color: #e2e8f0;
+  }
+
+  /* 6. הצגת הערות הנאמן וההוצאות באותו שדה */
+  .flex-1 {
+    flex: 1;
+  }
+
+  /* 7. התאמת שדות הכנסות והוצאות */
+  .currency-input {
+    font-weight: 700;
+    color: #1e3a8a; /* צבע כחול להוצאות */
+  }
+  .text-green {
+    color: var(--success); /* צבע ירוק להכנסות */
+    font-weight: 800;
+  }
+  .text-red {
+    color: var(--danger); /* צבע אדום לפיגורים */
+    font-weight: 800;
+  }
+
+  /* 8. התאמת כל השדות שיהיו באותו גובה */
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;  /* שלא יחרגו מהשורה */
+  }
+
+  /* 9. התאמת הגדרת רוחב למטרת הדפסה */
+  @media print {
+    iframe {
+      width: 100%;
+      height: 320px;
     }
-
-    * { box-sizing: border-box; outline: none; }
-
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      direction: rtl;
-      text-align: right;
-      margin: 0;
-      background: #f8fafc; /* Light gray background for screen */
-      color: var(--text);
-      font-size: 12px;
+      background: white;
+      color: black;
     }
-
-    /* --- UI Structure --- */
-    .top-bar {
-      background: var(--primary);
-      color: white;
-      padding: 10px;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 700;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    .top-bar, .btn {
+      display: none !important;
     }
-
     .page {
-      max-width: 210mm; /* A4 Width */
-      margin: 10px auto;
-      background: white;
-      padding: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      border-radius: 4px;
-    }
-
-    .card {
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 8px 10px;
-      margin-bottom: 8px;
-      background: white;
-    }
-
-    /* --- Typography & Headers --- */
-    .section-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--primary);
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 3px;
-      margin-bottom: 6px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .sub-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: #334155;
-      margin: 6px 0 2px;
-      text-decoration: underline;
-      text-decoration-color: var(--primary);
-    }
-
-    /* --- Inputs & Rows --- */
-    .row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 5px;
-    }
-
-    label {
-      font-size: 11px;
-      font-weight: 600;
-      color: #475569;
-      white-space: nowrap;
-    }
-
-    input[type="text"],
-    input[type="number"],
-    input[type="date"],
-    select,
-    textarea {
-      font-family: inherit;
-      font-size: 11px;
-      padding: 3px 6px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      background: var(--bg-input);
-      color: #000;
-      transition: all 0.2s;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px var(--focus-glow);
-    }
-
-    textarea { resize: vertical; min-height: 30px; width: 100%; }
-    
-    /* Disabled / Readonly states */
-    input:disabled, select:disabled, input[readonly] {
-      background: var(--bg-readonly);
-      color: #64748b;
-      cursor: not-allowed;
-      border-color: #e2e8f0;
-    }
-    
-    /* Special Logic: Locked section (Red border) */
-    .locked-section input, 
-    .locked-section select {
-      border: 1px solid #fca5a5 !important; /* Light red border */
-      background: #fff1f2 !important;
-      color: #991b1b !important;
-      pointer-events: none;
-    }
-
-    /* --- Specific Field Sizes --- */
-    .tiny { width: 40px; text-align: center; }
-    .short { width: 80px; }
-    .medium { width: 110px; }
-    .long { width: 160px; }
-    .flex-1 { flex: 1; }
-
-    /* --- Utility Classes --- */
-    .currency-input { font-weight: 700; color: #1e3a8a; } /* Blue for money */
-    .text-green { color: var(--success); font-weight: 800; }
-    .text-red { color: var(--danger); font-weight: 800; }
-    .center-text { text-align: center; }
-
-    /* Wrapped Labels (For compact rows) */
-    .label-wrap {
-      display: inline-flex;
-      flex-direction: column;
-      line-height: 1;
-      text-align: center;
-      font-size: 10px;
-      justify-content: center;
-      min-width: 40px;
-      margin-left: 2px;
-    }
-
-    /* --- Grid Layouts --- */
-    .grid-2-col {
-      display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: 10px;
-      align-items: start;
-    }
-
-    .recommendation-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
-      background: #f1f5f9;
-      padding: 6px;
-      border-radius: 4px;
-      margin-bottom: 4px;
-      text-align: center;
-    }
-    
-    .recommendation-grid label { display: block; margin-bottom: 2px; font-size: 10px; }
-    .recommendation-grid input { width: 95%; text-align: center; font-weight: bold; }
-
-    /* --- Buttons --- */
-    .btn {
+      padding: 0;
+      box-shadow: none;
+      max-width: 100%;
+      margin: 0;
       border: none;
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 11px;
-      cursor: pointer;
-      font-weight: 600;
     }
-    .btn-print { background: #334155; color: white; }
-    .btn-reset { background: white; border: 1px solid var(--danger); color: var(--danger); }
-
-    /* --- PRINT STYLES --- */
-    @media print {
-      @page { size: A4 portrait; margin: 6mm; }
-      body { background: white; font-size: 10.5px; -webkit-print-color-adjust: exact; }
-      .top-bar, .btn { display: none !important; }
-      .page { padding: 0; box-shadow: none; max-width: 100%; margin: 0; border: none; }
-      .card { border: none; border-bottom: 1px solid #000; padding: 2px 0; margin-bottom: 4px; border-radius: 0; box-shadow: none; }
-      .section-title { color: #000; border-bottom: 2px solid #000; margin-bottom: 4px; font-size: 12px; }
-      .sub-title { color: #000; text-decoration: none; font-weight: 800; margin-top: 4px; font-size: 10.5px; }
-      
-      input, select, textarea {
-        border: none;
-        border-bottom: 1px dotted #999;
-        background: transparent !important;
-        border-radius: 0;
-        padding: 0 2px;
-        min-height: auto;
-        color: #000 !important;
-        font-weight: 600;
-      }
-      
-      /* Visual translation for screen colors */
-      .text-green, .text-red { color: #000 !important; font-weight: 900; text-decoration: underline; }
-      .locked-section input { border-bottom: 1px solid transparent !important; color: #ccc !important; }
-      
-      /* Layout fixes */
-      .grid-2-col { gap: 8px; }
-      .recommendation-grid { background: none; border: 1px solid #000; padding: 2px; }
-      .recommendation-grid input { border-bottom: none; }
-      
-      /* Hide placeholders */
-      ::placeholder { color: transparent; }
-      
-      /* Ensure calculator iframe prints cleanly or hidden if needed */
-      iframe { border: 1px solid #000; }
+    .card {
+      border: none;
+      border-bottom: 1px solid #000;
+      padding: 2px 0;
+      margin-bottom: 4px;
+      border-radius: 0;
+      box-shadow: none;
     }
-  </style>
-</head>
-<body>
-
-  <div class="top-bar">
-    <div style="max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-      <span>דו"ח מסכם לדיון צו שיקום (טופס 1000)</span>
-      <div style="display:flex; gap:10px;">
-        <button class="btn btn-print" onclick="window.print()">🖨 הדפסה</button>
-        <button class="btn btn-reset" onclick="document.getElementById('mainForm').reset()">↺ איפוס</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="page">
-    <form id="mainForm">
-      
-      <div class="card">
-        <div class="section-title">פרטי תיק וצו תשלומים</div>
-        
-        <div style="display: flex; gap: 15px; justify-content: space-between;">
-          <div style="flex: 1;">
-            <div class="row">
-              <label>תיק ממונה:</label> <input type="text" class="short" maxlength="10">
-              <label>תיק ביהמ"ש:</label> <input type="text" class="short">
-              <label>שם החייב:</label> <input type="text" class="medium">
-            </div>
-            <div class="row">
-              <label>שם הנאמן:</label> <input type="text" class="medium">
-              <label>תאריך צו כינוס:</label> <input type="date" id="orderDate" class="medium">
-            </div>
-          </div>
-          
-          <div style="flex: 1.2; border-right: 1px solid var(--border); padding-right: 10px;">
-            <div class="row">
-              <label>תשלום חודשי:</label> 
-              <input type="text" id="monthlyPayment" class="short currency-input" placeholder="₪">
-              <label>נכון ליום:</label> 
-              <input type="date" id="calcDate" class="medium">
-            </div>
-            
-            <div class="row">
-              <label>תשלום מדורג:</label> 
-              <input type="text" id="gradedPayment" class="short currency-input" placeholder="₪">
-              <label>למשך:</label> 
-              <input type="number" id="gradedMonths" class="tiny" value="3" min="1">
-              <span>חודשים (מיום הצו)</span>
-            </div>
-
-            <div class="row" style="background: #f0f9ff; padding: 4px; border-radius: 4px; border: 1px solid #bae6fd;">
-              <label class="text-green">סה"כ לתשלום:</label> 
-              <input type="text" id="totalToPay" class="short currency-input" readonly>
-              <label>חודשים מהצו:</label> 
-              <input type="text" id="monthsSinceOrder" class="tiny" readonly>
-            </div>
-          </div>
-        </div>
-
-        <hr style="border-top:1px dashed var(--border); margin: 6px 0;">
-        <div style="background: #fffbeb; padding: 4px 8px; border-radius: 4px; border: 1px solid #fde68a;">
-          <div class="sub-title" style="margin-top:0;">החלטות ממונה (עדכון צו)</div>
-          
-          <div class="row">
-            <label>תאריך החלטה:</label>
-            <input type="date" id="commDecDate">
-            
-            <label>סכום קבוע חדש:</label>
-            <input type="text" id="commNewFixed" class="short currency-input">
-            
-            <div style="display:flex; align-items:center; background:white; border:1px solid #cbd5e1; padding:2px 4px; border-radius:4px;">
-              <input type="checkbox" id="useCustomDate" onchange="toggleField('commEffectiveDate', this.checked)">
-              <label for="useCustomDate" style="font-size:10px; margin:0 4px;">תחולה מותאמת</label>
-              <input type="date" id="commEffectiveDate" class="medium" disabled>
-            </div>
-          </div>
-
-          <div class="row">
-            <label style="font-weight:800;">תשלום מדורג:</label>
-            <input type="text" id="commGradedAmount" class="short currency-input" placeholder="סכום">
-            <label>מיום:</label>
-            <input type="date" id="commGradedDate">
-            <label>למשך:</label>
-            <input type="number" id="commGradedMonths" class="tiny" placeholder="חוד'">
-            <label>חודשים</label>
-          </div>
-          
-          <div class="row">
-            <label>הערות הממונה:</label>
-            <input type="text" class="flex-1" placeholder="הערות להחלטה...">
-          </div>
-        </div>
-      </div>
-
-      <div class="grid-2-col">
-        
-        <div>
-          <div class="card" id="debtorIncomeBlock">
-            <div class="section-title">
-              הכנסות החייב
-              <label style="font-size:10px;"><input type="checkbox" onchange="toggleLockSection('debtorData', this.checked)"> החייב לא עובד</label>
-            </div>
-            
-            <div id="debtorData">
-              <div class="row" style="flex-wrap: nowrap;">
-                <input type="text" class="short" placeholder="מקצוע">
-                <input type="text" class="medium" placeholder="מקום עבודה">
-                <input type="text" class="short" placeholder="היקף משרה">
-                <input type="text" id="debtorNet" class="short currency-input text-green" placeholder="שכר נטו">
-              </div>
-              
-              <div class="row">
-                <label>פוטנציאל:</label>
-                <input type="text" class="short currency-input">
-                <label>הערות:</label>
-                <input type="text" class="flex-1">
-              </div>
-            </div>
-
-            <div class="row" style="margin-top:6px; font-size:10px;">
-              <label><input type="checkbox"> נכות</label>
-              <label><input type="checkbox"> ה.הכנסה</label>
-              <label><input type="checkbox"> סיוע שכ"ד</label>
-              <label style="margin-right:auto;">סה"כ קצבאות:</label>
-              <input type="text" id="totalAllow" class="short currency-input">
-            </div>
-          </div>
-
-          <div class="card">
-             <div class="section-title">
-              הכנסות בן/ת הזוג
-              <label style="font-size:10px;"><input type="checkbox" onchange="toggleLockSection('spouseData', this.checked)"> לא עובד/ת</label>
-            </div>
-            <div id="spouseData" class="row">
-              <input type="text" class="medium" placeholder="מקצוע">
-              <input type="text" id="spouseNet" class="short currency-input text-green" placeholder="שכר נטו">
-              <input type="text" class="flex-1" placeholder="הערות...">
-            </div>
-            
-            <div class="row" style="justify-content: flex-end; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 4px;">
-               <label>סה"כ הכנסות:</label>
-               <input type="text" id="totalIncome" class="short currency-input text-green" readonly>
-               
-               <div style="width: 20px;"></div> <label>סה"כ הוצאות:</label>
-               <input type="text" id="totalExpenses" class="short currency-input text-red">
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="section-title">פרטים אישיים</div>
-            <div class="row">
-               <label>מצב משפחתי:</label>
-               <select class="short"><option>נשוי</option><option>רווק</option><option>גרוש</option></select>
-               <label>ילדים:</label> <input type="number" class="tiny">
-               <label>מזונות:</label> 
-               <input type="checkbox" id="chkAlimony" onchange="toggleField('valAlimony', this.checked)">
-               <input type="text" id="valAlimony" class="short currency-input" disabled>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="card">
-            <div class="section-title">התנהלות וחובות</div>
-            
-            <div class="sub-title">הגשת דוחות</div>
-            <div class="row">
-              <label><input type="radio" name="rep" checked> כסדרם</label>
-              <label><input type="radio" name="rep"> חלקי</label>
-              <label><input type="radio" name="rep"> לא הוגשו</label>
-              <input type="text" class="flex-1" placeholder="הערות...">
-            </div>
-            
-            <div class="row" style="background: #f8fafc; padding: 4px; border: 1px solid #e2e8f0; border-radius: 4px;">
-               <div class="label-wrap">מסמכים<br>חסרים</div>
-               <select class="tiny" style="width:45px;"><option>לא</option><option>כן</option></select>
-               
-               <div style="width:10px; border-right:1px solid #ccc; height:20px; margin:0 4px;"></div>
-               
-               <div class="label-wrap">כמות<br>פיגורים</div>
-               <input type="number" class="tiny">
-               
-               <div class="label-wrap">סך<br>פיגורים</div>
-               <input type="text" class="short currency-input text-red">
-            </div>
-
-            <div class="sub-title">חובות</div>
-            <div class="row">
-              <label>מס' נושים:</label><input type="number" class="tiny">
-              <label>סכום חוב:</label><input type="text" class="short currency-input">
-            </div>
-            
-            <div class="row" style="justify-content: center; background: #fff1f2; padding: 3px; border-radius: 4px;">
-               <label class="text-red">דין קדימה:</label>
-               <input type="text" class="medium currency-input">
-            </div>
-            
-            <div class="row" style="margin-top:4px;">
-               <input type="checkbox" id="chkNonDis" onchange="toggleField('valNonDis', this.checked)">
-               <label for="chkNonDis">חובות לא ברי הפטר</label>
-               <input type="text" id="valNonDis" class="short currency-input" disabled>
-            </div>
-            
-            <div class="sub-title">נכסים</div>
-            <div class="row" style="align-items: flex-end;">
-               <div class="label-wrap" style="text-align: right;">דירת<br>מגורים</div>
-               <input type="checkbox" style="margin-bottom: 5px;">
-               <input type="text" class="flex-1 currency-input" placeholder="הערכת שווי">
-            </div>
-             <div class="row">
-               <label><input type="checkbox"> רכב</label>
-               <label><input type="checkbox"> זכויות</label>
-               <label><input type="checkbox"> אחר</label>
-               <input type="text" class="flex-1 currency-input" placeholder="שווי מימוש">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-title">סיכום והמלצות</div>
-        
-        <div class="sub-title" style="margin-bottom:4px;">תוכנית הנאמן</div>
-        <div class="recommendation-grid">
-           <div><label>סכום חודשי</label><input type="text" class="currency-input" id="trusM"></div>
-           <div><label>למשך (חודשים)</label><input type="number" id="trusD"></div>
-           <div><label>סה"כ תוכנית</label><input type="text" class="currency-input" id="trusTot" readonly style="background:#f0fdf4;"></div>
-           <div><label>תוספת נכסים</label><input type="text" class="currency-input" id="trusAdd"></div>
-           <div><label>סה"כ לקופה</label><input type="text" class="currency-input" id="trusGrand" readonly style="font-weight:900;"></div>
-        </div>
-        <textarea rows="2" placeholder="תמצית עמדת הנאמן..."></textarea>
-        
-        <hr style="border-top:1px dashed #cbd5e1; margin:8px 0;">
-
-        <div class="sub-title" style="margin-bottom:4px;">תוכנית הממונה</div>
-        <div class="recommendation-grid" style="background:#eef2ff;">
-           <div><label>סכום חודשי</label><input type="text" class="currency-input" id="commM"></div>
-           <div><label>למשך (חודשים)</label><input type="number" id="commD"></div>
-           <div><label>סה"כ תוכנית</label><input type="text" class="currency-input" id="commTot" readonly style="background:#ffffff;"></div>
-           <div><label>תוספת/הערה</label><input type="text"></div> <div><label>סה"כ לקופה</label><input type="text" class="currency-input" id="commGrand" readonly style="font-weight:900;"></div>
-        </div>
-        <textarea rows="2" placeholder="תמצית עמדת הממונה..."></textarea>
-      </div>
-
-      <div class="card" style="page-break-inside: avoid;">
-        <div class="sub-title">מחשבון עזר</div>
-        <iframe src="payment-order-calculator.html" style="width:100%; height:320px; border:none;"></iframe>
-      </div>
-
-    </form>
-  </div>
-
-  <script>
-    /* --- LOGIC --- */
-    
-    // 1. Initialize Dates
-    document.addEventListener("DOMContentLoaded", () => {
-       document.getElementById('calcDate').valueAsDate = new Date();
-       addCurrencyListeners();
-       addCalcListeners();
-    });
-
-    // 2. Generic Field Toggles
-    function toggleField(targetId, isChecked) {
-       const el = document.getElementById(targetId);
-       el.disabled = !isChecked;
-       if (!isChecked) el.value = "";
-    }
-
-    function toggleLockSection(containerId, isChecked) {
-       const container = document.getElementById(containerId);
-       if (isChecked) {
-          container.classList.add('locked-section');
-          // Clear inputs inside
-          container.querySelectorAll('input').forEach(i => i.value = "");
-       } else {
-          container.classList.remove('locked-section');
-       }
-       calcTotals(); // Recalculate income
-    }
-
-    // 3. Currency Formatting
-    function addCurrencyListeners() {
-       document.querySelectorAll('.currency-input').forEach(input => {
-          input.addEventListener('blur', function() {
-             const raw = this.value.replace(/[^\d.]/g, '');
-             if (raw) {
-                this.value = parseFloat(raw).toLocaleString('he-IL') + ' ₪';
-             }
-          });
-          input.addEventListener('focus', function() {
-             this.value = this.value.replace(/[^\d.]/g, '');
-          });
-       });
-    }
-
-    function parseCurr(val) {
-       if (!val) return 0;
-       return parseFloat(val.replace(/[^\d.]/g, '')) || 0;
-    }
-
-    // 4. Recommendation Calculators
-    function addCalcListeners() {
-       ['trus', 'comm'].forEach(prefix => {
-          const m = document.getElementById(prefix+'M');
-          const d = document.getElementById(prefix+'D');
-          const add = document.getElementById(prefix+'Add'); // Only for trustee effectively
-          
-          const run = () => {
-             const mon = parseCurr(m.value);
-             const dur = parseFloat(d.value) || 0;
-             const bonus = add ? parseCurr(add.value) : 0;
-             
-             const prog = mon * dur;
-             document.getElementById(prefix+'Tot').value = prog.toLocaleString() + ' ₪';
-             document.getElementById(prefix+'Grand').value = (prog + bonus).toLocaleString() + ' ₪';
-          };
-          
-          if(m) m.addEventListener('blur', run);
-          if(d) d.addEventListener('input', run);
-          if(add) add.addEventListener('blur', run);
-       });
-
-       // Main Payment Calculator Events
-       const calcInputs = ['orderDate', 'calcDate', 'monthlyPayment', 'gradedPayment', 'gradedMonths', 
-                           'commDecDate', 'commNewFixed', 'useCustomDate', 'commEffectiveDate',
-                           'commGradedAmount', 'commGradedDate', 'commGradedMonths'];
-       
-       calcInputs.forEach(id => {
-          const el = document.getElementById(id);
-          if(el) el.addEventListener('change', calculatePaymentTimeline);
-          if(el && el.type === 'text') el.addEventListener('blur', calculatePaymentTimeline);
-       });
-       
-       // Income Totals
-       ['debtorNet', 'spouseNet', 'totalAllow'].forEach(id => {
-          document.getElementById(id).addEventListener('blur', calcTotals);
-       });
-    }
-    
-    function calcTotals() {
-       const d = parseCurr(document.getElementById('debtorNet').value);
-       const s = parseCurr(document.getElementById('spouseNet').value);
-       const a = parseCurr(document.getElementById('totalAllow').value);
-       document.getElementById('totalIncome').value = (d+s+a).toLocaleString() + ' ₪';
-    }
-
-    // 5. THE TIMELINE CALCULATOR (Complex Logic)
-    function calculatePaymentTimeline() {
-       const orderDateStr = document.getElementById('orderDate').value;
-       const calcDateStr = document.getElementById('calcDate').value;
-       
-       if (!orderDateStr || !calcDateStr) return;
-       
-       const start = new Date(orderDateStr);
-       const end = new Date(calcDateStr);
-       const firstPaymentMonth = new Date(start); 
-       firstPaymentMonth.setMonth(start.getMonth() + 1); // +30 days approx
-       
-       let totalToPay = 0;
-       let monthsCount = 0;
-       
-       // Parse Basic Data
-       const baseMonthly = parseCurr(document.getElementById('monthlyPayment').value);
-       const baseGraded = parseCurr(document.getElementById('gradedPayment').value);
-       const baseGradedMonths = parseInt(document.getElementById('gradedMonths').value) || 3;
-       
-       // Parse Commissioner Data
-       const commDecDateStr = document.getElementById('commDecDate').value;
-       const commFixed = parseCurr(document.getElementById('commNewFixed').value);
-       const useCustom = document.getElementById('useCustomDate').checked;
-       const commEffStr = document.getElementById('commEffectiveDate').value;
-       
-       // Determine Effective Date for Fixed Change
-       let commEffectiveDate = null;
-       if (commFixed > 0 && commDecDateStr) {
-           commEffectiveDate = new Date(useCustom && commEffStr ? commEffStr : commDecDateStr);
-       }
-       
-       // Parse Commissioner Graded
-       const commGradedAmt = parseCurr(document.getElementById('commGradedAmount').value);
-       const commGradedStartStr = document.getElementById('commGradedDate').value;
-       const commGradedDur = parseInt(document.getElementById('commGradedMonths').value) || 0;
-       
-       let commGradedStart = null;
-       let commGradedEnd = null;
-       
-       if (commGradedAmt > 0 && commGradedStartStr && commGradedDur > 0) {
-           commGradedStart = new Date(commGradedStartStr);
-           commGradedEnd = new Date(commGradedStart);
-           commGradedEnd.setMonth(commGradedEnd.getMonth() + commGradedDur);
-       }
-
-       // Iterator
-       let current = new Date(firstPaymentMonth);
-       current.setDate(1); // Normalise to 1st of month for comparison
-       
-       // Limit loop to avoid infinite (safety)
-       let safeguard = 0;
-       
-       while (current <= end && safeguard < 200) {
-           monthsCount++;
-           let monthAmount = 0;
-           
-           // Logic Hierarchy:
-           // 1. Commissioner Graded (Specific temporary change)
-           // 2. Commissioner Fixed (Permanent change from effective date)
-           // 3. Original Graded
-           // 4. Original Fixed
-           
-           let isCommGraded = false;
-           if (commGradedStart && commGradedEnd) {
-               if (current >= commGradedStart && current < commGradedEnd) {
-                   monthAmount = commGradedAmt;
-                   isCommGraded = true;
-               }
-           }
-           
-           if (!isCommGraded) {
-               let isCommFixed = false;
-               if (commEffectiveDate) {
-                   if (current >= commEffectiveDate) {
-                       monthAmount = commFixed;
-                       isCommFixed = true;
-                   }
-               }
-               
-               if (!isCommFixed) {
-                   // Check Original Graded
-                   // How many months from FIRST payment?
-                   // Note: Logic says "from order date", but usually payment starts +1 month.
-                   // We assume the first X payments are graded.
-                   if (monthsCount <= baseGradedMonths && baseGraded > 0) {
-                       monthAmount = baseGraded;
-                   } else {
-                       monthAmount = baseMonthly;
-                   }
-               }
-           }
-           
-           totalToPay += monthAmount;
-           
-           // Next Month
-           current.setMonth(current.getMonth() + 1);
-           safeguard++;
-       }
-       
-       document.getElementById('monthsSinceOrder').value = monthsCount;
-       document.getElementById('totalToPay').value = totalToPay.toLocaleString() + ' ₪';
-    }
-
-  </script>
-</body>
-</html>
-
+  }
+</style>
