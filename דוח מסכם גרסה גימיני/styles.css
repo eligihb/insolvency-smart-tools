@@ -1,0 +1,85 @@
+:root {
+  --primary: #1e293b;
+  --accent: #0ea5e9;
+  --danger: #dc2626;
+  --green: #15803d;
+  --bg: #f1f5f9;
+}
+
+* { font-family: 'Assistant', sans-serif; box-sizing: border-box; font-size: 13px; }
+
+body { background: var(--bg); direction: rtl; margin: 0; padding: 0; }
+
+.page { max-width: 1100px; margin: 0 auto; padding: 15px; }
+
+/* גריד ראשי בשיטת Flexbox למניעת בלבול צדדים */
+.layout-main {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 12px !important;
+  align-items: flex-start !important;
+  margin-top: 10px;
+}
+
+.right-column {
+  flex: 1 !important; /* תופס את כל המקום שנשאר */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.left-column {
+  flex: 0 0 370px !important; /* נעילה קשיחה על 370 פיקסלים */
+  width: 370px !important;
+  max-width: 370px !important;
+  min-width: 370px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  width: 100%;
+}
+
+.section-title {
+  background: var(--primary);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-weight: 800;
+}
+
+.row { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
+
+input, textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.readonly { background: #f8fafc; border: 1px solid #e2e8f0; font-weight: 700; }
+
+.compact-gauge-bar {
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 5px 0;
+}
+
+.compact-gauge-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.metric-card { background: #f8fafc; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0; }
+.metric-status-text { font-size: 11px; margin-top: 4px; }

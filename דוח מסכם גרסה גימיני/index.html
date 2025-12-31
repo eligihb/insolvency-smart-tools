@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>דו"ח מסכם לדיון צו שיקום - מערכת חכמה</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="top-bar">
+      <span style="font-size:20px; font-weight:900;">דו"ח מסכם לדיון צו שיקום</span>
+      <div class="top-actions">
+        <button type="button" class="btn-action" onclick="resetForm()">איפוס</button>
+        <button type="button" class="btn-action" onclick="exportToPDF()">PDF</button>
+      </div>
+  </div>
+
+  <div class="page">
+    <form id="mainForm">
+      <div class="top-grid">
+        <div class="card flex-3">
+          <div class="section-title">פרטי תיק</div>
+          <div class="row">
+            <label>חייב/ת:</label><input type="text" id="debtorName" class="name-field">
+            <label>תיק:</label><input type="text" id="caseNumber" class="short">
+          </div>
+          <div class="row">
+            <label>צו:</label><input type="date" id="orderDate" class="date-input">
+            <label>דיון:</label><input type="date" id="hearingDate" class="date-input">
+          </div>
+        </div>
+
+        <div class="card flex-2">
+          <div class="section-title">צו תשלומים</div>
+          <div class="row">
+            <label>חודשי:</label><input type="text" id="monthlyPayment" class="currency-input-auto">
+          </div>
+          <div class="row">
+            <label>יתרה:</label><input type="text" id="caseBalance" class="currency-input-auto">
+          </div>
+        </div>
+      </div>
+
+      <div class="layout-main">
+        <div class="right-column">
+          <div class="card">
+            <div class="section-title">הכנסות והוצאות</div>
+            <div class="row">
+              <label>נטו חייב:</label><input type="text" id="debtorNet" class="currency-input-auto">
+              <label>פוטנציאל:</label><input type="text" id="debtorPotential" class="currency-input-auto">
+            </div>
+            <div class="row">
+              <label>הוצאות:</label><input type="text" id="grandTotalExpenses" class="currency-input-auto">
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="section-title">חובות והתנהלות</div>
+            <div class="row">
+              <label>סך חובות:</label><input type="text" id="valTotalDebts" class="currency-input-auto">
+              <label>דין קדימה:</label><input type="text" id="valPriority" class="currency-input-auto">
+            </div>
+            <div class="row">
+              <label>פיגורים:</label><input type="text" id="valArrears" class="currency-input-auto">
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="section-title">המלצות</div>
+            <div class="row">
+              <label>חודשים:</label><input type="number" id="trusD" class="mini">
+              <label>סכום:</label><input type="text" id="trusM" class="currency-input-auto">
+            </div>
+            <input type="text" id="trusTot" class="readonly" readonly placeholder="סה''כ תוכנית">
+            <textarea id="legalProposalText" class="legal-text-area" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="left-column">
+          <div class="calculator-container">
+            <div class="section-title">מחשבון עזר</div>
+            <div class="result-card">
+              <div class="k">הכנסה פנויה</div>
+              <div class="v" id="disposableIncomeResult">0 ₪</div>
+            </div>
+            <div class="result-card">
+              <div class="k">תשלום מומלץ</div>
+              <div class="v" id="proposedPaymentResult">0 ₪</div>
+            </div>
+          </div>
+
+          <div class="smart-analytics">
+            <div class="section-title">תובנות חכמות</div>
+            <div class="metric-card">
+              <div class="metric-label">מדד מאמץ</div>
+              <div class="compact-gauge-bar"><div id="effortScoreFill" class="compact-gauge-fill"></div></div>
+              <div id="effortScoreStatusText" class="metric-status-text"></div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">צפי דיבידנד</div>
+              <div id="dividendText" class="metric-status-text" style="font-weight:800;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
