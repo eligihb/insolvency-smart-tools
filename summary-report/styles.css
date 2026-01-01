@@ -2181,3 +2181,42 @@ textarea {
   background: #2563eb;
 }
 
+@media print {
+    /* שומר על הצבעים והרקעים כפי שהם מופיעים במסך */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* מגדיר את גודל הדף ושוליים אפסיים כדי למנוע תזוזות */
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
+
+    /* הסתרת אלמנטים שלא צריכים להופיע בדוח המודפס */
+    .top-bar, .btn-action, .reset-btn, .file-upload-zone {
+        display: none !important;
+    }
+
+    /* ביטול גלילה ושמירה על מבנה ה-Grid/Flex של הטופס */
+    body {
+        background: white !important;
+        overflow: visible !important;
+        width: 210mm; /* רוחב A4 סטנדרטי */
+    }
+
+    .container {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+
+    /* מניעת שבירת כרטיסיות באמצע הדף */
+    .card, .section-block {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 15px !important;
+    }
+}
