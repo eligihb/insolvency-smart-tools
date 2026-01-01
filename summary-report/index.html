@@ -18,6 +18,10 @@
   <div class="top-bar">
     <div style="display:flex; gap:4px; align-items:center; justify-content:center; padding:0 8px; position:relative;">
       <div style="display:flex; gap:4px; align-items:center; position:absolute; right:8px;">
+        <button type="button" class="btn-action btn-ai" onclick="toggleOverlay()" title="ניתוח דוח באמצעות AI">
+          <span class="btn-icon">🤖</span>
+          <span>ניתוח AI</span>
+        </button>
         <button type="button" class="btn-action btn-reset" onclick="resetForm()" title="איפוס הטופס">
           <span class="btn-icon">↻</span>
           <span>איפוס</span>
@@ -43,13 +47,13 @@
     </div>
   </div>
 
-  <div class="page"><!DOCTYPE html>
+  <div class="page">
 
     <form id="mainForm">
       <!-- שורה עליונה: פרטי תיק + צו תשלומים + החלטות ממונה -->
       <div style="display:flex; gap:5px; margin-bottom:5px;">
         <!-- בלוק 1: פרטי תיק (מימין, שליש רוחב) -->
-        <div class="card" style="flex:0 0 27%;">
+        <div class="card">
           <div class="section-title">פרטי תיק</div>
           
           <div class="row" style="flex-wrap:nowrap; gap:2px;">
@@ -88,7 +92,7 @@
         </div>
 
         <!-- בלוק 2: צו תשלומים -->
-        <div class="card payment-order-card" style="flex:0 0 23%; margin-left: 0;">
+        <div class="card payment-order-card">
           <div class="section-title">צו תשלומים</div>
           <div id="zeroCaseTitle" class="zero-case-title" style="display:none;">תיק אפס</div>
           
@@ -120,7 +124,7 @@
         </div>
 
         <!-- בלוק 3: פרטים אישיים ומזונות -->
-        <div class="card" style="flex:0 0 25%;">
+        <div class="card">
           <div class="section-title">
             <span>פרטים אישיים</span>
           </div>
@@ -337,7 +341,7 @@
           </div>
 
           <!-- נכסים -->
-          <div class="card" style="page-break-inside: avoid; margin: 0; margin-bottom: 5px; width: 100%;">
+          <div class="card">
             <div class="section-title">נכסים</div>
             <div class="row" style="flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 4px;">
               <label style="display: flex; align-items: center; gap: 4px; cursor: pointer; font-size: 10px;">
@@ -364,7 +368,7 @@
           </div>
 
           <!-- סיכום והמלצות -->
-          <div class="card" style="margin-top: 6px;">
+          <div class="card">
             <div class="section-title">סיכום והמלצות</div>
             
             <div class="recom-block" style="width:100%;">
@@ -645,7 +649,7 @@
           </div>
 
           <!-- אבני דרך בתיק -->
-          <div class="card" style="page-break-inside: avoid; margin: 5px 0 0 0; width: 100%; padding: 5px;">
+          <div class="card">
             <div class="sub-title" style="margin: 0 0 3px 0;">אבני דרך בתיק</div>
             <div id="timelineContainer" style="margin-bottom: 3px;">
               <div class="timeline-row" style="display: flex; gap: 4px; margin-bottom: 2px; align-items: center;">
@@ -682,6 +686,18 @@
   <div class="bottom-bar">
     <div style="text-align:center; padding:6px; font-size:10px; color:#64748b;">
       טפסים חכמים - נבנה על ידי YE
+    </div>
+  </div>
+  
+  <div id="ai-upload-overlay" class="upload-overlay" style="display:none;">
+    <div class="upload-card">
+      <h3>העלאת דוח ממצאי בדיקה (PDF)</h3>
+      <p>הסוכן החכם ינתח את הדפוסים וימלא את הטופס אוטומטית</p>
+      <div class="drop-zone" onclick="document.getElementById('file-input').click()">
+        <span id="upload-status">לחץ כאן או גרור קובץ PDF</span>
+        <input type="file" id="file-input" accept=".pdf" style="display:none;" onchange="handleFileUpload(this)">
+      </div>
+      <button class="btn-action" onclick="toggleOverlay()">סגור</button>
     </div>
   </div>
   

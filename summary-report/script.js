@@ -2,6 +2,11 @@
 // פונקציות עזר כלליות
 // ============================================
 
+function toggleOverlay() {
+  const overlay = document.getElementById('ai-upload-overlay');
+  overlay.style.display = (overlay.style.display === 'none') ? 'flex' : 'none';
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // עדכון תאריך אוטומטי בכותרת ההדפסה
   const currentDateEl = document.getElementById('current-date');
