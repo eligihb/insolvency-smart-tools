@@ -8,6 +8,17 @@ document.addEventListener("DOMContentLoaded", () => {
     yearBadgeEl.textContent = `מעודכן ל־${new Date().getFullYear()}`;
   }
 
+  // עדכון תאריך ושעה לכותרת הדפסה
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('he-IL');
+  const timeStr = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+
+  const printDateEl = document.getElementById('printDate');
+  const printTimeEl = document.getElementById('printTime');
+
+  if (printDateEl) printDateEl.textContent = dateStr;
+  if (printTimeEl) printTimeEl.textContent = timeStr;
+
   setupNumberOnlyFields();
   setupCurrencyAutoFields();
   setupCourtCaseInput();

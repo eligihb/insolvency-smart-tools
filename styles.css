@@ -277,21 +277,50 @@ input:disabled {
   border-color: #e2e8f0;
 }
 
-textarea { 
-  resize: vertical; 
-  min-height: 28px; 
+textarea {
+  resize: vertical;
+  min-height: 28px;
 }
 
 /* --- גדלים --- */
-.short { width: 80px; }
-.tiny { width: 50px; text-align: center; }
-.mini { width: 35px; text-align: center; }
-.medium { width: 120px; }
-.date-input { width: 95px; }
-.case-field { width: 65px; }
-.name-field { width: 65px; }
-.trustee-name-field { width: 95px; }
-.time-input { width: 70px; }
+.short {
+  width: 80px;
+}
+
+.tiny {
+  width: 50px;
+  text-align: center;
+}
+
+.mini {
+  width: 35px;
+  text-align: center;
+}
+
+.medium {
+  width: 120px;
+}
+
+.date-input {
+  width: 95px;
+}
+
+.case-field {
+  width: 65px;
+}
+
+.name-field {
+  width: 65px;
+}
+
+.trustee-name-field {
+  width: 95px;
+}
+
+.time-input {
+  width: 70px;
+}
+
 .date-display {
   display: inline-block;
   text-align: center;
@@ -304,17 +333,20 @@ textarea {
   overflow-wrap: break-word;
   margin-right: 2px;
 }
+
 .months-label-right {
   margin-right: 8px;
 }
-.payment-amount { 
-  width: 70px; 
+
+.payment-amount {
+  width: 70px;
   text-align: right;
   direction: rtl;
 }
-.graded-months { 
-  width: 48px; 
-  text-align: center; 
+
+.graded-months {
+  width: 48px;
+  text-align: center;
   -moz-appearance: textfield;
   height: 26px !important;
   line-height: 26px !important;
@@ -322,6 +354,7 @@ textarea {
   align-items: center !important;
   justify-content: center !important;
 }
+
 .graded-months::-webkit-inner-spin-button,
 .graded-months::-webkit-outer-spin-button {
   opacity: 1;
@@ -329,14 +362,16 @@ textarea {
   margin-top: 3px;
   margin-bottom: 3px;
 }
-.months-count { 
-  width: 35px; 
-  text-align: center; 
+
+.months-count {
+  width: 35px;
+  text-align: center;
   font-weight: 700;
   background: #f8fafc;
   height: 26px !important;
   line-height: 26px !important;
 }
+
 .months-label {
   min-width: 50px;
   max-width: 60px;
@@ -350,11 +385,14 @@ textarea {
   align-items: center;
   justify-content: center;
 }
-.flex-1 { flex: 1; }
+
+.flex-1 {
+  flex: 1;
+}
 
 /* --- עיצובים ספציפיים --- */
-.currency-input { 
-  font-weight: 700; 
+.currency-input {
+  font-weight: 700;
   color: var(--primary);
   text-align: right;
   direction: rtl;
@@ -459,11 +497,12 @@ textarea {
 }
 
 .btn-ai .btn-icon {
-  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
 }
 
 /* שמירה על תאימות לאחור */
-.btn-reset.old, .btn-report {
+.btn-reset.old,
+.btn-report {
   padding: 6px 12px;
   font-size: 10px !important;
   font-family: 'Assistant', sans-serif !important;
@@ -477,7 +516,8 @@ textarea {
   color: var(--text);
 }
 
-.btn-reset.old:hover, .btn-report:hover {
+.btn-reset.old:hover,
+.btn-report:hover {
   background: #f8fafc;
 }
 
@@ -495,18 +535,18 @@ textarea {
   justify-content: center;
 }
 
-.text-green { 
-  color: var(--green) !important; 
-  font-weight: 800; 
+.text-green {
+  color: var(--green) !important;
+  font-weight: 800;
 }
 
-.text-red { 
-  color: var(--red) !important; 
-  font-weight: 800; 
+.text-red {
+  color: var(--red) !important;
+  font-weight: 800;
 }
 
 /* נעילה אדומה */
-.locked-section input:not(#debtorNotes):not(#spouseNotes):not(#debtorPotential), 
+.locked-section input:not(#debtorNotes):not(#spouseNotes):not(#debtorPotential),
 .locked-section select {
   border: 1px solid #fecaca !important;
   background: #fef2f2 !important;
@@ -539,26 +579,26 @@ textarea {
     align-items: flex-start;
     justify-content: flex-start;
   }
-  
-  .layout-main > div:first-child {
+
+  .layout-main>div:first-child {
     max-width: 100%;
     display: flex;
     flex-direction: column;
     gap: 2px;
     align-items: flex-start;
   }
-  
-  .layout-main > div:first-child {
+
+  .layout-main>div:first-child {
     width: 400px;
     flex-shrink: 0;
   }
-  
-  .layout-main > div:first-child > .card {
+
+  .layout-main>div:first-child>.card {
     padding: 10px;
     width: 100%;
   }
-  
-  .layout-main > .left-column {
+
+  .layout-main>.left-column {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -604,11 +644,11 @@ textarea {
   gap: 1px;
 }
 
-.recom-item label { 
-  font-size: 12px !important; 
+.recom-item label {
+  font-size: 12px !important;
   font-family: 'Assistant', sans-serif !important;
   margin: 0 !important;
-  margin-bottom: 0 !important; 
+  margin-bottom: 0 !important;
   padding: 0 !important;
   padding-top: 0;
   text-align: center;
@@ -616,8 +656,8 @@ textarea {
   vertical-align: middle;
 }
 
-.recom-item input { 
-  width: 100%; 
+.recom-item input {
+  width: 100%;
   text-align: center;
   padding: 0 8px !important;
   font-size: 12px !important;
@@ -687,9 +727,9 @@ textarea {
   line-height: 1.1 !important;
   line-height: 1.2;
   color: #e6f4f1;
-  background: rgba(255,255,255,.12);
+  background: rgba(255, 255, 255, .12);
   padding: 3px 8px;
-  border: 1px solid rgba(255,255,255,.25);
+  border: 1px solid rgba(255, 255, 255, .25);
   border-radius: 10px;
   white-space: nowrap;
   line-height: 1.2;
@@ -1429,15 +1469,18 @@ textarea {
 }
 
 .effort-low .effort-score-value {
-  color: #22c55e; /* ירוק - מאמץ נמוך */
+  color: #22c55e;
+  /* ירוק - מאמץ נמוך */
 }
 
 .effort-medium .effort-score-value {
-  color: #f59e0b; /* כתום - מאמץ בינוני */
+  color: #f59e0b;
+  /* כתום - מאמץ בינוני */
 }
 
 .effort-high .effort-score-value {
-  color: #ef4444; /* אדום - מאמץ גבוה */
+  color: #ef4444;
+  /* אדום - מאמץ גבוה */
 }
 
 /* עיצוב הנוסח המשפטי - קטן אך בולט */
@@ -1789,7 +1832,7 @@ textarea {
   color: #3b2f00;
   border: 1px solid #ffe6a8;
   border-radius: 12px;
-  box-shadow: 0 12px 28px rgba(0,0,0,.15);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .15);
   padding: 8px 10px;
   line-height: 1.4;
 }
@@ -1804,7 +1847,7 @@ textarea {
   font-size: 0.78rem;
   cursor: pointer;
   white-space: nowrap;
-  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
 }
 
 .reset-btn:hover {
@@ -1816,9 +1859,11 @@ textarea {
     grid-template-columns: 1fr;
     gap: 8px;
   }
+
   .calc-inputs-col {
     order: 1;
   }
+
   .calc-results-col {
     order: 2;
   }
@@ -1826,15 +1871,15 @@ textarea {
 
 /* --- הדפסה (A4 בול) --- */
 @media print {
-  @page { 
-    size: A4 portrait; 
+  @page {
+    size: A4 portrait;
     width: 210mm;
-    margin: 5mm; 
+    margin: 5mm;
   }
 
-  body { 
-    background: white !important; 
-    -webkit-print-color-adjust: exact; 
+  body {
+    background: white !important;
+    -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     width: 210mm;
     margin: 0;
@@ -1842,205 +1887,102 @@ textarea {
   }
 
   /* הסתרת top-bar וכפתורים */
-  .top-bar { 
+  .top-bar {
     display: none !important;
   }
 
-  button, .btn-reset, .btn-report {
-    display: none !important; 
-  }
-
-  .page { 
-    max-width: 210mm; 
-    width: 210mm;
-    margin: 0 auto; 
-    padding: 0; 
-    transform: none; 
-    transform-origin: top center; 
-  }
-
-  .card { 
-    border: 1px solid #e2e8f0 !important; 
-    box-shadow: none !important; 
-    padding: 5px 0; 
-    margin-bottom: 5px; 
-    border-radius: 4px !important; 
-    background: var(--panel) !important; 
-  }
-
-  .section-title { 
-    background: #1e293b !important;
-    color: #ffffff !important; 
-    border-bottom: none !important; 
-    padding: 4px 6px;
-  }
-
-  .sub-title { 
-    color: var(--primary) !important; 
-    text-decoration: none !important; 
-    margin-top: 1px; 
-  }
-
-  /* איפוס שדות להדפסה */
-  input, select, textarea {
-    border: 1px solid #cbd5e1 !important;
-    background: #ffffff !important;
-    border-radius: 8px !important;
-    padding: 3px 4px !important;
-    color: var(--text) !important;
-    box-shadow: none !important;
-  }
-
-  /* תרגום צבעים להדפסה */
-  .text-green, .text-red { 
-    color: black !important; 
-    font-weight: 900; 
-    text-decoration: underline; 
-  }
-
-  .locked-section input { 
-    border-bottom: none !important; 
-    color: #ccc !important; 
-  }
-
-  /* גריד להדפסה */
-  .layout-main { 
-    display: flex !important; 
-    gap: 5px !important; 
-    page-break-inside: avoid;
-  }
-
-  /* מחשבון בהדפסה */
-  .calculator-container {
-    background: #fbfeff !important;
-    border: 1px solid var(--border) !important;
-    page-break-inside: avoid;
-    transform: none !important;
-    border-radius: 10px !important;
-  }
-
-  .calc-header {
-    background: var(--primary) !important;
-    color: #ffffff !important;
-    border-bottom: none;
-  }
-
-  .calc-inputs-col {
-    background: linear-gradient(135deg, #f8fafb 0%, #f0f4f7 100%) !important;
-    border: 1px solid var(--border) !important;
-  }
-
-  .calc-results-col {
-    background: #eaf6f6 !important;
-    border: 1px solid var(--border) !important;
-  }
-
-  .result-card {
-    background: #fff !important;
-    border: 1px solid #dbe9ea !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
-  }
-
-  .chip {
-    background: #f5f5f5 !important;
-    border: 1px solid #cfd8e3 !important;
-    color: #666 !important;
-  }
-
-  .chip.active {
-    background: var(--primary) !important;
-    color: #fff !important;
-    border: 1px solid var(--primary) !important;
-  }
-
-  .chip:not(.active) {
-    background: #f5f5f5 !important;
-    border: 1px solid #cfd8e3 !important;
-  }
-
-  /* שמירה על צבעי רקע */
-  .recom-block {
-    background: #f0fdf4 !important;
-    border: 1px solid #bbf7d0 !important;
-  }
-
-  .recom-block.comm {
-    background: #eff6ff !important;
-    border: 1px solid #bfdbfe !important;
-  }
-
-  /* בלוק החלטות ממונה */
-  div[style*="background:#f8fafc"] {
-    background: #f8fafc !important;
-    border: 1px solid #0ea5e9 !important;
-    border-radius: 4px !important;
-  }
-
-  /* הסתרת כפתורים בהדפסה */
-  button, .btn-action, .reset-btn {
+  button,
+  .btn-reset,
+  .btn-report {
     display: none !important;
   }
 
+  /* וידוא שהכל נכנס בעמוד אחד - החזרת Scaling */
   .page {
-    max-height: 287mm !important;
-    height: 287mm !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
+    width: 210mm;
+    margin: 0 auto;
+    padding: 0;
+    /* הקטנה משמעותית כדי להיכנס לדף A4 עם שוליים בטוחים */
+    transform: scale(0.72);
+    transform-origin: top center;
+    border: none !important;
+    overflow: visible !important;
   }
 
+  /* מרכוז כללי */
   body {
-    overflow: hidden !important;
-    height: 297mm !important;
-    max-height: 297mm !important;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
   }
 
-  html {
-    height: 297mm !important;
-    max-height: 297mm !important;
-  }
-
-  /* וידוא שהכל נכנס בעמוד אחד */
-  * {
-    page-break-inside: avoid;
-    page-break-after: avoid;
-  }
-
-  .layout-main > div:first-child,
-  .left-column {
-    page-break-inside: avoid;
-    page-break-after: avoid;
-  }
-  
-  /* צמצום רווחים בהדפסה */
   .card {
-    margin-bottom: 3px !important;
-    padding: 4px 6px !important;
-  }
-  
-  .row {
-    margin-bottom: 2px !important;
-  }
-  
-  .section-title {
-    margin-bottom: 3px !important;
-    padding: 3px 6px !important;
-  }
-  
-  .sub-title {
-    margin-bottom: 2px !important;
-  }
-
-  .smart-analytics {
-    background: white !important;
-    border: 1px solid #000 !important;
-  }
-
-  .gauge-bar, .participation-bar, .allocation-bar, .debt-load-bar {
+    border: 1px solid #94a3b8 !important;
     box-shadow: none !important;
+    padding: 5px 0;
+    margin-bottom: 5px;
+    border-radius: 4px !important;
+    background: #ffffff !important;
   }
 
-  .gauge-fill, .participation-segment, .allocation-segment, .debt-load-fill {
+  /* כותרת הדפסה - מוצגת רק בהדפסה או לפי צורך */
+  .print-header-container {
+    display: flex !important;
+  }
+}
+
+/* עיצוב הכותרת החדשה (מוסתרת במסך רגיל, מוצגת בהדפסה) */
+.print-header-container {
+  display: none;
+  /* ברירת מחדל מוסתר במסך */
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #1e293b;
+}
+
+.print-main-title {
+  font-size: 28px !important;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+  text-align: center;
+  font-family: 'Assistant', sans-serif !important;
+}
+
+.print-meta-left,
+.print-meta-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px !important;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.print-meta-left {
+  left: 0;
+}
+
+.print-meta-right {
+  right: 0;
+}
+
+@media print {
+  .print-header-container {
+    display: flex !important;
+  }
+
+  .gauge-fill,
+  .participation-segment,
+  .allocation-segment,
+  .debt-load-fill {
     box-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }
 
@@ -2151,4 +2093,3 @@ textarea {
 #addTimelineRow:hover {
   background: #2563eb;
 }
-
