@@ -2181,42 +2181,55 @@ textarea {
   background: #2563eb;
 }
 
+/* הגדרות למסך רגיל - הסתרת כותרת ההדפסה */
+.print-only-header { 
+    display: none; 
+}
+
 @media print {
-    /* שומר על הצבעים והרקעים כפי שהם מופיעים במסך */
-    * {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
+    .print-only-header {
+        display: block;
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid var(--primary);
+        padding-bottom: 10px;
     }
 
-    /* מגדיר את גודל הדף ושוליים אפסיים כדי למנוע תזוזות */
+    .print-only-header h1 { 
+        font-size: 24px; 
+        color: #0f172a; 
+        margin: 0; 
+    }
+
     @page {
-        size: A4;
-        margin: 10mm;
+        size: A4 vertical;
+        margin: 15mm; /* שוליים קבועים */
     }
 
-    /* הסתרת אלמנטים שלא צריכים להופיע בדוח המודפס */
-    .top-bar, .btn-action, .reset-btn, .file-upload-zone {
-        display: none !important;
-    }
-
-    /* ביטול גלילה ושמירה על מבנה ה-Grid/Flex של הטופס */
     body {
         background: white !important;
-        overflow: visible !important;
-        width: 210mm; /* רוחב A4 סטנדרטי */
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
 
     .container {
         width: 100% !important;
-        margin: 0 !important;
+        max-width: 100% !important;
+        margin: 0 auto !important; /* מרכוז */
         padding: 0 !important;
-        box-shadow: none !important;
+        transform: scale(1.02); /* הגדלה קלה לניצול שטח */
+        transform-origin: top center;
     }
 
-    /* מניעת שבירת כרטיסיות באמצע הדף */
-    .card, .section-block {
-        break-inside: avoid;
-        page-break-inside: avoid;
-        margin-bottom: 15px !important;
+    /* שמירה על פריסת הטורים (Grid) בדיוק כמו במסך */
+    .dashboard-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important; /* מבטיח שני טורים */
+        gap: 20px !important;
+    }
+
+    .top-bar, .btn-action, .reset-btn { 
+        display: none !important; 
     }
 }

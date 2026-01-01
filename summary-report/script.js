@@ -3,6 +3,11 @@
 // ============================================
 
 document.addEventListener("DOMContentLoaded", () => {
+  // עדכון תאריך אוטומטי בכותרת ההדפסה
+  const currentDateEl = document.getElementById('current-date');
+  if (currentDateEl) {
+    currentDateEl.innerText = new Date().toLocaleDateString('he-IL');
+  }
   const yearBadgeEl = document.getElementById('yearBadge');
   if (yearBadgeEl) {
     yearBadgeEl.textContent = `מעודכן ל־${new Date().getFullYear()}`;
