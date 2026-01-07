@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ניטור נט המשפט</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f0f2f5; }
+        .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .warning { background: #fff3cd; } 
+        .extreme { background: #f8d7da; color: #721c24; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: right; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>מערכת ניטור דיונים</h1>
+        <div id="stats">טוען...</div>
+        <table id="results">
+            <thead><tr><th>שעה</th><th>תיק</th><th>צדדים</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script>
+        fetch('data.json').then(r => r.json()).then(data => {
+            document.getElementById('stats').innerHTML = `<b>שופט:</b> ${data.judge} | <b>תאריך:</b> ${data.date} | <b>דיונים:</b> ${data.count}`;
+            const tbody = document.querySelector('#results tbody');
+            data.hearings.forEach(h => {
+                tbody.innerHTML += `<tr><td>${h.time}</td><td>${h.caseNum}</td><td>${h.parties}</td></tr>`;
+            });
+        });
+    </script>
+</body>
+</html>
