@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ניטור עומס נט המשפט</title>
+    <style>
+        body { font-family: system-ui; padding: 20px; background: #f4f7f6; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .warning { background: #fff3cd; color: #856404; } /* אזהרה - צהוב */
+        .medium { background: #d1ecf1; color: #0c5460; }  /* בינוני - כחול */
+        .high { background: #ffeeba; color: #856404; }    /* גבוה - כתום */
+        .extreme { background: #f8d7da; color: #721c24; } /* חריג - אדום */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: right; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>דוח עומס שיפוטי</h1>
+        <p id="meta">טוען נתונים...</p>
+        <div id="status-box" style="padding: 15px; border-radius: 5px; font-weight: bold;"></div>
+        <table id="hearings-table">
+            <thead>
+                <tr><th>שעה</th><th>מספר תיק</th><th>צדדים</th><th>סוג דיון</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('meta').innerText = `שופט: ${data.judge} | תאריך: ${data.date} | עדכון אחרון: ${data.lastUpdated}`;
+                
+                const statusBox = document.getElementById('status-box');
+                const count = data.count;
+                
+                // לוגיקת צבעים (מחוזי - לפי האיפיון שלך)
+                statusBox.innerText = `סה"כ דיונים: ${count}`;
+                if (count >= 15) statusBox.className = 'extreme';
+                else if (count >= 10) statusBox.className = 'high';
+                else if (count >= 3) statusBox.className = 'medium';
+                else statusBox.className = 'warning';
+
+                const tbody = document.querySelector('#hearings-table tbody');
+                data.hearings.forEach(h => {
+                    const row = `<tr><td>${h.time}</td><td>${h.caseNum}</td><td>${h.parties}</td><td>${h.type}</td></tr>`;
+                    tbody.innerHTML += row;
+                });
+            });
+    </script>
+</body>
+</html>
