@@ -1,0 +1,30 @@
+name: Court Monitor Bot
+on:
+  workflow_dispatch: # הפעלה ידנית
+  schedule:
+    - cron: '0 8 * * 1,3,5' # ריצה אוטומטית
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install Dependencies
+        run: |
+          cd court-monitor
+          npm install
+          npx playwright install chromium
+      - name: Run Scraper
+        run: |
+          cd court-monitor
+          node scraper.js
+      - name: Commit and Push Results
+        run: |
+          git config --global user.name "Bot"
+          git config --global user.email "bot@github.com"
+          git add court-monitor/data.json
+          git commit -m "Update court data" || exit 0
+          git push
