@@ -603,6 +603,15 @@
           display: none !important;
         }
 
+        /* Fix overlapping button in mobile */
+        .btn-manual-top {
+          position: relative !important;
+          top: auto !important;
+          right: auto !important;
+          float: right;
+          margin-bottom: 15px;
+        }
+
         /* Hide top bar on mobile if requested, or keep? User said cancel definitions. I'll keep it simple/hidden if it was hidden before. Actually, let's keep it visible or revert to "mobile-only display none". */
       }
 
