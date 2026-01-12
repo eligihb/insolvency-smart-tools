@@ -4,239 +4,674 @@
 
 <head>
 
-<meta charset="UTF-8" />
+  <meta charset="UTF-8" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>מחשבון צו תשלומים - YE Professional 2026</title>
+  <title>מחשבון צו תשלומים - YE Professional 2026</title>
 
 
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 
 
-<style>
+  <style>
+    :root {
 
-:root {
+      --primary: #1e293b;
+      --secondary: #0f172a;
+      --inner-bg: #1e293b;
 
-  --primary: #1e293b; --secondary: #0f172a; --inner-bg: #1e293b;
+      --panel: #334155;
+      --text: #ffffff;
+      --label: #cbd5e1;
 
-  --panel: #334155; --text: #ffffff; --label: #cbd5e1;
+      --border: #475569;
+      --accent: #38bdf8;
+      --danger: #fb7185;
+      --success: #34d399;
 
-  --border: #475569; --accent: #38bdf8; --danger: #fb7185; --success: #34d399;
+    }
 
-}
 
 
+    * {
+      box-sizing: border-box;
+    }
 
-* { box-sizing: border-box; }
+    body {
 
-body {
+      font-family: 'Heebo', sans-serif;
+      background: #ffffff;
 
-  font-family: 'Heebo', sans-serif; background: #ffffff; 
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
 
-  margin: 0; padding: 0; display: flex; justify-content: center; align-items: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
 
-  min-height: 100vh; overflow-x: hidden;
+    }
 
-}
 
 
+    .main-container {
 
-.main-container {
+      width: 1100px;
+      background: var(--inner-bg);
+      padding: 20px 30px;
 
-  width: 1100px; background: var(--inner-bg); padding: 20px 30px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      margin: 20px auto;
 
-  border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); margin: 20px auto;
+      position: relative;
 
-  position: relative;
+      transform: scale(0.62);
+      transform-origin: top center;
 
-}
+    }
 
 
 
-.top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
 
-.date-tag { background: rgba(56, 189, 248, 0.15); color: var(--accent); padding: 5px 15px; border-radius: 8px; font-weight: 700; border: 1px solid var(--accent); font-size: 0.9rem; }
+    .date-tag {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      padding: 5px 15px;
+      border-radius: 8px;
+      font-weight: 700;
+      border: 1px solid var(--accent);
+      font-size: 0.9rem;
+    }
 
 
 
-.top-controls { display: flex; gap: 6px; }
-
-.btn-ctrl { background: var(--panel); border: 1px solid var(--border); color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
-
-.btn-ctrl:hover { border-color: var(--accent); background: var(--secondary); }
-
-
-
-header { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border); }
-
-header h1 { margin: 0; font-size: 1.5rem; font-weight: 700; color: #fff; text-align: center; }
-
-
-
-.board { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
-
-.inputs-col, .results-col { background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 20px; }
-
-
-
-.section-title { display: flex; align-items: center; justify-content: center; margin-bottom: 12px; color: #fff; font-size: 1.1rem; font-weight: 700; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
-
-
-
-.info-trigger {
-
-  display: inline-block; width: 16px; height: 16px; background: var(--accent); color: var(--secondary);
-
-  border-radius: 50%; font-size: 11px; line-height: 16px; text-align: center; font-weight: bold;
-
-  margin-right: 6px; cursor: help; position: relative;
-
-}
-
-.info-trigger:hover::after {
-
-  content: attr(data-tip); position: absolute; bottom: 130%; right: 0;
-
-  background: #000; color: #fff; padding: 10px; border-radius: 8px;
-
-  font-size: 0.8rem; width: 250px; z-index: 100; text-align: right; font-weight: 400;
-
-  box-shadow: 0 8px 20px rgba(0,0,0,0.6); line-height: 1.4;
-
-}
-
-
-
-.input-group { display: flex; flex-direction: column; margin-bottom: 10px; align-items: center; width: 100%; }
-
-.input-group label { font-size: 0.95rem; font-weight: 600; color: var(--label); margin-bottom: 6px; text-align: center; width: 100%; }
-
-
-
-input, select, textarea { padding: 10px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--secondary); color: #ffffff !important; font-size: 1.1rem; font-weight: 600; text-align: center; width: 100%; }
-
-.amt-input { color: var(--accent) !important; font-size: 1.25rem; width: 160px !important; }
-
-
-
-.chip { padding: 10px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--secondary); cursor: pointer; color: #fff; font-weight: 600; font-size: 0.95rem; flex: 1; min-height: 52px; display: flex; align-items: center; justify-content: center; }
-
-.chip.active { background: var(--accent); color: var(--secondary); border-color: var(--accent); }
-
-
-
-.category-btn-group { display: flex; gap: 8px; margin: 20px 0; width: 100%; }
-
-
-
-.result-grid { display: grid; grid-template-columns: 1fr 1fr !important; gap: 15px; } 
-
-.result-card { background: var(--secondary); border: 1px solid var(--border); border-radius: 18px; padding: 16px; text-align: center; position: relative; }
-
-.result-card .k { color: var(--label); font-size: 0.95rem; margin-bottom: 6px; }
-
-.result-card .v { font-size: 1.35rem; font-weight: 800; color: #ffffff !important; }
-
-
-
-.ratio-bar-container { width: 100%; height: 18px; background: #475569; border-radius: 9px; margin: 12px 0; overflow: hidden; display: flex; }
-
-.bar-d { background: var(--accent); height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #ffffff !important; font-weight: 900; }
-
-.bar-p { background: var(--success); height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #ffffff !important; font-weight: 900; }
-
-
-
-.result-wide { grid-column: 1 / -1 !important; }
-
-.result-big .v { font-size: 1.8rem; color: var(--accent) !important; font-weight: 900; }
-
-
-
-.btn-manual-top { position: absolute; top: 12px; right: 12px; background: var(--panel); border: 1px solid var(--border); color: var(--label); font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
-
-
-
-.insight-box {
-
-  width: 100%; background: rgba(56, 189, 248, 0.12); border-radius: 15px;
-
-  padding: 20px; margin-top: 25px; border-right: 6px solid var(--accent);
-
-  font-size: 0.95rem; line-height: 1.6; color: #ffffff !important; display: none;
-
-}
-
-.insight-box b { color: var(--accent) !important; font-size: 1.05rem; }
-
-
-
-footer { margin-top: 25px; text-align: center; border-top: 1px solid var(--border); padding-top: 15px; font-size: 1.1rem; color: var(--label); font-weight: 700; }
-
-
-
-#entryPanel {
-
-  position: relative; display: none; background: rgba(0,0,0,0.3); 
-
-  padding: 15px; border-radius: 15px; border: 1px dashed var(--accent); margin-top: 10px;
-
-}
-
-.close-x { position: absolute; top: 5px; left: 10px; color: var(--danger); cursor: pointer; font-weight: 800; font-size: 1.3rem; }
-
-
-
-@media screen and (max-width: 768px) {
-
-  .main-container { width: 95%; padding: 15px; margin: 10px auto; }
-
-  .board { grid-template-columns: 1fr; }
-
-  .inputs-col, .results-col { display: none; }
-
-  .inputs-col.active, .results-col.active { display: block; }
-
-}
-
-
-
-@media print {
-
-  @page { size: A4 portrait; margin: 1cm; }
-
-  body { background: #fff !important; color: #000 !important; }
-
-  .main-container { width: 100% !important; max-width: 100% !important; box-shadow: none !important; margin: 0 !important; background: #fff !important; padding: 0 !important; }
-
-  .board { width: 100% !important; grid-template-columns: 1fr 1fr !important; }
-
-  .inputs-col, .results-col { display: block !important; border: 1px solid #000 !important; color: #000 !important; }
-
-  .v, .bar-d, .bar-p, .insight-box { color: #000 !important; }
-
-  .top-controls, .btn-ctrl, .btn-manual-top, .category-btn-group, #manualBox, #entryPanel, .info-trigger { display: none !important; }
-
-  header { border: 2px solid #000 !important; background: #f0f0f0 !important; }
-
-  header h1, .section-title, label, .k, #resRatioD, #resRatioP, .date-tag { color: #000 !important; }
-
-  .insight-box { background: #f9f9f9 !important; border: 1px solid #000 !important; border-right: 6px solid #000 !important; display: block !important; padding: 12px !important; }
-
-  footer { color: #000 !important; border-top: 2px solid #000 !important; display: block !important; margin-top: 40px; }
-
-}
-
-</style>
+    .top-controls {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-ctrl {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-ctrl:hover {
+      border-color: var(--accent);
+      background: var(--secondary);
+    }
+
+
+
+    header {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid var(--border);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      text-align: center;
+    }
+
+
+
+    .board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .inputs-col,
+    .results-col {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
+    }
+
+
+
+    .info-trigger {
+
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: var(--accent);
+      color: var(--secondary);
+
+      border-radius: 50%;
+      font-size: 11px;
+      line-height: 16px;
+      text-align: center;
+      font-weight: bold;
+
+      margin-right: 6px;
+      cursor: help;
+      position: relative;
+
+    }
+
+    .info-trigger:hover::after {
+
+      content: attr(data-tip);
+      position: absolute;
+      bottom: 130%;
+      right: 0;
+
+      background: #000;
+      color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+
+      font-size: 0.8rem;
+      width: 250px;
+      z-index: 100;
+      text-align: right;
+      font-weight: 400;
+
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      line-height: 1.4;
+
+    }
+
+
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .input-group label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--label);
+      margin-bottom: 6px;
+      text-align: center;
+      width: 100%;
+    }
+
+
+
+    input,
+    select,
+    textarea {
+      padding: 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: var(--secondary);
+      color: #ffffff !important;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
+      width: 100%;
+    }
+
+    .amt-input {
+      color: var(--accent) !important;
+      font-size: 1.25rem;
+      width: 160px !important;
+    }
+
+
+
+    .chip {
+      padding: 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: var(--secondary);
+      cursor: pointer;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      flex: 1;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chip.active {
+      background: var(--accent);
+      color: var(--secondary);
+      border-color: var(--accent);
+    }
+
+
+
+    .category-btn-group {
+      display: flex;
+      gap: 8px;
+      margin: 20px 0;
+      width: 100%;
+    }
+
+
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 15px;
+    }
+
+    .result-card {
+      background: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      text-align: center;
+      position: relative;
+    }
+
+    .result-card .k {
+      color: var(--label);
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .result-card .v {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff !important;
+    }
+
+
+
+    .ratio-bar-container {
+      width: 100%;
+      height: 18px;
+      background: #475569;
+      border-radius: 9px;
+      margin: 12px 0;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .bar-d {
+      background: var(--accent);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #ffffff !important;
+      font-weight: 900;
+    }
+
+    .bar-p {
+      background: var(--success);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #ffffff !important;
+      font-weight: 900;
+    }
+
+
+
+    .result-wide {
+      grid-column: 1 / -1 !important;
+    }
+
+    .result-big .v {
+      font-size: 1.8rem;
+      color: var(--accent) !important;
+      font-weight: 900;
+    }
+
+
+
+    .btn-manual-top {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      color: var(--label);
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+
+
+    .insight-box {
+
+      width: 100%;
+      background: rgba(56, 189, 248, 0.12);
+      border-radius: 15px;
+
+      padding: 20px;
+      margin-top: 25px;
+      border-right: 6px solid var(--accent);
+
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #ffffff !important;
+      display: none;
+
+    }
+
+    .insight-box b {
+      color: var(--accent) !important;
+      font-size: 1.05rem;
+    }
+
+
+
+    footer {
+      margin-top: 25px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      padding-top: 15px;
+      font-size: 1.1rem;
+      color: var(--label);
+      font-weight: 700;
+    }
+
+
+
+    #entryPanel {
+
+      position: relative;
+      display: none;
+      background: rgba(0, 0, 0, 0.3);
+
+      padding: 15px;
+      border-radius: 15px;
+      border: 1px dashed var(--accent);
+      margin-top: 10px;
+
+    }
+
+    .close-x {
+      position: absolute;
+      top: 5px;
+      left: 10px;
+      color: var(--danger);
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 1.3rem;
+    }
+
+
+
+    @media screen and (max-width: 768px) {
+
+      .main-container {
+        width: 95%;
+        padding: 15px;
+        margin: 10px auto;
+      }
+
+      .board {
+        grid-template-columns: 1fr;
+      }
+
+      .inputs-col,
+      .results-col {
+        display: none;
+      }
+
+      .inputs-col.active,
+      .results-col.active {
+        display: block;
+      }
+
+    }
+
+
+
+    @media print {
+
+      @page {
+        size: A4 portrait;
+        margin: 1cm;
+      }
+
+      body {
+        background: #fff !important;
+        color: #000 !important;
+        height: auto;
+        overflow: visible;
+      }
+
+      .main-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        background: #fff !important;
+        padding: 0 !important;
+        transform: none !important;
+        border: none !important;
+      }
+
+      header {
+        border: 2px solid #000 !important;
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+      }
+
+      header h1 {
+        color: #000 !important;
+      }
+
+      .board {
+        width: 100% !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 20px !important;
+      }
+
+      .inputs-col,
+      .results-col {
+        display: block !important;
+        border: 2px solid #000 !important;
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+      }
+
+      .result-card {
+        background: #fff !important;
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+        color: #000 !important;
+      }
+
+      .v,
+      .k,
+      label,
+      .section-title,
+      .bar-d,
+      .bar-p,
+      input,
+      select {
+        color: #000 !important;
+        text-shadow: none !important;
+      }
+
+      input,
+      select,
+      .chip {
+        background: #fff !important;
+        border: 1px solid #aaa !important;
+      }
+
+      .chip.active {
+        background: #e5e5e5 !important;
+        color: #000 !important;
+        border: 2px solid #000 !important;
+        font-weight: 800;
+      }
+
+      .amt-input {
+        color: #000 !important;
+        font-weight: 800;
+      }
+
+      .ratio-bar-container {
+        border: 1px solid #000;
+        background: #fff;
+      }
+
+      .bar-d {
+        background: #ddd !important;
+        color: #000 !important;
+        border-right: 1px solid #000;
+      }
+
+      .bar-p {
+        background: #fff !important;
+        color: #000 !important;
+      }
+
+      .insight-box {
+        background: #fff !important;
+        border: 2px solid #000 !important;
+        border-right: 6px solid #000 !important;
+        display: block !important;
+        padding: 12px !important;
+        color: #000 !important;
+      }
+
+      .insight-box b {
+        color: #000 !important;
+        text-decoration: underline;
+      }
+
+      footer {
+        color: #000 !important;
+        border-top: 2px solid #000 !important;
+        display: block !important;
+        margin-top: 40px;
+      }
+
+      /* Hide interactive elements */
+      .top-controls,
+      .btn-ctrl,
+      .btn-manual-top,
+      .category-btn-group,
+      #manualBox,
+      #entryPanel,
+      .info-trigger,
+      .close-x,
+      .chip:not(.active) {
+        /* Only keep active chips or hide non-primary ones? */
+        /* Actually simpler to just keep layout but clear styles. */
+      }
+
+      /* Hide "Add" buttons in inputs */
+      .input-group button.chip {
+        display: none !important;
+      }
+
+      /* Hide toggles that are not active? Or just style them plain. */
+      /* Let's keep structure but make neutral. */
+
+      .top-bar {
+        display: none !important;
+      }
+
+      .insight-box {
+        width: 100%;
+        background: rgba(56, 189, 248, 0.12);
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 25px;
+        border-right: 6px solid var(--accent);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #ffffff !important;
+        display: none;
+      }
+
+      .insight-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 12px;
+        gap: 12px;
+      }
+
+      .insight-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .insight-icon {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        line-height: 1.4;
+      }
+
+      .insight-text {
+        flex-grow: 1;
+      }
+
+      .insight-box b {
+        color: var(--accent) !important;
+        font-size: 1.05rem;
+      }
+
+      @media print {
+        .insight-box {
+          background: #fff !important;
+          border: 2px solid #000 !important;
+          border-right: 6px solid #000 !important;
+          color: #000 !important;
+        }
+      }
+    }
+  </style>
 
 </head>
 
@@ -244,129 +679,146 @@ footer { margin-top: 25px; text-align: center; border-top: 1px solid var(--borde
 
 
 
-<div class="main-container" id="calcRoot">
+  <div class="main-container" id="calcRoot">
 
-  <div class="top-bar">
+    <div class="top-bar">
 
-    <div id="dateTag" class="date-tag">--/--/----</div>
+      <div id="dateTag" class="date-tag">--/--/----</div>
 
-    <div class="top-controls">
+      <div class="top-controls">
 
-      <button class="btn-ctrl" onclick="window.print()">הדפסה/PDF 🖨️</button>
+        <button class="btn-ctrl" onclick="window.print()">הדפסה/PDF 🖨️</button>
 
-      <button class="btn-ctrl" id="btnShot">צילום 📸</button>
+        <button class="btn-ctrl" id="btnShot">צילום 📸</button>
 
-      <button class="btn-ctrl" onclick="restoreFromStorage()">שחזור ↺</button>
+        <button class="btn-ctrl" onclick="restoreFromStorage()">שחזור נתונים ↺</button>
 
-      <button class="btn-ctrl" style="color:var(--danger)" onclick="resetData()">איפוס ✖</button>
-
-    </div>
-
-  </div>
-
-
-
-  <header><h1>מחשבון צו תשלומים</h1></header>
-
-
-
-  <div class="board">
-
-    <div class="inputs-col active" id="step1">
-
-      <div class="section-title">👤 נתוני בסיס והכנסות</div>
-
-      <div class="input-group">
-
-        <label>מצב משפחתי</label>
-
-        <div style="display:flex; gap:8px; width:100%;">
-
-          <button class="chip family-type active" data-type="יחיד">יחיד (נשוי חי בנפרד)</button>
-
-          <button class="chip family-type" data-type="זוג">זוג</button>
-
-          <button class="chip family-type" data-type="רווק">רווק / גרוש / אלמן</button>
-
-        </div>
+        <button class="btn-ctrl" style="color:var(--danger)" onclick="resetData()">איפוס ✖</button>
 
       </div>
 
+    </div>
 
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+
+    <header>
+      <h1>מחשבון צו תשלומים</h1>
+    </header>
+
+
+
+    <div class="board">
+
+      <div class="inputs-col active" id="step1">
+
+        <div class="section-title">👤 נתוני בסיס והכנסות</div>
+
+        <div class="input-group">
+
+
+
+          <div style="display:flex; gap:8px; width:100%;">
+
+            <button class="chip family-type active" data-type="יחיד">יחיד (נשוי חי בנפרד)</button>
+
+            <button class="chip family-type" data-type="זוג">זוג</button>
+
+            <button class="chip family-type" data-type="רווק">רווק / גרוש / אלמן</button>
+
+          </div>
+
+        </div>
+
+
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
 
           <div class="input-group">
 
-              <label><span class="info-trigger" data-tip="כולל קטינים עד גיל 18. ניתן לכלול בני 18-21 המשרתים בשירות חובה/לאומי או מסיימים לימודים.">?</span> ילדים (עד 18)</label>
+            <label><span class="info-trigger"
+                data-tip="כולל קטינים עד גיל 18. ניתן לכלול בני 18-21 המשרתים בשירות חובה/לאומי או מסיימים לימודים.">?</span>
+              ילדים (עד 18)</label>
 
-              <div style="display: flex; gap: 8px; align-items: center;">
+            <div style="display: flex; gap: 8px; align-items: center;">
 
-                <input id="childrenCount" type="number" value="0" min="0" oninput="calc()" style="width: 65px;">
+              <button class="chip" style="font-size:1.3rem; padding:0 15px; min-height:40px; color:var(--danger);"
+                onclick="changeKids(-1)">-</button>
+              <input id="childrenCount" type="number" value="0" min="0" oninput="calc()" style="width: 65px;">
+              <button class="chip" style="font-size:1.3rem; padding:0 15px; min-height:40px;"
+                onclick="changeKids(1)">+</button>
 
-                <button class="chip" style="font-size:1.3rem; padding:0 15px; min-height:40px;" onclick="changeKids(1)">+</button>
-
-              </div>
+            </div>
 
           </div>
 
           <div class="input-group"><label>מי בהליך?</label>
 
-              <div style="display:flex; gap:8px; width:100%;"><button class="chip gender-btn active" data-gender="חייב" onclick="setGender('חייב', this)">חייב</button><button class="chip gender-btn" data-gender="חייבת" onclick="setGender('חייבת', this)">חייבת</button></div>
+            <div style="display:flex; gap:8px; width:100%;"><button class="chip gender-btn active" data-gender="חייב"
+                onclick="setGender('חייב', this)">חייב</button><button class="chip gender-btn" data-gender="חייבת"
+                onclick="setGender('חייבת', this)">חייבת</button></div>
 
           </div>
 
-      </div>
+        </div>
 
 
 
-      <hr style="border:0; border-top:1.5px solid var(--border); margin: 20px 0;">
+        <hr style="border:0; border-top:1.5px solid var(--border); margin: 20px 0;">
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
 
-          <div class="input-group"><label><span class="info-trigger" data-tip="הכנסה נטו מעבודה או עסק לאחר ניכויי חובה: מס, פנסיה וביטוח לאומי.">?</span> הכנסה חייב/ת</label><input id="salD" type="text" class="amt-input live-curr" placeholder="0"></div>
+          <div class="input-group"><label><span class="info-trigger"
+                data-tip="הכנסה נטו מעבודה או עסק לאחר ניכויי חובה: מס, פנסיה וביטוח לאומי.">?</span> הכנסה
+              חייב/ת</label><input id="salD" type="text" class="amt-input live-curr" placeholder="0"></div>
 
-          <div class="input-group"><label>הכנסה בן זוג</label><input id="salP" type="text" class="amt-input live-curr" placeholder="0"></div>
+          <div class="input-group"><label>הכנסה בן זוג</label><input id="salP" type="text" class="amt-input live-curr"
+              placeholder="0"></div>
 
-      </div>
+        </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
 
-          <div class="input-group"><label>הכנסה נוספת (חייב)</label><input id="addD" type="text" class="amt-input live-curr" placeholder="0"></div>
+          <div class="input-group"><label>הכנסה נוספת (חייב)</label><input id="addD" type="text"
+              class="amt-input live-curr" placeholder="0"></div>
 
-          <div class="input-group"><label>הכנסה נוספת (בן זוג)</label><input id="addP" type="text" class="amt-input live-curr" placeholder="0"></div>
+          <div class="input-group"><label>הכנסה נוספת (בן זוג)</label><input id="addP" type="text"
+              class="amt-input live-curr" placeholder="0"></div>
 
-      </div>
-
-
-
-      <div id="incomeAdditions" style="margin-top:15px;"></div>
-
-      <div id="expenseAdditions"></div>
-
-
-
-      <div class="category-btn-group">
-
-        <button class="chip" onclick="toggleEntry('allowance')"><span class="info-trigger" data-tip="גמלאות מוגנות (נכות, זקנה, הבטחת הכנסה) אינן נכללות בנכסי הקופה.">?</span> קצבאות ➕</button>
-
-        <button class="chip" onclick="toggleEntry('special')"><span class="info-trigger" data-tip="הוצאות חיוניות המגובות באסמכתאות (בריאות, תעסוקה, צהרונים עד 1,000 שח לילד).">?</span> הוצאות ➕</button>
-
-        <button class="chip" onclick="toggleEntry('alimony')"><span class="info-trigger" data-tip="סכום ההקצבה לזכאי למזונות שנקבע לפי סעיף 179 לחוק.">?</span> מזונות ➕</button>
-
-      </div>
+        </div>
 
 
 
-      <div id="entryPanel">
+        <div id="incomeAdditions" style="margin-top:15px;"></div>
+
+        <div id="expenseAdditions"></div>
+
+
+
+        <div class="category-btn-group">
+
+          <button class="chip" onclick="toggleEntry('allowance')"><span class="info-trigger"
+              data-tip="גמלאות מוגנות (נכות, זקנה, הבטחת הכנסה) אינן נכללות בנכסי הקופה.">?</span> קצבאות ➕</button>
+
+          <button class="chip" onclick="toggleEntry('special')"><span class="info-trigger"
+              data-tip="הוצאות חיוניות המגובות באסמכתאות (בריאות, תעסוקה, צהרונים עד 1,000 שח לילד).">?</span> הוצאות
+            ➕</button>
+
+          <button class="chip" onclick="toggleEntry('alimony')"><span class="info-trigger"
+              data-tip="סכום ההקצבה לזכאי למזונות שנקבע לפי סעיף 179 לחוק.">?</span> מזונות ➕</button>
+
+        </div>
+
+
+
+        <div id="entryPanel">
 
           <span class="close-x" onclick="closeEntry()">✖</span>
 
           <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 10px; margin-bottom: 10px;">
 
-              <select id="entryType" style="background:var(--secondary); color:#fff;"></select>
+            <select id="entryType" style="background:var(--secondary); color:#fff;"></select>
 
-              <input id="entryAmt" type="text" class="live-curr" placeholder="₪">
+            <input id="entryAmt" type="text" class="live-curr" placeholder="₪">
 
           </div>
 
@@ -374,67 +826,97 @@ footer { margin-top: 25px; text-align: center; border-top: 1px solid var(--borde
 
           <div style="display:flex; justify-content:center;">
 
-              <span style="cursor:pointer; font-weight:700; color:var(--success); font-size:1.1rem;" onclick="commitEntry()">✅ עדכן</span>
+            <span style="cursor:pointer; font-weight:700; color:var(--success); font-size:1.1rem;"
+              onclick="commitEntry()">✅ עדכן</span>
 
           </div>
 
-      </div>
-
-    </div>
-
-
-
-    <div class="results-col" id="step2">
-
-      <div class="section-title">📊 תוצאות</div>
-
-      <div class="result-grid">
-
-        <div class="result-card"><div class="k">סה״כ הכנסות</div><div id="resIncome" class="v">0 ₪</div></div>
-
-        <div class="result-card"><div class="k">קצבת ילדים</div><div id="resKidsSS" class="v">0 ₪</div></div>
-
-        <div class="result-card"><div class="k">דמי מחייה</div><div id="resBase" class="v">0 ₪</div></div>
-
-        <div class="result-card"><div class="k">סה״כ הוצאות</div><div id="resExp" class="v">0 ₪</div></div>
-
-        <div class="result-card result-wide result-big"><div class="k">הכנסה פנויה</div><div id="resDisp" class="v" style="font-size:0.85rem;">על פי הנתונים אין הכנסה פנויה</div></div>
-
-        <div class="result-card result-wide">
-
-          <div class="k">יחס הכנסות חלוקת נטל</div>
-
-          <div class="ratio-bar-container"><div id="barD" class="bar-d"></div><div id="barP" class="bar-p"></div></div>
-
-          <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:700;"><span id="resRatioD" style="color:#ffffff!important">חייב: 0%</span><span id="resRatioP" style="color:#ffffff!important">בן זוג: 0%</span></div>
-
         </div>
 
-        <div class="result-card result-wide result-big" style="border: 2px solid var(--accent);">
+      </div>
 
-          <button class="btn-manual-top" onclick="toggleManual()">שנה סכום</button>
 
-          <div class="k">תשלום חודשי מוצע</div>
 
-          <div id="originalValLabel" style="font-size:1rem; color:var(--label); text-decoration:line-through; margin-bottom:5px; display:none;"></div>
+      <div class="results-col" id="step2">
 
-          <div id="resFinalPay" class="v" style="color: var(--danger) !important">0 ₪</div>
+        <div class="section-title">📊 תוצאות</div>
 
-          <div id="resManualNote" style="display:none; width:100%; font-size:0.85rem; color:#ffffff!important; font-style:italic; margin-top:8px; border-top:1px solid #444; padding-top:8px;"></div>
+        <div class="result-grid">
 
-          <div id="manualBox" style="display:none; margin-top: 10px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px;">
+          <div class="result-card">
+            <div class="k">סה״כ הכנסות</div>
+            <div id="resIncome" class="v">0 ₪</div>
+          </div>
 
-            <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+          <div class="result-card">
+            <div class="k">קצבת ילדים</div>
+            <div id="resKidsSS" class="v">0 ₪</div>
+          </div>
+
+          <div class="result-card">
+            <div class="k">דמי מחייה</div>
+            <div id="resBase" class="v">0 ₪</div>
+          </div>
+
+          <div class="result-card">
+            <div class="k">סה״כ הוצאות</div>
+            <div id="resExp" class="v">0 ₪</div>
+          </div>
+
+          <div class="result-card result-wide result-big">
+            <div class="k">הכנסה פנויה</div>
+            <div id="resDisp" class="v" style="font-size:0.85rem;">על פי הנתונים אין הכנסה פנויה</div>
+          </div>
+
+          <div class="result-card result-wide">
+
+            <div class="k">יחס הכנסות חלוקת נטל</div>
+
+            <div class="ratio-bar-container">
+              <div id="barD" class="bar-d"></div>
+              <div id="barP" class="bar-p"></div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:700;"><span
+                id="resRatioD" style="color:#ffffff!important">חייב: 0%</span><span id="resRatioP"
+                style="color:#ffffff!important">בן זוג: 0%</span></div>
+
+          </div>
+
+          <div class="result-card result-wide result-big" style="border: 2px solid var(--accent);">
+
+            <button class="btn-manual-top" onclick="toggleManual()">שנה סכום</button>
+
+            <div class="k">תשלום חודשי מוצע</div>
+
+            <div id="originalValLabel"
+              style="font-size:1rem; color:var(--label); text-decoration:line-through; margin-bottom:5px; display:none;">
+            </div>
+
+            <div id="resFinalPay" class="v" style="color: var(--danger) !important">0 ₪</div>
+
+            <div id="resManualNote"
+              style="display:none; width:100%; font-size:0.85rem; color:#ffffff!important; font-style:italic; margin-top:8px; border-top:1px solid #444; padding-top:8px;">
+            </div>
+
+            <div id="manualBox"
+              style="display:none; margin-top: 10px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px;">
+
+              <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
 
                 <input id="manualAmt" type="text" class="amt-input live-curr" placeholder="חדש">
 
                 <button class="chip active" style="min-height:40px; flex:none" onclick="commitManual()">✅ עדכן</button>
 
-                <button class="chip" style="min-height:40px; flex:none; color:var(--danger)" onclick="resetManual()">↺</button>
+                <button class="chip" style="min-height:40px; flex:none; color:var(--danger)"
+                  onclick="resetManual()">↺</button>
+
+              </div>
+
+              <textarea id="manualNote" placeholder="הסבר לשינוי..."
+                style="font-size:0.9rem; height:65px; width:100%; padding:10px; background:var(--secondary); color:#fff;"></textarea>
 
             </div>
-
-            <textarea id="manualNote" placeholder="הסבר לשינוי..." style="font-size:0.9rem; height:65px; width:100%; padding:10px; background:var(--secondary); color:#fff;"></textarea>
 
           </div>
 
@@ -444,251 +926,237 @@ footer { margin-top: 25px; text-align: center; border-top: 1px solid var(--borde
 
     </div>
 
+    <div id="insightBox" class="insight-box"></div>
+
+    <footer>YE - פתרונות חכמים לניהול הליכי חדלות פירעון &copy; 2026</footer>
+
   </div>
 
-  <div id="insightBox" class="insight-box"></div>
 
-  <footer>YE - פתרונות חכמים לניהול הליכי חדלות פירעון &copy; 2026</footer>
 
-</div>
+  <script>
 
+    const E = id => document.getElementById(id);
 
+    const parseVal = s => parseInt(String(s || '').replace(/[^\d]/g, '')) || 0;
 
-<script>
+    const formatVal = n => new Intl.NumberFormat('he-IL').format(n) + (n > 0 ? ' ₪' : '');
 
-const E = id => document.getElementById(id);
+    const STORAGE_KEY = 'ye_payment_calc_2026_final_sync';
 
-const parseVal = s => parseInt(String(s || '').replace(/[^\d]/g, '')) || 0;
 
-const formatVal = n => new Intl.NumberFormat('he-IL').format(n) + (n > 0 ? ' ₪' : '');
 
-const STORAGE_KEY = 'ye_payment_calc_2026_final_sync';
+    let isRestoring = false;
 
+    let state = { incomes: [], expenses: [], currentMode: '', gender: 'חייב', family: 'יחיד', isManual: false };
 
+    const config = { base: { "יחיד": 4711, "רווק": 4711, "זוג": 6229 }, kidsSS: { 0: 0, 1: 173, 2: 392, 3: 611, 4: 830, 5: 1003 } };
 
-let isRestoring = false;
 
-let state = { incomes: [], expenses: [], currentMode: '', gender: 'חייב', family: 'יחיד', isManual: false };
 
-const config = { base: { "יחיד": 4711, "רווק": 4711, "זוג": 6229 }, kidsSS: { 0:0, 1:173, 2:392, 3:611, 4:830, 5:1003 } };
+    function setCurrencyValue(el, val) {
 
+      if (!el) return;
 
+      const n = parseVal(val);
 
-function setCurrencyValue(el, val) {
+      el.value = n > 0 ? formatVal(n) : '';
 
-  if (!el) return;
+    }
 
-  const n = parseVal(val);
 
-  el.value = n > 0 ? formatVal(n) : '';
 
-}
+    function applyLiveFormatting(el) {
 
+      el.addEventListener('input', e => {
 
+        if (isRestoring) return;
 
-function applyLiveFormatting(el) {
+        let raw = parseVal(e.target.value);
 
-  el.addEventListener('input', e => {
+        e.target.value = raw > 0 ? formatVal(raw) : '';
 
-    if (isRestoring) return;
+        calc();
 
-    let raw = parseVal(e.target.value);
+      });
 
-    e.target.value = raw > 0 ? formatVal(raw) : '';
+    }
 
-    calc();
+    document.querySelectorAll('.live-curr').forEach(applyLiveFormatting);
 
-  });
 
-}
 
-document.querySelectorAll('.live-curr').forEach(applyLiveFormatting);
+    window.onload = () => { E('dateTag').textContent = new Date().toLocaleDateString('he-IL'); };
 
 
 
-window.onload = () => { E('dateTag').textContent = new Date().toLocaleDateString('he-IL'); };
+    function changeKids(n) { E('childrenCount').value = Math.max(0, parseInt(E('childrenCount').value) + n); calc(); }
 
+    function setGender(g, btn) {
 
+      state.gender = g;
 
-function changeKids(n) { E('childrenCount').value = Math.max(0, parseInt(E('childrenCount').value) + n); calc(); }
+      document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
 
-function setGender(g, btn) { 
+      btn.classList.add('active');
 
-    state.gender = g; 
+      calc();
 
-    document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active')); 
+    }
 
-    btn.classList.add('active'); 
+    document.querySelectorAll('.family-type').forEach(btn => {
 
-    calc(); 
+      btn.onclick = () => {
 
-}
+        document.querySelectorAll('.family-type').forEach(b => b.classList.remove('active'));
 
-document.querySelectorAll('.family-type').forEach(btn => {
+        btn.classList.add('active'); state.family = btn.dataset.type; calc();
 
-  btn.onclick = () => { 
+      };
 
-    document.querySelectorAll('.family-type').forEach(b => b.classList.remove('active')); 
+    });
 
-    btn.classList.add('active'); state.family = btn.dataset.type; calc(); 
 
-  };
 
-});
+    function toggleEntry(mode) { if (state.currentMode === mode && E('entryPanel').style.display === 'block') { closeEntry(); } else { openEntry(mode); } }
 
+    function openEntry(mode) {
 
+      state.currentMode = mode; E('entryPanel').style.display = 'block'; const s = E('entryType'); s.innerHTML = '';
 
-function toggleEntry(mode) { if (state.currentMode === mode && E('entryPanel').style.display === 'block') { closeEntry(); } else { openEntry(mode); } }
+      if (mode === 'allowance') ['נכות', 'זקנה', 'הבטחת הכנסה', 'אחר'].forEach(o => s.add(new Option(o, o)));
 
-function openEntry(mode) { 
+      else if (mode === 'special') ['חריגות', 'צהרון', 'טיפול בילד', 'תשלום חודשי בן זוג (בהליך)', 'אחר'].forEach(o => s.add(new Option(o, o)));
 
-    state.currentMode = mode; E('entryPanel').style.display = 'block'; const s = E('entryType'); s.innerHTML = ''; 
+      else s.add(new Option('מזונות', 'מזונות'));
 
-    if(mode === 'allowance') ['נכות', 'זקנה', 'הבטחת הכנסה', 'אחר'].forEach(o => s.add(new Option(o, o))); 
+    }
 
-    else if(mode === 'special') ['חריגות', 'צהרון', 'טיפול בילד', 'תשלום חודשי בן זוג (בהליך)', 'אחר'].forEach(o => s.add(new Option(o, o))); 
 
-    else s.add(new Option('מזונות', 'מזונות')); 
 
-}
+    function commitEntry() {
 
+      const amt = parseVal(E('entryAmt').value); let type = E('entryType').value; let note = E('entryNote').value;
 
+      if (type.includes('בן זוג')) note = "תיק ראשון בזמן";
 
-function commitEntry() { 
+      if (amt > 0) { state[state.currentMode === 'allowance' ? 'incomes' : 'expenses'].push({ type, amt, note }); renderLists(); closeEntry(); calc(); }
 
-    const amt = parseVal(E('entryAmt').value); let type = E('entryType').value; let note = E('entryNote').value; 
+    }
 
-    if(type.includes('בן זוג')) note = "תיק ראשון בזמן"; 
+    function closeEntry() { E('entryPanel').style.display = 'none'; state.currentMode = ''; E('entryAmt').value = ''; E('entryNote').value = ''; }
 
-    if(amt > 0) { state[state.currentMode === 'allowance' ? 'incomes' : 'expenses'].push({ type, amt, note }); renderLists(); closeEntry(); calc(); } 
 
-}
 
-function closeEntry() { E('entryPanel').style.display = 'none'; state.currentMode = ''; E('entryAmt').value = ''; E('entryNote').value = ''; }
+    function renderLists() {
 
-
-
-function renderLists() {
-
-    const row = (item, i, list) => {
+      const row = (item, i, list) => {
 
         let dispType = item.type;
 
-        if(item.type.includes('בן זוג')) dispType = "תשלום חודשי<br>בן זוג בהליך";
+        if (item.type.includes('בן זוג')) dispType = "תשלום חודשי<br>בן זוג בהליך";
 
         return '<div style="display:grid; grid-template-columns: 1fr 0.8fr 1.4fr 25px; background:var(--secondary); padding:8px 12px; border-radius:10px; margin-bottom:5px; font-size:0.9rem; align-items:center; border-right:4px solid var(--accent); color:#fff !important;">' +
 
-            '<span>' + dispType + '</span><span style="font-weight:700">' + formatVal(item.amt) + '</span><span>' + item.note + '</span>' +
+          '<span>' + dispType + '</span><span style="font-weight:700">' + formatVal(item.amt) + '</span><span>' + item.note + '</span>' +
 
-            '<span style="color:var(--danger); cursor:pointer;" onclick="removeItem(\''+list+'\', '+i+')">✖</span></div>';
+          '<span style="color:var(--danger); cursor:pointer;" onclick="removeItem(\'' + list + '\', ' + i + ')">✖</span></div>';
 
-    };
+      };
 
-    E('incomeAdditions').innerHTML = state.incomes.map((item, i) => row(item, i, 'incomes')).join('');
+      E('incomeAdditions').innerHTML = state.incomes.map((item, i) => row(item, i, 'incomes')).join('');
 
-    E('expenseAdditions').innerHTML = state.expenses.map((item, i) => row(item, i, 'expenses')).join('');
+      E('expenseAdditions').innerHTML = state.expenses.map((item, i) => row(item, i, 'expenses')).join('');
 
-}
-
-
-
-function removeItem(list, i) { state[list].splice(i, 1); renderLists(); calc(); }
-
-function toggleManual() { E('manualBox').style.display = 'block'; }
-
-function commitManual() { state.isManual = true; E('manualBox').style.display = 'none'; E('originalValLabel').style.display = 'block'; calc(); }
-
-function resetManual() { state.isManual = false; E('manualAmt').value = ''; E('manualNote').value = ''; E('manualBox').style.display = 'none'; E('originalValLabel').style.display = 'none'; calc(); }
+    }
 
 
 
-function saveState() {
+    function removeItem(list, i) { state[list].splice(i, 1); renderLists(); calc(); }
 
-  if (isRestoring) return;
+    function toggleManual() { E('manualBox').style.display = 'block'; }
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({ 
+    function commitManual() { state.isManual = true; E('manualBox').style.display = 'none'; E('originalValLabel').style.display = 'block'; calc(); }
 
-    kids: E('childrenCount').value, salD: E('salD').value, salP: E('salP').value, addD: E('addD').value, addP: E('addP').value, 
-
-    family: state.family, gender: state.gender, incomes: state.incomes, expenses: state.expenses, isManual: state.isManual, manualAmt: E('manualAmt').value, manualNote: E('manualNote').value 
-
-  }));
-
-}
+    function resetManual() { state.isManual = false; E('manualAmt').value = ''; E('manualNote').value = ''; E('manualBox').style.display = 'none'; E('originalValLabel').style.display = 'none'; calc(); }
 
 
 
-function calc() {
+    function saveState() {
 
-    const kCount = parseInt(E('childrenCount').value || 0);
+      if (isRestoring) return;
 
-    const baseP = (config.base[state.family] || 4711) + (kCount <= 4 ? kCount * 1500 : (4 * 1500) + ((kCount - 4) * 1300));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
 
-    const kSS = kCount <= 5 ? config.kidsSS[kCount] : 1003 + (kCount-5)*173;
+        kids: E('childrenCount').value, salD: E('salD').value, salP: E('salP').value, addD: E('addD').value, addP: E('addP').value,
 
-    
+        family: state.family, gender: state.gender, incomes: state.incomes, expenses: state.expenses, isManual: state.isManual, manualAmt: E('manualAmt').value, manualNote: E('manualNote').value
 
-    const dSal = parseVal(E('salD').value) + parseVal(E('addD').value), pSal = parseVal(E('salP').value) + parseVal(E('addP').value);
+      }));
 
-    const allowT = state.incomes.reduce((s, a) => s + a.amt, 0), spouseP = state.expenses.filter(e => e.type.includes('בן זוג')).reduce((s, a) => s + a.amt, 0);
-
-    const alimonyE = state.expenses.filter(e => e.type === 'מזונות').reduce((s, a) => s + a.amt, 0);
-
-    const alimonyI = state.incomes.filter(i => i.type === 'מזונות').reduce((s, a) => s + a.amt, 0);
-
-    const otherE = state.expenses.filter(e => !e.type.includes('מזונות') && !e.type.includes('בן זוג')).reduce((s, a) => s + a.amt, 0);
-
-    const totalI = dSal + pSal + allowT + kSS, totalE = baseP + otherE + alimonyE + spouseP, disp = totalI - totalE;
+    }
 
 
 
-    E('resIncome').textContent = formatVal(totalI); E('resKidsSS').textContent = formatVal(kSS); E('resBase').textContent = formatVal(baseP); E('resExp').textContent = formatVal(totalE);
+    function calc() {
 
-    const pD = Math.round((dSal / (dSal + pSal || 1)) * 100);
+      const kCount = parseInt(E('childrenCount').value || 0);
 
-    E('barD').style.width = pD + "%"; E('barD').textContent = pD > 10 ? pD + "%" : ""; E('barP').style.width = (100-pD) + "%"; E('barP').textContent = (100-pD) > 10 ? (100-pD) + "%" : "";
+      const baseP = (config.base[state.family] || 4711) + (kCount <= 4 ? kCount * 1500 : (4 * 1500) + ((kCount - 4) * 1300));
 
-    E('resRatioD').textContent = "חייב: " + pD + "%"; E('resRatioP').textContent = "בן זוג: " + (100-pD) + "%";
+      const kSS = kCount <= 5 ? config.kidsSS[kCount] : 1003 + (kCount - 5) * 173;
 
+      const dSal = parseVal(E('salD').value) + parseVal(E('addD').value), pSal = parseVal(E('salP').value) + parseVal(E('addP').value);
 
+      const allowT = state.incomes.reduce((s, a) => s + a.amt, 0), spouseP = state.expenses.filter(e => e.type.includes('בן זוג')).reduce((s, a) => s + a.amt, 0);
 
-    const ins = E('insightBox'); ins.style.display = "block";
+      const alimonyE = state.expenses.filter(e => e.type === 'מזונות').reduce((s, a) => s + a.amt, 0);
 
-    const now = new Date(); const minWage = (now.getMonth() >= 3 || now.getFullYear() > 2026) ? 6443.85 : 6248;
+      const alimonyI = state.incomes.filter(i => i.type === 'מזונות').reduce((s, a) => s + a.amt, 0);
 
-    let fText = state.family === "זוג" ? "זוג" : "יחיד"; if (kCount > 0) fText += " עם " + kCount + " ילדים";
+      const otherE = state.expenses.filter(e => !e.type.includes('מזונות') && !e.type.includes('בן זוג')).reduce((s, a) => s + a.amt, 0);
 
-    
+      const totalI = dSal + pSal + allowT + kSS, totalE = baseP + otherE + alimonyE + spouseP, disp = totalI - totalE;
 
-    let insights = ["<b>תובנות-</b> עבור " + fText + ", דמי המחיה הבסיסיים המוגנים הם " + formatVal(baseP) + ". "];
+      E('resIncome').textContent = formatVal(totalI); E('resKidsSS').textContent = formatVal(kSS); E('resBase').textContent = formatVal(baseP); E('resExp').textContent = formatVal(totalE);
 
-    
+      const pD = Math.round((dSal / (dSal + pSal || 1)) * 100);
 
-    const tzTotal = state.expenses.filter(e => e.type === 'צהרון').reduce((s, a) => s + a.amt, 0);
+      E('barD').style.width = pD + "%"; E('barD').textContent = pD > 10 ? pD + "%" : ""; E('barP').style.width = (100 - pD) + "%"; E('barP').textContent = (100 - pD) > 10 ? (100 - pD) + "%" : "";
 
-    if(kCount > 0 && tzTotal > (kCount * 1000)) insights.push("⚠️ הוצאות צהרון חורגות מהתקרה המוכרת של 1,000 ₪ לילד. ");
+      E('resRatioD').textContent = "חייב: " + pD + "%"; E('resRatioP').textContent = "בן זוג: " + (100 - pD) + "%";
 
-    if (alimonyE > 0 || alimonyI > 0) insights.push("בוצע שקלול דמי מזונות בהתאם לסעיף 179 לחוק. ");
+      const ins = E('insightBox'); ins.style.display = "block";
 
+      const now = new Date(); const minWage = (now.getMonth() >= 3 || now.getFullYear() > 2026) ? 6443.85 : 6248;
 
+      let fText = state.family === "זוג" ? "זוג" : "יחיד"; if (kCount > 0) fText += " עם " + kCount + " ילדים";
 
-    const prot = state.incomes.filter(i => ['נכות', 'זקנה', 'הבטחת הכנסה'].includes(i.type));
+      let insights = [];
 
-    if (prot.length > 0) insights.push("התא מתקיים מגמלאות מוגנות (" + prot.map(p=>p.type).join(', ') + ") שאינן חלק מנכסי הקופה. ");
+      insights.push({ icon: "ℹ️", text: "<b>תובנות-</b> עבור " + fText + ", דמי המחיה הבסיסיים המוגנים הם " + formatVal(baseP) + "." });
 
-    if (spouseP > 0) insights.push("הופחת תשלום בן זוג המנוהל כתיק ראשון בזמן. ");
+      const tzTotal = state.expenses.filter(e => e.type === 'צהרון').reduce((s, a) => s + a.amt, 0);
 
+      if (kCount > 0 && tzTotal > (kCount * 1000)) insights.push({ icon: "⚠️", text: "הוצאות צהרון חורגות מהתקרה המוכרת של 1,000 ₪ לילד." });
 
+      if (alimonyE > 0 || alimonyI > 0) insights.push({ icon: "⚖️", text: "בוצע שקלול דמי מזונות בהתאם לסעיף 179 לחוק." });
 
-    if (disp <= 0) {
+      const prot = state.incomes.filter(i => ['נכות', 'זקנה', 'הבטחת הכנסה'].includes(i.type));
+
+      if (prot.length > 0) insights.push({ icon: "🏠", text: "התא מתקיים מגמלאות מוגנות (" + prot.map(p => p.type).join(', ') + ") שאינן חלק מנכסי הקופה." });
+
+      if (spouseP > 0) insights.push({ icon: "📉", text: "הופחת תשלום בן זוג המנוהל כתיק ראשון בזמן." });
+
+      if (disp <= 0) {
 
         if (!isRestoring) { E('resDisp').textContent = "על פי הנתונים אין הכנסה פנויה"; E('resDisp').style.fontSize = "0.85rem"; }
 
         E('resFinalPay').textContent = (dSal === 0 && allowT > 0) ? "תיק אפס" : "0 ₪";
 
-        if (dSal === 0 && allowT === 0) insights.push("בהיעדר הכנסה וקצבאות, יוטל תשלום של 150 ₪ למשך 3 חודשים. ");
+        if (dSal === 0 && allowT === 0) insights.push({ icon: "🛑", text: "בהיעדר הכנסה וקצבאות, יוטל תשלום של 150 ₪ למשך 3 חודשים." });
 
-    } else {
+      } else {
 
         E('resDisp').textContent = formatVal(disp); E('resDisp').style.fontSize = "1.5rem";
 
@@ -698,77 +1166,86 @@ function calc() {
 
         if (state.isManual) {
 
-            E('resFinalPay').textContent = formatVal(parseVal(E('manualAmt').value));
+          E('resFinalPay').textContent = formatVal(parseVal(E('manualAmt').value));
 
-            if (!isRestoring) {
+          if (!isRestoring) {
 
-                insights.push("<b>שינוי ידני:</b> הופעל שיקול דעת מקצועי. נימוק: \"" + E('manualNote').value + "\".");
+            insights.push({ icon: "✍️", text: "<b>שינוי ידני:</b> הופעל שיקול דעת מקצועי. נימוק: \"" + E('manualNote').value + "\"." });
 
-                E('resManualNote').textContent = "הסבר - " + E('manualNote').value; E('resManualNote').style.display = "block";
+            E('resManualNote').textContent = "הסבר - " + E('manualNote').value; E('resManualNote').style.display = "block";
 
-            }
+          }
 
         } else {
 
-            E('resFinalPay').textContent = calcPay === 0 ? "תיק אפס" : formatVal(calcPay);
+          E('resFinalPay').textContent = calcPay === 0 ? "תיק אפס" : formatVal(calcPay);
 
-            if (!isRestoring) E('resManualNote').style.display = "none";
+          if (!isRestoring) E('resManualNote').style.display = "none";
 
         }
 
-        insights.push("הממונה מותיר 50% מהפנויה כ<b>תמריץ למיצוי כושר השתכרות</b>. שכר המינימום הוא " + formatVal(minWage) + ".");
+        insights.push({ icon: "💡", text: "הממונה מותיר 50% מהפנויה כ<b>תמריץ למיצוי כושר השתכרות</b>. שכר המינימום הוא " + formatVal(minWage) + "." });
+
+      }
+
+      ins.innerHTML = insights.map(i => `<div class="insight-item"><span class="insight-icon">${i.icon}</span><span class="insight-text">${i.text}</span></div>`).join('');
+
+      saveState();
 
     }
 
-    ins.innerHTML = insights.join("<br>");
-
-    saveState();
-
-}
 
 
+    function restoreFromStorage() {
+      let raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) raw = localStorage.getItem(STORAGE_KEY + '_backup');
 
-function restoreFromStorage() {
+      if (!raw) { alert("לא נמצאו נתונים לשחזור."); return; }
 
-    const raw = localStorage.getItem(STORAGE_KEY);
+      isRestoring = true;
 
-    if(!raw) { alert("לא נמצאו נתונים לשחזור."); return; }
+      const d = JSON.parse(raw);
 
-    isRestoring = true;
+      E('childrenCount').value = d.kids || 0;
 
-    const d = JSON.parse(raw);
+      setCurrencyValue(E('salD'), d.salD); setCurrencyValue(E('salP'), d.salP);
 
-    E('childrenCount').value = d.kids || 0;
+      setCurrencyValue(E('addD'), d.addD); setCurrencyValue(E('addP'), d.addP);
 
-    setCurrencyValue(E('salD'), d.salD); setCurrencyValue(E('salP'), d.salP);
+      setCurrencyValue(E('manualAmt'), d.manualAmt); E('manualNote').value = d.manualNote || '';
 
-    setCurrencyValue(E('addD'), d.addD); setCurrencyValue(E('addP'), d.addP);
+      state.family = d.family || 'יחיד'; state.gender = d.gender || 'חייב';
 
-    setCurrencyValue(E('manualAmt'), d.manualAmt); E('manualNote').value = d.manualNote || '';
+      state.incomes = d.incomes || []; state.expenses = d.expenses || []; state.isManual = !!d.isManual;
 
-    state.family = d.family || 'יחיד'; state.gender = d.gender || 'חייב';
+      document.querySelectorAll('.family-type').forEach(b => b.classList.toggle('active', b.dataset.type === state.family));
 
-    state.incomes = d.incomes || []; state.expenses = d.expenses || []; state.isManual = !!d.isManual;
+      document.querySelectorAll('.gender-btn').forEach(b => {
+        const isMatch = b.getAttribute('data-gender') === state.gender;
+        b.classList.toggle('active', isMatch);
+      });
 
-    document.querySelectorAll('.family-type').forEach(b => b.classList.toggle('active', b.dataset.type === state.family));
+      renderLists();
 
-    document.querySelectorAll('.gender-btn').forEach(b => b.classList.toggle('active', b.textContent.includes(state.gender)));
+      isRestoring = false;
 
-    renderLists();
+      calc();
 
-    isRestoring = false; 
+    }
 
-    calc(); 
+    function resetData() {
+      if (confirm("לאפס הכל?")) {
+        const current = localStorage.getItem(STORAGE_KEY);
+        if (current) localStorage.setItem(STORAGE_KEY + '_backup', current);
 
-}
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+      }
+    }
 
+    E('btnShot').onclick = () => { html2canvas(E('calcRoot'), { scale: 2, backgroundColor: '#1e293b' }).then(c => { const l = document.createElement('a'); l.download = 'ye-calc.png'; l.href = c.toDataURL(); l.click(); }); };
 
-
-function resetData() { if(confirm("לאפס הכל?")) { localStorage.removeItem(STORAGE_KEY); location.reload(); } }
-
-E('btnShot').onclick = () => { html2canvas(E('calcRoot'), { scale: 2, backgroundColor: '#1e293b' }).then(c => { const l = document.createElement('a'); l.download = 'ye-calc.png'; l.href = c.toDataURL(); l.click(); }); };
-
-</script>
+  </script>
 
 
 
