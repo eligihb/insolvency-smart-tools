@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>מחשבון צו תשלומים</title>
+<title>מחשבון צו תשלומים - YE Professional Final Edition 2026</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,604 +11,383 @@
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <style>
+:root {
+  --primary: #1e293b; 
+  --secondary: #0f172a;
+  --inner-bg: #1e293b;
+  --panel: #334155; 
+  --text: #f8fafc;
+  --label: #cbd5e1;
+  --border: #475569;
+  --accent: #38bdf8;
+  --danger: #fb7185;
+  --success: #34d399;
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: 'Heebo', sans-serif;
+  background: #ffffff; 
+  margin: 0; padding: 0;
+  display: flex; justify-content: center; align-items: flex-start;
+  min-height: 100vh;
+}
+
 .scale-container {
-  transform: scale(0.82);
-  transform-origin: top center;
-  width: 122%;
+  transform: scale(0.8);
+  transform-origin: top center;
+  width: 860px;
+  min-width: 860px;
+  max-width: 860px;
+  background: var(--inner-bg);
+  padding: 10px 20px;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  margin: 10px auto;
 }
 
-:root{
-  --primary:#005f73; --secondary:#0a9396; --bg:#f4f7f9; --panel:#fff;
-  --text:#1f2937; --label:#4b5563; --border:#dbe3ea; --accent:#ee9b00;
-  --danger:#ae2012; --blue:#0a58ff; --muted:#6b7280;
-  --maxw:860px;
+.calculator { width: 100%; position: relative; }
+
+.top-controls {
+  position: absolute; top: 5px; left: 0; z-index: 10;
+  display: flex; gap: 4px; flex-wrap: nowrap;
 }
 
-*{box-sizing:border-box}
-body{
-  font-family:'Heebo',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  margin:0;
-  padding:12px;
-  display:flex;
-  justify-content:center;
-  min-height:100vh
+.btn-ctrl {
+  background: var(--panel); border: 1px solid var(--border); color: #fff;
+  padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
+  white-space: nowrap;
 }
 
-.calculator{width:100%;max-width:var(--maxw)}
-header{
-  background:var(--primary);color:#fff;border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.08);
-  padding:10px 14px;display:flex;align-items:center;justify-content:center;position:relative
+header {
+  background: rgba(255,255,255,0.05); border-radius: 10px; padding: 8px;
+  display: flex; justify-content: flex-start; margin-bottom: 10px; border: 1px solid var(--border);
 }
-header h1{margin:0;font-size:1.28rem;line-height:1}
-.year-badge{position:absolute;inset-inline-start:10px;inset-block-start:8px;font-size:.72rem;color:#e6f4f1;background:rgba(255,255,255,.12);padding:3px 8px;border:1px solid rgba(255,255,255,.25);border-radius:10px}
+header h1 { margin: 0; font-size: 1.2rem; font-weight: 700; color: #fff; width: 100%; text-align: right; padding-right: 10px; }
 
-.board{
-  margin-top:10px;background:#fbfeff;border:1px solid #e6eef5;border-radius:14px;
-  box-shadow:0 6px 20px rgba(0,0,0,.06);
-  padding:10px;
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+.board { 
+    display: grid; 
+    grid-template-columns: 410px 410px; 
+    gap: 15px; 
+    width: 835px;
 }
 
-/* תוצאות משמאל (עמודה 2), הזנה מימין (עמודה 1) */
-.results-col{background:#eaf6f6;border:1px solid var(--border);border-radius:12px;padding:10px;grid-column:2}
-.inputs-col{background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px;grid-column:1}
+.inputs-col, .results-col { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 12px; }
 
-.section-title{margin:2px 0 8px;color:var(--primary);font-size:.98rem;font-weight:700;text-align:center}
-.controls-top{display:flex;gap:8px;justify-content:center;margin:6px 0 10px;flex-wrap:nowrap}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid #cfd8e3;border-radius:10px;background:#fff;cursor:pointer;font-weight:500;font-size:.9rem}
-.btn:hover{background:#f6f8fb}
-.btn.reset{border-color:#a0aec0}
-
-.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.result-card{background:#fff;border:1px solid #dbe9ea;border-radius:10px;padding:8px;text-align:center}
-.result-card .k{color:var(--muted);font-weight:500;font-size:.9rem}
-.result-card .v{margin-top:4px;font-weight:700;color:var(--accent);font-size:1rem}
-
-/* עיצוב מד האחוזים */
-.ratio-visual {
-  grid-column: 1/-1;
-  background: #e2e8f0;
-  height: 12px;
-  border-radius: 6px;
-  margin: 4px 0 8px;
-  overflow: hidden;
-  display: flex;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-}
-.ratio-bar-d { background: var(--secondary); transition: width 0.4s ease; width: 50%; border-inline-end: 1px solid #fff; }
-.ratio-bar-p { background: var(--accent); transition: width 0.4s ease; width: 50%; }
-
-.result-wide{grid-column:1/-1}
-.result-big .v{font-size:1.08rem;color:var(--blue)}
-.result-danger .v{color:var(--danger)}
-.zero-case{color:#c2410c;font-weight:800;font-size:.98rem}
-
-.center-card{max-width:340px;margin-inline:auto}
-.solo-pay{grid-column:1/-1;max-width:340px;justify-self:center}
-
-.row{display:grid;gap:8px}
-.row-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.row-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.input-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.input-group{display:flex;flex-direction:column;align-items:stretch}
-.input-group label{
-  font-weight:600;color:var(--label);display:flex;gap:6px;align-items:center;justify-content:center;
-  margin-bottom:3px;font-size:.9rem;text-align:center;min-height:40px;line-height:1.2
-}
-.input-group input,.input-group select,.input-group textarea{
-  border:1px solid var(--border);padding:6px 8px;border-radius:10px;font-size:.95rem;background:#fbfeff
-}
-.input-group input:focus,.input-group select:focus,.input-group textarea:focus{outline:none;border-color:var(--secondary);box-shadow:0 0 0 3px rgba(10,147,150,.18)}
-.input-group textarea{min-height:70px;resize:vertical}
-.readonly{background:#f2f6ff;border-color:#cfe0ff;color:#1f3a8a;font-weight:600}
-
-.status-row{max-width:60%;margin-inline:auto}
-
-.toggles-line{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:nowrap}
-.chip{
-  padding:5px 10px;border:1px solid #cfd8e3;border-radius:999px !important;
-  background:#fff;cursor:pointer;font-size:.88rem;line-height:1;color:#0b2239;
-}
-.chip.active{background:#0d9488;color:#fff;border-color:#0d9488}
-.chip.alert{background:#fff;border-color:#cfd8e3;color:#b42318}
-.chip.alert.active{background:#b42318;color:#fff;border-color:#b42318}
-
-.info-btn{width:18px;height:18px;border-radius:50%;background:#eef6f6;color:#0d6b6b;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;border:1px solid #d4e7e7;cursor:pointer}
-.pop{position:absolute;z-index:1000;max-width:320px;background:#fff7d6;color:#3b2f00;border:1px solid #ffe6a8;border-radius:12px;box-shadow:0 12px 28px rgba(0,0,0,.15);padding:10px 12px;line-height:1.45}
-
-.report-trigger{display:flex;justify-content:center;margin:8px 0 4px}
-.report-btn{background:#fff;border:1px dashed #c8d2de;padding:8px 12px;border-radius:12px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:.95rem;font-weight:600}
-.report-btn:hover{background:#f6fbff}
-#reportPanel{display:none}
-.note-toggle{margin-inline-start:auto;display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:#0d6b6b}
-
-.sticky-mobile{display:none}
-
-@media (max-width:768px){
-  .calculator{max-width:100%}
-  header h1{font-size:1.12rem}
-  .year-badge{display:none}
-
-  .board{grid-template-columns:1fr;gap:10px}
-  .inputs-col{order:1}
-  .results-col{order:2;padding-bottom:84px}
-
-  .status-row{
-    max-width:100%;
-    margin:0 auto 6px auto;
-    justify-items:center;
-  }
-  .status-row .input-group{width:min(420px,100%)}
-  .status-row .toggles-line{justify-content:center;flex-wrap:wrap}
-
-  .row-2,.input-pair{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .row-3{grid-template-columns:repeat(2,minmax(0,1fr))}
-
-  .sticky-mobile{
-    position:fixed;left:50%;transform:translateX(-50%);
-    width:min(100%, var(--maxw));
-    bottom:0;background:#ffffffcc;backdrop-filter:saturate(1.2) blur(6px);
-    border-top:1px solid #dfe7ee;padding:6px 8px;display:flex;gap:6px;justify-content:space-between;z-index:10
-  }
-  .btn{flex:1;justify-content:center;padding:9px 6px}
-  .controls-top{display:none!important}
+.section-title {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  margin-bottom: 8px; color: #fff; font-size: 0.9rem; font-weight: 700;
+  border-bottom: 1px solid var(--border); padding-bottom: 4px;
 }
 
-.shot-scale{transform:scale(.96);transform-origin:top center}
+.input-group { display: flex; flex-direction: column; margin-bottom: 6px; align-items: center; width: 100%; }
+.input-group label { font-size: 0.75rem; font-weight: 600; color: var(--label); margin-bottom: 3px; text-align: center; width: 100%; }
+
+input, select, textarea {
+  padding: 6px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--secondary); color: #ffffff !important; 
+  font-size: 0.95rem; font-weight: 600; text-align: center; width: 100%;
+}
+select option { color: #ffffff; background: var(--secondary); }
+
+.amt-input { color: var(--accent) !important; font-size: 1.1rem; width: 130px !important; }
+
+.chip {
+  padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--secondary); cursor: pointer; color: #fff; font-weight: 600; font-size: 0.8rem;
+  white-space: normal; word-wrap: break-word; line-height: 1.2;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+}
+.chip.active { background: var(--accent); color: var(--secondary); border-color: var(--accent); }
+
+.category-btn-group { display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: center; gap: 5px; margin: 10px 0; width: 100%; }
+.category-btn-group .chip { flex: 1; min-height: 40px; }
+
+.entry-panel {
+    background: rgba(0,0,0,0.2); padding: 10px; border-radius: 12px; margin: 8px 0;
+    border: 1px dashed var(--accent);
+}
+.entry-row-1 { display: grid; grid-template-columns: 1.5fr 1fr; gap: 6px; margin-bottom: 6px; }
+.entry-row-2 { width: 100%; margin-bottom: 8px; }
+
+.embedded-list { margin-bottom: 8px; width: 100%; }
+.list-row {
+    display: grid; grid-template-columns: 1fr 0.8fr 1.4fr 25px;
+    background: var(--secondary); padding: 5px 10px; border-radius: 8px;
+    margin-bottom: 3px; font-size: 0.72rem; align-items: center; border-right: 4px solid var(--accent);
+    color: #ffffff !important;
+}
+.list-row span { color: #ffffff !important; font-weight: 500; }
+
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.result-card { background: var(--secondary); border: 1px solid var(--border); border-radius: 12px; padding: 10px; text-align: center; position: relative; }
+.result-card .k { color: var(--label); font-size: 0.8rem; margin-bottom: 4px; }
+.result-card .v { font-size: 1.1rem; font-weight: 800; color: #fff; }
+
+.ratio-bar-container { width: 100%; height: 14px; background: #475569; border-radius: 7px; margin: 8px 0 4px 0; overflow: hidden; display: flex; }
+.bar-d { background: var(--accent); height: 100%; transition: 0.4s; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: #ffffff !important; font-weight: 800; }
+.bar-p { background: var(--success); height: 100%; transition: 0.4s; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: #ffffff !important; font-weight: 800; }
+#resRatioD, #resRatioP { color: #ffffff !important; font-weight: 700; }
+
+.result-wide { grid-column: 1 / -1; }
+.result-big .v { font-size: 1.4rem; color: var(--accent); font-weight: 900; }
+
+.btn-manual-container { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; }
+.btn-manual-top {
+    background: var(--panel); border: 1px solid var(--border); color: var(--label);
+    font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; cursor: pointer;
+}
+.btn-manual-reset { color: var(--danger) !important; border-color: var(--danger) !important; }
+
+.res-manual-note { display: block; width: 100%; font-size: 0.75rem; color: #ffffff !important; font-style: italic; margin-top: 4px; border-top: 1px solid #444; padding-top: 4px; }
+
+footer { margin-top: 15px; text-align: center; border-top: 1px solid var(--border); padding-top: 8px; font-size: 0.8rem; color: var(--label); }
+
+@media print {
+  body { background: #fff !important; color: #000 !important; padding: 0; }
+  .scale-container { transform: scale(1) !important; width: 100% !important; max-width: 100% !important; box-shadow: none !important; margin: 0 !important; background: #fff !important; padding: 10px !important; }
+  .board { width: 100% !important; grid-template-columns: 1fr 1fr !important; }
+  .inputs-col, .results-col, .result-card, .list-row, .entry-panel { background: #fff !important; border: 1.5px solid #000 !important; color: #000 !important; }
+  .top-controls, .btn-ctrl, .btn-manual-container, footer, .category-btn-group, #manualBox, #entryPanel { display: none !important; }
+  header { border: 2px solid #000 !important; background: #f0f0f0 !important; }
+  header h1, .section-title, label, .k, .v, #resRatioD, #resRatioP { color: #000 !important; }
+  input, select { border: 1px solid #000 !important; background: #fff !important; color: #000 !important; }
+  .amt-input { color: #000 !important; font-weight: bold !important; border: 2px solid #000 !important; }
+  .ratio-bar-container { border: 1.5px solid #000 !important; background: #fff !important; }
+  .bar-d { background: #999 !important; color: #000 !important; }
+  .bar-p { background: #eee !important; color: #000 !important; }
+}
 </style>
 </head>
 <body>
+
 <div class="scale-container">
-  <div class="calculator" id="calcRoot">
-    <header>
-      <span class="year-badge" id="yearBadge"></span>
-      <h1>מחשבון צו תשלומים</h1>
-    </header>
+  <div class="calculator" id="calcRoot">
+    <div class="top-controls">
+      <button class="btn-ctrl" onclick="window.print()">הדפסה/PDF 🖨️</button>
+      <button class="btn-ctrl" id="btnShot">צילום 📸</button>
+      <button class="btn-ctrl" onclick="restoreData()">שחזור ↺</button>
+      <button class="btn-ctrl" style="color:var(--success)" onclick="saveData()">שמור 💾</button>
+      <button class="btn-ctrl" style="color:var(--danger)" onclick="resetData()">איפוס ✖</button>
+    </div>
 
-    <div class="board">
-            <div class="inputs-col">
-                <div class="row status-row">
-          <div class="input-group">
-            <label>סטטוס משפחתי</label>
-          <div class="toggles-line" id="familyTypeGroup">
-  <button class="chip family-type active" data-type="יחיד/ נשוי חי בנפרד">יחיד/ נשוי חי בנפרד</button>
-  <button class="chip family-type" data-type="רווק/ גרוש/ אלמן">רווק/ גרוש/ אלמן</button>
-  <button class="chip family-type" data-type="זוג">זוג</button>
-</div>
+    <header><h1>מחשבון צו תשלומים</h1></header>
 
-            <div class="toggles-line" style="margin-top:6px">
-              <span>מס׳ ילדים:</span>
-              <input id="childrenCount" type="number" min="0" max="10" value="0" style="width:60px;text-align:center;">
-              <button class="chip" type="button" id="addChildBtn">הוסף ילד</button>
-            </div>
-          </div>
-          <div class="toggles-line">
-            <span>מי בהליך?</span>
-            <button class="chip" id="debtorMaleBtn" aria-pressed="true">חייב</button>
-            <button class="chip" id="debtorFemaleBtn" aria-pressed="false">חייבת</button>
-            <button class="chip alert" id="jointBtn" aria-pressed="false">שני בני הזוג בהליך?</button>
-          </div>
-        </div>
-
-        <hr style="border:none;border-top:1px solid var(--border);margin:6px 0 8px">
-
-        <div class="section-title">הכנסות והוצאות התא המשפחתי (₪)</div>
-
-        <div class="input-pair">
-          <div class="input-group">
-            <label><span id="lblSalaryD">הכנסה (חייב/ת)</span> <span class="info-btn" data-info="ממוצע נטו תלושי שכר">?</span></label>
-            <input id="salaryDebtor" type="number" placeholder="הזן הכנסה">
-          </div>
-          <div class="input-group">
-            <label><span id="lblSalaryP">הכנסה (בן/בת זוג)</span> <span class="info-btn" data-info="ממוצע נטו תלושי שכר">?</span></label>
-            <input id="salaryPartner" type="number" placeholder="הזן הכנסה">
-          </div>
-        </div>
-
-        <div class="input-pair">
-          <div class="input-group">
-            <label><span id="lblOtherD">הכנסות אחרות (חייב/ת)</span> <span class="info-btn" data-info="לדוגמה: פרילנס/שכירות">?</span></label>
-            <input id="otherIncomeDebtor" type="number" placeholder="הזן הכנסה אחרת">
-          </div>
-          <div class="input-group">
-            <label><span id="lblOtherP">הכנסות אחרות (בן/בת זוג)</span> <span class="info-btn" data-info="לדוגמה: פרילנס/שכירות">?</span></label>
-            <input id="otherIncomePartner" type="number" placeholder="הזן הכנסה אחרת">
-        </div>
-        </div>
-
-        <div class="row" style="justify-items:center">
-          <div class="toggles-line" style="margin-top:4px">
-            <button class="chip" id="btnAllowances">קצבאות</button>
-            <button class="chip" id="btnAlimony">מזונות</button>
-          </div>
-        </div>
-
-        <div id="allowanceFields" class="row row-2" style="margin-top:6px;display:none">
-          <div class="input-group">
-            <label><span id="lblAllowD">קצבה (חייב/ת)</span> <span class="info-btn" data-info="קצבאות קיימות">?</span></label>
-            <input id="debtorAllowance" type="number" placeholder="הזן קצבה">
-          </div>
-          <div class="input-group">
-            <label><span id="lblAllowP">קצבה (בן/בת זוג)</span> <span class="info-btn" data-info="קצבאות קיימות">?</span></label>
-            <input id="partnerAllowance" type="number" placeholder="הזן קצבה">
-          </div>
-        </div>
-
-        <div id="alimonyFields" class="row row-2" style="margin-top:6px;display:none">
-          <div class="input-group">
-            <label>הוצאות מזונות <span class="info-btn" data-info="מזונות בתשלום חודשי">?</span></label>
-            <input id="alimonyExpenses" type="number" placeholder="הזן הוצאות מזונות">
-          </div>
-        </div>
-
-        <div class="input-pair" style="margin-top:6px">
-          <div class="input-group">
-            <label>הוצאות חריגות <span class="info-btn" data-info="רפואי, נסיעה וכד׳">?</span></label>
-            <input id="unusualExpenses" type="number" placeholder="הזן הוצאות">
-          </div>
-          <div class="input-group">
-            <label>הוצאות טיפול וצהרונים <span class="info-btn" data-info="צהרונים/טיפול">?</span></label>
-            <input id="childcareExpenses" type="number" placeholder="הזן הוצאות">
-          </div>
-        </div>
-
-        <div class="report-trigger">
-          <button class="report-btn" id="reportBtn">📌 פרטי דו״ח</button>
-        </div>
-        <div id="reportPanel" class="row row-3" style="margin-top:4px">
-          <div class="input-group">
-            <label>מס׳ תיק</label>
-            <input id="caseId" type="text" placeholder="לדוגמה: 12345/25">
-          </div>
-          <div class="input-group">
-            <label>שם עורך/ת החישוב</label>
-            <input id="authorName" type="text" placeholder="שם מלא">
-          </div>
-          <div class="input-group">
-            <label>תאריך</label>
-            <input id="reportDate" type="text" class="readonly" readonly>
-          </div>
-          <div class="input-group" style="grid-column:1/-1;display:none" id="noteRow">
-            <label>הערה</label>
-            <textarea id="reportNote" maxlength="500" placeholder="הערה עד 500 תווים"></textarea>
-          </div>
-          <div class="note-toggle" id="noteToggle" style="grid-column:1/-1">📌 פתח/י שדה הערה</div>
-        </div>
-      </div>
-
-            <div class="results-col">
-        <div class="controls-top">
-          <button class="btn" id="btnPdf">🖨️ PDF</button>
-          <button class="btn" id="btnShot">📸 צילום</button>
-          <button class="btn" id="btnMail">✉️ שליחת מייל</button>
-          <button class="btn reset" id="btnReset">↺ איפוס</button>
-        </div>
-
-        <div class="section-title">תוצאות החישוב</div>
-
-        <div class="result-grid">
-          <div class="result-card"><div class="k">סך הכנסות</div><div class="v" id="totalIncomeResult">₪ 0</div></div>
-          <div class="result-card"><div class="k">קצבת  ילדים</div><div class="v" id="socialSecurityAllowance">₪ 0</div></div>
-
-          <div class="result-card"><div class="k">דמי מחייה בכבוד</div><div class="v" id="baseLivingCostResult">₪ 0</div></div>
-          <div class="result-card"><div class="k">סך הוצאות</div><div class="v" id="totalExpensesResult">₪ 0</div></div>
-
-          <div class="result-card result-wide result-big">
-            <div class="k">הכנסה פנויה לתא המשפחתי</div>
-            <div class="v" id="disposableIncomeResult">אין הכנסה פנויה</div>
-          </div>
-
-          <div class="result-card"><div class="k" id="debtorIncomeRatioLabel">אחוז הכנסה (חייב/ת)</div><div class="v" id="debtorIncomeRatio">0.0%</div></div>
-          <div class="result-card"><div class="k" id="partnerIncomeRatioLabel">אחוז הכנסה (בן/בת זוג)</div><div class="v" id="partnerIncomeRatio">0.0%</div></div>
-
-          <div class="ratio-visual">
-            <div id="barDebtor" class="ratio-bar-d"></div>
-            <div id="barPartner" class="ratio-bar-p"></div>
+    <div class="board">
+      <div class="inputs-col">
+        <div class="section-title">👤 נתוני בסיס והכנסות</div>
+        <div class="input-group">
+          <label>מצב משפחתי</label>
+          <div class="toggles-line" style="display:flex; gap:6px; width:100%;">
+            <button class="chip family-type active" style="flex:1; min-height:48px;" data-type="יחיד">יחיד (נשוי חי בנפרד)</button>
+            <button class="chip family-type" style="flex:1; min-height:48px;" data-type="זוג">זוג</button>
+            <button class="chip family-type" style="flex:1; min-height:48px;" data-type="רווק">רווק / גרוש / אלמן</button>
           </div>
+        </div>
 
-          <div class="result-card" id="debtorPaymentCard"><div class="k" id="debtorPaymentLabel">תשלום מוצע (חייב/ת)</div><div class="v" id="debtorPaymentResult">₪ 0</div></div>
-          <div class="result-card" id="partnerPaymentCard" style="display:none"><div class="k" id="partnerPaymentLabel">תשלום מוצע (בן/בת זוג)</div><div class="v" id="partnerPaymentResult">₪ 0</div></div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;">
+            <div class="input-group"><label>ילדים (עד 18)</label>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <input id="childrenCount" type="number" value="0" min="0" oninput="calc()" style="width: 55px;">
+                  <button class="chip" style="font-size:1.1rem; padding:2px 10px;" onclick="changeKids(1)">+</button>
+                </div>
+            </div>
+            <div class="input-group"><label>מי בהליך?</label>
+                <div class="toggles-line" style="margin-bottom:0; display:flex; gap:6px; width:100%;">
+                    <button class="chip gender-btn active" style="flex:1; padding: 8px;" onclick="setGender('חייב', this)">חייב</button>
+                    <button class="chip gender-btn" style="flex:1; padding: 8px;" onclick="setGender('חייבת', this)">חייבת</button>
+                </div>
+            </div>
+        </div>
 
-          <div class="result-card result-wide result-danger center-card" id="familyPaymentCard" style="display:none">
-            <div class="k">תשלום חודשי לתא משפחתי</div>
-            <div class="v" id="finalPaymentResult">₪ 0</div>
-          </div>
+        <hr style="border:0; border-top:1.5px solid var(--border); margin: 12px 0;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="input-group"><label>הכנסה חייב/ת</label><input id="salD" type="text" class="amt-input live-curr" placeholder="0"></div>
+            <div class="input-group"><label>הכנסה בן זוג</label><input id="salP" type="text" class="amt-input live-curr" placeholder="0"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px;">
+            <div class="input-group"><label>הכנסה נוספת (חייב)</label><input id="addD" type="text" class="amt-input live-curr" placeholder="0"></div>
+            <div class="input-group"><label>הכנסה נוספת (בן זוג)</label><input id="addP" type="text" class="amt-input live-curr" placeholder="0"></div>
+        </div>
 
-          <div class="result-card result-wide" id="zeroCaseRow" style="display:none">
-            <div class="v zero-case">תיק אפס</div>
-          </div>
-        </div>
+        <div id="incomeAdditions" class="embedded-list" style="margin-top:10px;"></div>
+        <div id="expenseAdditions" class="embedded-list"></div>
 
-        <div class="sticky-mobile">
-          <button class="btn" id="btnPdf_m">🖨️ PDF</button>
-          <button class="btn" id="btnShot_m">📸 צילום</button>
-          <button class="btn" id="btnMail_m">✉️ מייל</button>
-          <button class="btn reset" id="btnReset_m">↺ איפוס</button>
-        </div>
-      </div>
-    </div>
-  </div>
+        <div class="category-btn-group">
+          <button class="chip" id="btn_allowance" onclick="toggleEntry('allowance')">קצבאות ➕</button>
+          <button class="chip" id="btn_special" onclick="toggleEntry('special')">הוצאות ➕</button>
+          <button class="chip" id="btn_alimony" onclick="toggleEntry('alimony')">מזונות ➕</button>
+        </div>
+
+        <div id="entryPanel" class="entry-panel" style="display:none;">
+            <div class="entry-row-1">
+                <select id="entryType"></select>
+                <input id="entryAmt" type="text" class="live-curr" placeholder="₪">
+            </div>
+            <div class="entry-row-2"><input id="entryNote" type="text" placeholder="הערה / פירוט"></div>
+            <div style="display:flex; justify-content:center; gap:15px;">
+                <span style="cursor:pointer; font-weight:700; color:var(--success); font-size:0.9rem;" onclick="commitEntry()">✅ עדכן והטמע</span>
+                <span style="cursor:pointer; color:var(--danger); font-size:0.9rem;" onclick="closeEntry()">✖ סגור</span>
+            </div>
+        </div>
+      </div>
+
+      <div class="results-col">
+        <div class="section-title">📊 תוצאות</div>
+        <div class="result-grid">
+          <div class="result-card"><div class="k">סה״כ הכנסות</div><div id="resIncome" class="v">0 ₪</div></div>
+          <div class="result-card"><div class="k">קצבת ילדים</div><div id="resKidsSS" class="v">0 ₪</div></div>
+          <div class="result-card"><div class="k">דמי מחייה</div><div id="resBase" class="v">0 ₪</div></div>
+          <div class="result-card"><div class="k">סה״כ הוצאות</div><div id="resExp" class="v">0 ₪</div></div>
+          <div class="result-card result-wide result-big"><div class="k">הכנסה פנויה</div><div id="resDisp" class="v">אין פנויה</div></div>
+          <div class="result-card result-wide">
+            <div class="k">יחס הכנסות חלוקת נטל</div>
+            <div class="ratio-bar-container"><div id="barD" class="bar-d"></div><div id="barP" class="bar-p"></div></div>
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:700; margin-top: 4px;">
+              <span id="resRatioD">חייב: 0%</span><span id="resRatioP">בן זוג: 0%</span>
+            </div>
+          </div>
+          <div class="result-card result-wide result-big" style="border: 2px solid var(--accent); position: relative;">
+            <div class="btn-manual-container">
+                <button id="btnManualToggle" class="btn-manual-top" onclick="toggleManual()">שנה סכום</button>
+                <button id="btnManualReset" class="btn-manual-top btn-manual-reset" onclick="resetManual()">↺</button>
+            </div>
+            <div class="k">תשלום חודשי מוצע</div>
+            <div id="originalValLabel" style="font-size:0.85rem; color:var(--label); text-decoration:line-through; margin-bottom:4px; display:none;"></div>
+            <div id="resFinalPay" class="v" style="color: var(--danger)">0 ₪</div>
+            <div id="resManualNote" class="res-manual-note" style="display:none;"></div>
+            <div id="manualBox" style="display:none; margin-top: 10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 12px;">
+              <div style="display:flex; gap:6px; margin-bottom:6px; justify-content:center; align-items:center;">
+                  <input id="manualAmt" type="text" class="amt-input live-curr" placeholder="חדש" style="width:140px!important;">
+                  <button class="chip active" style="min-height:35px; flex:none" onclick="commitManual()">✅ עדכן</button>
+              </div>
+              <textarea id="manualNote" placeholder="הסבר לשינוי..." style="font-size:0.8rem; height:45px; width:100%; padding:8px; background:var(--secondary); color:#fff;"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer><b>YE</b> - פתרונות חכמים לניהול הליכי חדלות פירעון &copy; 2026</footer>
+  </div>
 </div>
 
 <script>
-document.getElementById('yearBadge').textContent = `מעודכן ל־${new Date().getFullYear()}`;
+const parseVal = s => parseInt(s.toString().replace(/[^\d]/g, '')) || 0;
+const formatVal = n => new Intl.NumberFormat('he-IL').format(n) + (n > 0 ? ' ₪' : '');
 
-const fmt = n => new Intl.NumberFormat('he-IL',{style:'currency',currency:'ILS',minimumFractionDigits:0}).format(n||0);
-const r10 = n => Math.floor((n||0)/10)*10;
+function applyLiveFormatting(el) {
+    el.addEventListener('input', e => {
+        let raw = parseVal(e.target.value);
+        if (raw > 99999999) raw = 99999999;
+        e.target.value = raw > 0 ? formatVal(raw) : '';
+        calc();
+    });
+}
+document.querySelectorAll('.live-curr').forEach(applyLiveFormatting);
+
 const E = id => document.getElementById(id);
-
-const els = {
-  salaryD:E('salaryDebtor'), salaryP:E('salaryPartner'),
-  otherD:E('otherIncomeDebtor'), otherP:E('otherIncomePartner'),
-  allowD:E('debtorAllowance'), allowP:E('partnerAllowance'),
-  unusual:E('unusualExpenses'), child:E('childcareExpenses'), alimony:E('alimonyExpenses'),
-
-  tIncome:E('totalIncomeResult'), tExp:E('totalExpensesResult'),
-  base:E('baseLivingCostResult'), kidsA:E('socialSecurityAllowance'),
-  disp:E('disposableIncomeResult'),
-  rDeb:E('debtorIncomeRatio'), rPar:E('partnerIncomeRatio'),
-  barDeb:E('barDebtor'), barPar:E('barPartner'),
-  payDeb:E('debtorPaymentResult'), payPar:E('partnerPaymentResult'),
-  famCard:E('familyPaymentCard'), payFam:E('finalPaymentResult'),
-  zeroRow:E('zeroCaseRow'),
-  partnerCard:E('partnerPaymentCard'), debtorPayCard:E('debtorPaymentCard'),
-
-  lblRD:E('debtorIncomeRatioLabel'), lblRP:E('partnerIncomeRatioLabel'),
-  lblPD:E('debtorPaymentLabel'),    lblPP:E('partnerPaymentLabel'),
-
-  lblSalaryD:E('lblSalaryD'), lblSalaryP:E('lblSalaryP'),
-  lblOtherD:E('lblOtherD'),  lblOtherP:E('lblOtherP'),
-  lblAllowD:E('lblAllowD'),  lblAllowP:E('lblAllowP'),
-
-  btnAllow:E('btnAllowances'), boxAllow:E('allowanceFields'),
-  btnAlim:E('btnAlimony'),    boxAlim:E('alimonyFields'),
-
-  male:E('debtorMaleBtn'), female:E('debtorFemaleBtn'), joint:E('jointBtn'),
-
-  reportBtn:E('reportBtn'), reportPanel:E('reportPanel'),
-  reportDate:E('reportDate'), noteToggle:E('noteToggle'), noteRow:E('noteRow'),
-
-  children:E('childrenCount'), addChild:E('addChildBtn'),
+const config = { 
+    base: { "יחיד": 4711, "רווק": 4711, "זוג": 6229 }, 
+    kids: { 0:0, 1:173, 2:392, 3:611, 4:830, 5:1003, 6:1176, 7:1349, 8:1522, 9:1695, 10:1868 } 
 };
 
-const livingBase = {
-  "יחיד/ נשוי חי בנפרד":4556,
-  "רווק/ גרוש/ אלמן":4556,
-  "זוג":6024,
-};
+let state = { incomes: [], expenses: [], currentMode: '', gender: 'חייב', family: 'יחיד', isManual: false };
 
-const kidsMap = {0:0,1:169,2:383,3:597,4:811,5:980,6:1149,7:1318,8:1487,9:1656,10:1825};
+function changeKids(n) { E('childrenCount').value = Math.max(0, parseInt(E('childrenCount').value) + n); calc(); }
+function setGender(g, btn) { state.gender = g; document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); calc(); }
 
-let gender='חייב', joint=false;
-let familyType = "יחיד/ נשוי חי בנפרד";
-let childrenCount = 0;
-
-function updateLabelSets(){
-  const d=(gender==='חייב')?'חייב':'חייבת';
-  const p=(gender==='חייב')?'בת זוג':'בן זוג';
-  els.lblRD.textContent=`אחוז הכנסה (${d})`;
-  els.lblRP.textContent=`אחוז הכנסה (${p})`;
-  els.lblPD.textContent=`תשלום מוצע (${d})`;
-  els.lblPP.textContent=`תשלום מוצע (${p})`;
-  els.lblSalaryD.textContent=`הכנסה (${d})`;
-  els.lblSalaryP.textContent=`הכנסה (${p})`;
-  els.lblOtherD.textContent =`הכנסות אחרות (${d})`;
-  els.lblOtherP.textContent =`הכנסות אחרות (${p})`;
-  els.lblAllowD.textContent =`קצבה (${d})`;
-  els.lblAllowP.textContent =`קצבה (${p})`;
-}
-function setGender(g){
-  gender=g;
-  els.male.classList.toggle('active', g==='חייב');
-  els.female.classList.toggle('active', g==='חייבת');
-  els.male.setAttribute('aria-pressed', String(g==='חייב'));
-  els.female.setAttribute('aria-pressed', String(g==='חייבת'));
-  updateLabelSets(); calc();
-}
-els.male.onclick=()=>setGender('חייב');
-els.female.onclick=()=>setGender('חייבת');
-
-els.joint.onclick=()=>{
-  joint=!joint;
-  els.joint.classList.toggle('active', joint);
-  els.joint.setAttribute('aria-pressed', String(joint));
-  els.famCard.style.display= joint ? 'block' : 'none';
-  els.partnerCard.style.display = joint ? 'block' : 'none';
-  els.debtorPayCard.classList.toggle('solo-pay', !joint);
-  calc();
-};
-
-els.btnAllow.onclick=()=>{ els.btnAllow.classList.toggle('active'); els.boxAllow.style.display=els.btnAllow.classList.contains('active')?'grid':'none'; };
-els.btnAlim.onclick =()=>{ els.btnAlim .classList.toggle('active'); els.boxAlim .style.display=els.btnAlim .classList.contains('active')?'grid':'none'; };
-
-els.reportBtn.onclick=()=>{
-  const show = els.reportPanel.style.display!=='grid';
-  els.reportPanel.style.display = show?'grid':'none';
-  if(show){ els.reportDate.value = new Date().toLocaleDateString('he-IL',{year:'numeric',month:'2-digit',day:'2-digit'}); }
-};
-els.noteToggle.onclick=()=>{
-  const on = els.noteRow.style.display!=='block';
-  els.noteRow.style.display = on?'block':'none';
-};
-
-/* בחירת סטטוס משפחתי + ילדים */
-const familyTypeButtons = document.querySelectorAll('.family-type');
-familyTypeButtons.forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    familyType = btn.dataset.type;
-    familyTypeButtons.forEach(b=>b.classList.toggle('active', b===btn));
-    calc();
-  });
+document.querySelectorAll('.family-type').forEach(btn => {
+    btn.onclick = () => {
+        document.querySelectorAll('.family-type').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active'); state.family = btn.dataset.type; calc();
+    };
 });
 
-els.addChild.onclick = ()=>{
-  let current = parseInt(els.children.value,10) || 0;
-  if(current < 10){
-    current++;
-    els.children.value = String(current);
-    childrenCount = current;
-    calc();
-  }
-};
+function toggleEntry(mode) { if (state.currentMode === mode && E('entryPanel').style.display === 'block') { closeEntry(); } else { openEntry(mode); } }
 
-els.children.addEventListener('input',()=>{
-  let val = parseInt(els.children.value,10);
-  if(isNaN(val) || val < 0) val = 0;
-  if(val > 10) val = 10;
-  els.children.value = String(val);
-  childrenCount = val;
-  calc();
-});
-
-/* פופאבר ? */
-let pop=null;
-document.addEventListener('click',e=>{
-  const b=e.target.closest('.info-btn');
-  if(b){
-    e.stopPropagation();
-    if(pop) pop.remove();
-    pop=document.createElement('div'); pop.className='pop'; pop.innerHTML=(b.dataset.info||'').replace(/\n/g,'<br>');
-    document.body.appendChild(pop);
-    const r=b.getBoundingClientRect(); pop.style.top=(window.scrollY+r.bottom+8)+'px'; pop.style.right=(window.innerWidth-r.right+8)+'px';
-    return;
-  }
-  if(pop){ pop.remove(); pop=null; }
-});
-
-/* חישוב */
-function calc(){
-  const base0 = livingBase[familyType] || 4556;
-  const base = base0 + (childrenCount * 1500);
-  const kids = kidsMap[childrenCount] || 0;
-
-  const dS=+els.salaryD.value||0, pS=+els.salaryP.value||0;
-  const dO=+els.otherD.value||0,  pO=+els.otherP.value||0;
-  const dA=+els.allowD.value||0,  pA=+els.allowP.value||0;
-  const un=+els.unusual.value||0, ch=+els.child.value||0, al=+els.alimony.value||0;
-
-  els.base.textContent = fmt(base);
-  els.kidsA.textContent = fmt(kids);
-
-  const totalIncome = dS+pS + dO+pO + dA+pA + kids;
-  els.tIncome.textContent = fmt(totalIncome);
-
-  const totalExp = base + un + ch + al;
-  els.tExp.textContent = fmt(totalExp);
-
-  const disp = totalIncome - totalExp;
-  els.disp.textContent = disp<=0 ? 'אין הכנסה פנויה' : fmt(disp);
-
-  const sumForRatio = dS+dO + pS+pO;
-  const rD = sumForRatio>0 ? (dS+dO)/sumForRatio : 0;
-  const rP = sumForRatio>0 ? (pS+pO)/sumForRatio : 0;
-  els.rDeb.textContent = (rD*100).toFixed(1)+'%';
-  els.rPar.textContent = (rP*100).toFixed(1)+'%';
-
-  // עדכון מד אחוזים ויזואלי
-  els.barDeb.style.width = (rD * 100) + '%';
-  els.barPar.style.width = (rP * 100) + '%';
-
-  const payD = r10((disp*rD)/2);
-  const payP = r10((disp*rP)/2);
-  els.payDeb.textContent = fmt(Math.max(0,payD));
-  els.payPar.textContent = fmt(Math.max(0,payP));
-
-  if(joint){
-    const fam = r10( Math.max(0, (disp/2) - payP ) * rD + payP );
-    els.payFam.textContent = fmt(fam);
-  }
-
-  const zeroCase = (dS===0 && dO===0 && dA>0);
-  els.zeroRow.style.display = zeroCase ? 'block':'none';
+function openEntry(mode) {
+    state.currentMode = mode; E('entryPanel').style.display = 'block';
+    const select = E('entryType'); select.innerHTML = '';
+    if(mode === 'allowance') ['נכות', 'זקנה', 'הבטחת הכנסה', 'אחר'].forEach(o => select.add(new Option(o, o)));
+    else if(mode === 'special') ['חריגות', 'צהרון', 'תשלום חודשי בן/ת זוג (בהליך חדלות)', 'אחר'].forEach(o => select.add(new Option(o, o)));
+    else select.add(new Option('מזונות', 'מזונות'));
 }
 
-/* מאזינים */
-[
-  'salaryDebtor','salaryPartner','otherIncomeDebtor','otherIncomePartner',
-  'debtorAllowance','partnerAllowance','unusualExpenses','childcareExpenses','alimonyExpenses'
-].forEach(id=>E(id).addEventListener('input',calc));
-
-/* צילום */
-function doShot(){
-  const root=document.getElementById('calcRoot');
-  root.classList.add('shot-scale');
-  html2canvas(root,{useCORS:true,allowTaint:true,scale:2,backgroundColor:'#ffffff'})
-    .then(cv=>{
-      root.classList.remove('shot-scale');
-      const data=cv.toDataURL('image/png');
-      const w=window.open('','_blank');
-      w.document.write(`<img src="${data}" style="max-width:100%;display:block;margin:0 auto">`);
-      w.document.title='צילום מסך המחשבון';
-    })
-    .catch(()=>{ root.classList.remove('shot-scale'); alert('שגיאה ביצירת צילום המסך'); });
+function commitEntry() {
+    const amt = parseVal(E('entryAmt').value);
+    let type = E('entryType').value;
+    let note = E('entryNote').value;
+    if(type === 'תשלום חודשי בן/ת זוג (בהליך חדלות)') note = "התיק הראשון בזמן";
+    if(amt > 0) {
+        state[state.currentMode === 'allowance' ? 'incomes' : 'expenses'].push({ type, amt, note });
+        renderLists(); E('entryAmt').value = ''; E('entryNote').value = ''; calc();
+    }
 }
 
-/* הדפסה/‏PDF כאימג׳ בדף A4 */
-function doPrint(){
-  const root=document.getElementById('calcRoot');
-  root.classList.add('shot-scale');
-  html2canvas(root,{useCORS:true,allowTaint:true,scale:2,backgroundColor:'#ffffff'}).then(cv=>{
-    root.classList.remove('shot-scale');
-    const dataURL=cv.toDataURL('image/png');
+function closeEntry() { E('entryPanel').style.display = 'none'; state.currentMode = ''; }
 
-    const pageW=200, pageH=287;
-    const aspect=cv.width/cv.height;
-    let imgWmm=pageW, imgHmm=imgWmm/aspect;
-    if(imgHmm>pageH){ imgHmm=pageH; imgWmm=imgHmm*aspect; }
-
-    const html=`<!doctype html><html dir="rtl"><head><meta charset="utf-8">
-      <style>@page{size:A4 portrait;margin:5mm}html,body{margin:0}img{display:block;margin:0 auto;width:${imgWmm}mm;height:${imgHmm}mm}</style>
-      </head><body>
-      <img id="shot" src="${dataURL}" alt="מחשבון צו תשלומים" onload="setTimeout(()=>{window.print();window.close()},100)">
-      </body></html>`;
-    const w=window.open('','_blank'); w.document.write(html); w.document.close(); w.focus();
-  }).catch(()=>{ root.classList.remove('shot-scale'); alert('אירעה שגיאה בזמן יצירת ה-PDF/הדפסה'); });
-}
-function getTxt(id){return (E(id)?.textContent||'').trim();}
-function doMail(){
-  const subject='תוצאות מחשבון צו תשלומים';
-  const body=[
-    'שלום,','',
-    'תקציר התוצאות (לצרף ידנית את ה-PNG/‏PDF):','',
-    `סך הכנסות: ${getTxt('totalIncomeResult')}`,
-    `סך הוצאות: ${getTxt('totalExpensesResult')}`,
-    `הכנסה פנויה: ${getTxt('disposableIncomeResult')}`,
-    `אחוז הכנסה (חייב/ת): ${getTxt('debtorIncomeRatio')}`,
-    `אחוז הכנסה (בן/בת זוג): ${getTxt('partnerIncomeRatio')}`,
-    `תשלום מוצע (חייב/ת): ${getTxt('debtorPaymentResult')}`,
-    (els.partnerCard.style.display!=='none')?`תשלום מוצע (בן/בת זוג): ${getTxt('partnerPaymentResult')}`:'',
-    (els.famCard.style.display!=='none')?`תשלום חודשי לתא משפחתי: ${getTxt('finalPaymentResult')}`:'',
-    '','בברכה'
-  ].filter(Boolean).join('\n');
-  window.location.href=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
-function doReset(){
-  document.querySelectorAll('input[type="number"],input[type="text"],textarea').forEach(i=>{ if(i.id!=='childrenCount') i.value=''; });
-  els.children.value='0';
-  childrenCount=0;
-  familyType="יחיד/ נשוי חי בנפרד";
-  document.querySelectorAll('.family-type').forEach((btn,idx)=>btn.classList.toggle('active', idx===0));
-
-  if(els.btnAllow.classList.contains('active')) els.btnAllow.click();
-  if(els.btnAlim .classList.contains('active')) els.btnAlim .click();
-  joint=false; els.joint.classList.remove('active'); els.joint.setAttribute('aria-pressed','false');
-  els.famCard.style.display='none'; els.partnerCard.style.display='none';
-  els.debtorPayCard.classList.add('solo-pay');
-  setGender('חייב'); calc();
+function renderLists() {
+    E('incomeAdditions').innerHTML = state.incomes.map((item, i) => createRow(item, i, 'incomes')).join('');
+    E('expenseAdditions').innerHTML = state.expenses.map((item, i) => createRow(item, i, 'expenses')).join('');
 }
 
-/* כפתורים */
-E('btnPdf').onclick=doPrint; E('btnPdf_m')?.addEventListener('click',doPrint);
-E('btnShot').onclick=doShot;  E('btnShot_m')?.addEventListener('click',doShot);
-E('btnMail').onclick=doMail;  E('btnMail_m')?.addEventListener('click',doMail);
-E('btnReset').onclick=doReset; E('btnReset_m')?.addEventListener('click',doReset);
+function createRow(item, i, list) {
+    return `<div class="list-row"><span>${item.type}</span><span style="font-weight:700">${formatVal(item.amt)}</span><span>${item.note}</span><span style="color:var(--danger); cursor:pointer;" onclick="removeItem('${list}', ${i})">✖</span></div>`;
+}
 
-/* init */
-setGender('חייב');
-els.debtorPayCard.classList.add('solo-pay');
+function removeItem(list, i) { state[list].splice(i, 1); renderLists(); calc(); }
+
+function toggleManual() { E('manualBox').style.display = 'block'; }
+function commitManual() { state.isManual = true; E('manualBox').style.display = 'none'; E('originalValLabel').style.display = 'block'; calc(); }
+function resetManual() { state.isManual = false; E('manualAmt').value = ''; E('manualNote').value = ''; E('manualBox').style.display = 'none'; E('originalValLabel').style.display = 'none'; E('resManualNote').style.display = 'none'; calc(); }
+
+function calc() {
+    const kCount = parseInt(E('childrenCount').value || 0);
+    let kidsAddition = kCount <= 4 ? kCount * 1500 : (4 * 1500) + ((kCount - 4) * 1300);
+    const base = (config.base[state.family] || 4711) + kidsAddition;
+    const kSS = config.kids[Math.min(kCount, 10)] || 0;
+    
+    const dSalTotal = parseVal(E('salD').value) + parseVal(E('addD').value);
+    const pSalTotal = parseVal(E('salP').value) + parseVal(E('addP').value);
+    const allowTotal = state.incomes.reduce((s, a) => s + a.amt, 0);
+    const spousePayment = state.expenses.filter(e => e.type === 'תשלום חודשי בן/ת זוג (בהליך חדלות)').reduce((s, a) => s + a.amt, 0);
+    const otherExp = state.expenses.filter(e => e.type !== 'תשלום חודשי בן/ת זוג (בהליך חדלות)').reduce((s, a) => s + a.amt, 0);
+    const totalInc = dSalTotal + pSalTotal + allowTotal + kSS;
+    const disposable = totalInc - (base + otherExp) - spousePayment;
+
+    E('resIncome').textContent = formatVal(totalInc);
+    E('resKidsSS').textContent = formatVal(kSS);
+    E('resBase').textContent = formatVal(base);
+    E('resExp').textContent = formatVal(base + otherExp + spousePayment);
+
+    const totalMainIncome = (dSalTotal + pSalTotal) || 1;
+    const pD = Math.round((dSalTotal / totalMainIncome) * 100);
+    const pP = 100 - pD;
+
+    E('barD').style.width = pD + "%"; E('barD').textContent = pD > 5 ? pD + "%" : "";
+    E('barP').style.width = pP + "%"; E('barP').textContent = pP > 5 ? pP + "%" : "";
+    E('resRatioD').textContent = `חייב: ${pD}%`; E('resRatioP').textContent = `בן זוג: ${pP}%`;
+
+    const resDispEl = E('resDisp');
+    if (disposable <= 0 || (dSalTotal === 0 && allowTotal > 0)) {
+        resDispEl.textContent = (dSalTotal === 0 && allowTotal > 0) ? "תיק אפס (קצבאות בלבד)" : "לפי הנתונים, לא נותרת יתרה חודשית פנויה";
+        resDispEl.style.fontSize = "0.82rem"; E('resFinalPay').textContent = "0 ₪";
+    } else {
+        resDispEl.textContent = formatVal(disposable); resDispEl.style.fontSize = "1.2rem";
+        const calculated = Math.floor(((disposable * (dSalTotal / totalMainIncome)) / 2) / 10) * 10;
+        E('originalValLabel').textContent = "סכום מקורי: " + formatVal(calculated);
+        E('resFinalPay').textContent = state.isManual ? formatVal(parseVal(E('manualAmt').value)) : formatVal(calculated);
+        if(state.isManual && E('manualNote').value) { E('resManualNote').textContent = "הסבר - " + E('manualNote').value; E('resManualNote').style.display = "block"; }
+    }
+}
+
+function saveData() { html2canvas(E('calcRoot'), { scale: 2, backgroundColor: '#1e293b' }).then(c => { const l = document.createElement('a'); l.download = 'ye-calc-2026.png'; l.href = c.toDataURL(); l.click(); }); }
+function resetData() { if(confirm("לאפס נתונים?")) location.reload(); }
+function restoreData() { alert("שוחזר!"); calc(); }
+
 calc();
 </script>
+
 </body>
+
 </html>
