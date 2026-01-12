@@ -370,7 +370,7 @@ function calc() {
 
     const resDispEl = E('resDisp');
     if (disposable <= 0 || (dSalTotal === 0 && allowTotal > 0)) {
-        resDispEl.textContent = (dSalTotal === 0 && allowTotal > 0) ? "תיק אפס (קצבאות בלבד)" : "לפי הנתונים, לא נותרת יתרה חודשית פנויה";
+        resDispEl.textContent = (dSalTotal === 0 && allowTotal > 0) ? "תיק אפס (קצבאות בלבד)" : "לפי הנתונים, לא נותרה יתרה חודשית פנויה";
         resDispEl.style.fontSize = "0.82rem"; E('resFinalPay').textContent = "0 ₪";
     } else {
         resDispEl.textContent = formatVal(disposable); resDispEl.style.fontSize = "1.2rem";
