@@ -21,7 +21,7 @@
         body {
             font-family: 'Heebo', sans-serif; background: #1a2233; 
             margin: 0; padding: 0; display: flex; justify-content: center; align-items: flex-start;
-            min-height: 100vh; overflow-x: hidden;
+            min-height: 100vh; overflow-x: hidden; color: white;
         }
 
         .main-container {
@@ -30,78 +30,72 @@
             position: relative;
         }
 
-        /* סרגל עליון - מחשב */
+        /* סרגל כלים - איפוס משמאל */
         .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .top-controls { display: flex; gap: 8px; flex-direction: row-reverse; } /* הופך סדר להביא איפוס לשמאל */
+        
         .date-tag { background: rgba(56, 189, 248, 0.15); color: var(--accent); padding: 5px 15px; border-radius: 8px; font-weight: 700; border: 1px solid var(--accent); font-size: 0.9rem; }
-        .top-controls { display: flex; gap: 6px; }
-        .btn-ctrl { background: var(--panel); border: 1px solid var(--border); color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .btn-ctrl { background: var(--panel); border: 1px solid var(--border); color: #fff; padding: 6px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
+        .btn-ctrl:hover { border-color: var(--accent); background: var(--secondary); }
 
-        header { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border); }
-        header h1 { margin: 0; font-size: 1.5rem; font-weight: 700; color: #fff; text-align: center; }
+        header { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border); text-align: center; }
+        header h1 { margin: 0; font-size: 1.5rem; font-weight: 700; color: #fff; }
 
-        /* לוח ראשי - 2 עמודות במחשב */
+        /* לוח ראשי - 2 עמודות */
         .board { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
         .inputs-col, .results-col { background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 20px; }
 
-        .section-title { display: flex; align-items: center; justify-content: center; margin-bottom: 12px; color: #fff; font-size: 1.1rem; font-weight: 700; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+        .section-title { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; color: #fff; font-size: 1.1rem; font-weight: 700; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
 
-        .input-group { display: flex; flex-direction: column; margin-bottom: 10px; align-items: center; width: 100%; }
-        .input-group label { font-size: 0.95rem; font-weight: 600; color: var(--label); margin-bottom: 6px; text-align: center; width: 100%; }
+        .input-group { display: flex; flex-direction: column; margin-bottom: 12px; align-items: center; width: 100%; }
+        .input-group label { font-size: 0.95rem; font-weight: 600; color: var(--label); margin-bottom: 8px; }
 
-        input, select, textarea { padding: 10px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--secondary); color: #ffffff !important; font-size: 1.1rem; font-weight: 600; text-align: center; width: 100%; }
-        .amt-input { color: var(--accent) !important; font-size: 1.25rem; width: 100% !important; }
+        input { padding: 12px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--secondary); color: #ffffff !important; font-size: 1.1rem; font-weight: 600; text-align: center; width: 100%; }
+        .amt-input { color: var(--accent) !important; font-size: 1.25rem; }
 
-        .chip { padding: 10px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--secondary); cursor: pointer; color: #fff; font-weight: 600; font-size: 0.9rem; flex: 1; min-height: 52px; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.2; }
+        .chip { padding: 10px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--secondary); cursor: pointer; color: #fff; font-weight: 600; font-size: 0.9rem; flex: 1; min-height: 52px; display: flex; align-items: center; justify-content: center; text-align: center; transition: 0.2s; }
         .chip.active { background: var(--accent); color: var(--secondary); border-color: var(--accent); }
 
-        .category-btn-group { display: flex; gap: 8px; margin: 20px 0; width: 100%; }
-
+        .category-btn-group { display: flex; gap: 10px; margin-top: 20px; width: 100%; }
+        
         /* תוצאות */
         .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; } 
-        .result-card { background: var(--secondary); border: 1px solid var(--border); border-radius: 18px; padding: 16px; text-align: center; position: relative; }
+        .result-card { background: var(--secondary); border: 1px solid var(--border); border-radius: 18px; padding: 16px; text-align: center; }
         .result-card .k { color: var(--label); font-size: 0.9rem; margin-bottom: 5px; }
-        .result-card .v { font-size: 1.35rem; font-weight: 800; color: #ffffff !important; }
+        .result-card .v { font-size: 1.4rem; font-weight: 800; color: #ffffff !important; }
         
-        .ratio-bar-container { width: 100%; height: 18px; background: #475569; border-radius: 9px; margin: 12px 0; overflow: hidden; display: flex; }
-        .bar-d { background: var(--accent); height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #fff; font-weight: 900; }
-        .bar-p { background: var(--success); height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #fff; font-weight: 900; }
+        .ratio-bar-container { width: 100%; height: 20px; background: #475569; border-radius: 10px; margin: 15px 0; overflow: hidden; display: flex; }
+        .bar-d { background: var(--accent); height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #000; font-weight: 900; }
+        .bar-p { background: var(--success); height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #000; font-weight: 900; }
 
-        .payment-box { border: 2px solid var(--accent) !important; grid-column: 1 / -1; }
-        .payment-box .v { font-size: 2rem; color: var(--danger) !important; }
+        .final-pay-card { grid-column: 1 / -1; border: 2px solid var(--accent); background: rgba(56, 189, 248, 0.05); }
+        .final-pay-card .v { font-size: 2.2rem; color: var(--danger) !important; }
 
-        .insight-box { width: 100%; background: rgba(56, 189, 248, 0.12); border-radius: 15px; padding: 20px; margin-top: 25px; border-right: 6px solid var(--accent); font-size: 0.95rem; color: #ffffff !important; line-height: 1.5; }
+        .insight-box { width: 100%; background: rgba(56, 189, 248, 0.1); border-radius: 15px; padding: 20px; margin-top: 20px; border-right: 6px solid var(--accent); font-size: 0.95rem; line-height: 1.6; }
 
-        footer { margin-top: 25px; text-align: center; border-top: 1px solid var(--border); padding-top: 15px; font-size: 1.1rem; color: var(--label); font-weight: 700; }
+        footer { margin-top: 30px; text-align: center; border-top: 1px solid var(--border); padding-top: 15px; font-size: 0.9rem; color: var(--label); }
 
-        /* אלמנטים מוסתרים במחשב (מיועדים ל-Wizard מובייל) */
-        .mobile-only { display: none; }
+        /* ניווט מובייל מרחף */
+        .mobile-nav-floating { display: none; position: fixed; bottom: 25px; left: 0; right: 0; padding: 0 20px; justify-content: space-between; z-index: 1000; gap: 15px; }
+        .nav-btn-float { flex: 1; padding: 16px; border-radius: 15px; border: none; font-weight: 800; font-size: 1.1rem; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-prev { background: var(--panel); color: white; }
+        .btn-next { background: var(--accent); color: var(--secondary); }
 
-        /* ============================================================
-           הגדרות מובייל בלבד
-           ============================================================ */
+        /* כפתור חשב כעת מובייל */
+        .mobile-calc-btn { display: none; width: 100%; padding: 18px; background: var(--success); color: var(--secondary); border: none; border-radius: 15px; font-size: 1.3rem; font-weight: 900; margin-top: 20px; cursor: pointer; box-shadow: 0 8px 20px rgba(52, 211, 153, 0.3); }
+
         @media screen and (max-width: 768px) {
-            .main-container { width: 100%; padding: 15px; border-radius: 0; margin: 0; }
-            .board { display: block; } /* ביטול הגריד הדו-עמודתי */
-            
-            .top-bar .date-tag { display: none; }
-            .top-controls { width: 100%; justify-content: space-between; }
-            #btnRestore { display: none; }
-
-            .mobile-only { display: flex; }
-            .mobile-progress { width: 100%; height: 6px; background: var(--border); border-radius: 10px; margin: 10px 0; overflow: hidden; }
-            .progress-fill { height: 100%; background: var(--accent); width: 33%; transition: 0.3s; }
-            .mobile-nav { justify-content: space-between; align-items: center; margin-bottom: 15px; }
-
-            /* Wizard Logic */
+            .main-container { width: 100%; padding: 15px; margin: 0; border-radius: 0; }
+            .board { display: block; }
             .step-content { display: none; }
             .step-content.active { display: block; }
-            
-            #mobileCalcBtn { display: block; width: 100%; padding: 15px; background: var(--accent); color: var(--secondary); border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 800; margin-top: 15px; }
-
-            .inputs-col, .results-col { background: transparent; border: none; padding: 0; }
-            .category-btn-group { flex-wrap: wrap; }
-            .category-btn-group .chip { min-height: 60px; }
+            .inputs-col, .results-col { background: transparent; border: none; padding: 10px 0; }
+            .mobile-nav-floating { display: flex; }
+            .mobile-calc-btn { display: block; }
+            .top-bar .date-tag { display: none; }
+            .category-btn-group { flex-direction: column; }
             .result-grid { grid-template-columns: 1fr; }
+            .chip { font-size: 0.85rem; min-height: 60px; }
         }
     </style>
 </head>
@@ -109,85 +103,85 @@
 
 <div class="main-container" id="calcRoot">
     <div class="top-bar">
-        <div id="dateTag" class="date-tag">12.1.2026</div>
+        <div class="date-tag">12.1.2026</div>
         <div class="top-controls">
-            <button class="btn-ctrl" onclick="resetData()" style="color:var(--danger)">איפוס ✖</button>
-            <button class="btn-ctrl" id="btnRestore" onclick="restoreFromStorage()">שחזור ↺</button>
+            <button class="btn-ctrl" style="color:var(--danger)" onclick="resetData()">איפוס ✖</button>
+            <button class="btn-ctrl" onclick="restoreFromStorage()">שחזור ↺</button>
             <button class="btn-ctrl" id="btnShot">צילום 📸</button>
             <button class="btn-ctrl" onclick="window.print()">הדפסה/PDF 🖨️</button>
         </div>
     </div>
 
-    <div class="mobile-only mobile-progress"><div class="progress-fill" id="progressFill"></div></div>
-    <div class="mobile-only mobile-nav">
-        <button class="btn-ctrl" onclick="changeStep(-1)">➔ הקודם</button>
-        <div style="color:var(--accent); font-weight:bold;">12.1.2026</div>
-        <button class="btn-ctrl" onclick="changeStep(1)">הבא ⬅</button>
-    </div>
-
     <header><h1>מחשבון צו תשלומים</h1></header>
 
     <div class="board">
-        <div id="mobileStep1" class="step-content active">
+        <div id="step1" class="step-content active">
             <div class="inputs-col">
-                <div class="section-title">👤 נתוני בסיס והכנסה</div>
+                <div class="section-title">👤 נתוני בסיס והכנסות</div>
                 
                 <div class="input-group">
                     <label>מצב משפחתי</label>
                     <div style="display:flex; gap:8px; width:100%;">
-                        <button class="chip family-type active" data-type="יחיד">יחיד (נשוי גר בנפרד)</button>
-                        <button class="chip family-type" data-type="זוג">זוג</button>
-                        <button class="chip family-type" data-type="רווק">רווק/גרוש/אלמן</button>
+                        <button class="chip family-btn active" data-val="יחיד">יחיד (נשוי גר בנפרד)</button>
+                        <button class="chip family-btn" data-val="זוג">זוג</button>
+                        <button class="chip family-btn" data-val="רווק">רווק/גרוש/אלמן</button>
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div class="input-group">
                         <label>ילדים (עד 18)</label>
                         <div style="display: flex; gap: 8px; align-items: center;">
-                            <input id="childrenCount" type="number" value="0" min="0" oninput="calc()" style="width: 60px;">
-                            <button class="chip" style="min-height:40px;" onclick="changeKids(1)">+</button>
+                            <button class="chip" style="min-height:45px; flex:none; width:45px;" onclick="changeKids(-1)">-</button>
+                            <input id="childrenCount" type="number" value="0" min="0" style="width: 60px;">
+                            <button class="chip" style="min-height:45px; flex:none; width:45px;" onclick="changeKids(1)">+</button>
                         </div>
                     </div>
                     <div class="input-group">
                         <label>מי בהליך?</label>
                         <div style="display:flex; gap:8px; width:100%;">
-                            <button class="chip gender-btn active">חייב</button>
-                            <button class="chip gender-btn">חייבת</button>
+                            <button class="chip gender-btn active" data-val="חייב">חייב</button>
+                            <button class="chip gender-btn" data-val="חייבת">חייבת</button>
                         </div>
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
                     <div class="input-group"><label>הכנסה חייב/ת</label><input id="salD" type="text" class="amt-input live-curr" placeholder="0"></div>
                     <div class="input-group"><label>הכנסה בן זוג</label><input id="salP" type="text" class="amt-input live-curr" placeholder="0"></div>
                 </div>
 
-                <div id="mobileStep2" class="step-content-pc">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                <div class="pc-only-additions">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
                         <div class="input-group"><label>הכנסה נוספת (חייב)</label><input id="addD" type="text" class="amt-input live-curr" placeholder="0"></div>
-                        <div class="input-group"><label>הכנסה נוספת (זוג)</label><input id="addP" type="text" class="amt-input live-curr" placeholder="0"></div>
+                        <div class="input-group"><label>הכנסה נוספת (בן זוג)</label><input id="addP" type="text" class="amt-input live-curr" placeholder="0"></div>
                     </div>
-                    <div class="category-btn-group">
-                        <button class="chip" onclick="toggleEntry('allowance')">קצבאות ➕</button>
-                        <button class="chip" onclick="toggleEntry('special')">הוצאות ➕</button>
-                        <button class="chip" onclick="toggleEntry('alimony')">מזונות ➕</button>
+                    <div class="category-btn-group" id="catGroup">
+                        <button class="chip" onclick="alert('הוסף קצבה')">קצבאות ➕</button>
+                        <button class="chip" onclick="alert('הוסף הוצאה')">הוצאות ➕</button>
+                        <button class="chip" onclick="alert('הוסף מזונות')">מזונות ➕</button>
                     </div>
-                    <button id="mobileCalcBtn" class="mobile-only" onclick="changeStep(1)">חשב תוצאות 📊</button>
                 </div>
             </div>
         </div>
 
-        <div id="mobileStep3" class="step-content step-content-pc">
+        <div id="step2" class="step-content">
+            <div class="inputs-col">
+                <div class="section-title">➕ תוספות והוצאות</div>
+                <div id="mobileAdditionsGoHere"></div> <button class="mobile-calc-btn" onclick="changeStep(1)">חשב כעת 📊</button>
+            </div>
+        </div>
+
+        <div id="step3" class="step-content pc-visible">
             <div class="results-col">
-                <div class="section-title">📊 תוצאות</div>
+                <div class="section-title">📊 תוצאות וחישוב</div>
                 <div class="result-grid">
                     <div class="result-card"><div class="k">סה"כ הכנסות</div><div id="resIncome" class="v">0 ₪</div></div>
                     <div class="result-card"><div class="k">קצבת ילדים</div><div id="resKidsSS" class="v">0 ₪</div></div>
                     <div class="result-card"><div class="k">דמי מחיה</div><div id="resBase" class="v">0 ₪</div></div>
                     <div class="result-card"><div class="k">סה"כ הוצאות</div><div id="resExp" class="v">0 ₪</div></div>
                     
-                    <div class="result-card payment-box">
+                    <div class="result-card final-pay-card">
                         <div class="k">תשלום חודשי מוצע</div>
                         <div id="resFinalPay" class="v">0 ₪</div>
                     </div>
@@ -195,54 +189,108 @@
                     <div class="result-card" style="grid-column: 1 / -1;">
                         <div class="k">יחס הכנסות חלוקת נטל</div>
                         <div class="ratio-bar-container"><div id="barD" class="bar-d" style="width: 50%;">50%</div><div id="barP" class="bar-p" style="width: 50%;">50%</div></div>
-                        <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold;"><span>חייב: 0%</span><span>בן זוג: 0%</span></div>
+                        <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:700;">
+                            <span id="txtRatioD">חייב: 0%</span>
+                            <span id="txtRatioP">בן זוג: 0%</span>
+                        </div>
                     </div>
                 </div>
-                <div id="insightBox" class="insight-box">תובנות יופיעו כאן לאחר הזנת נתונים...</div>
+                <div id="insightBox" class="insight-box">הזן נתוני הכנסה כדי לקבל תובנות מהמערכת...</div>
             </div>
         </div>
+    </div>
+
+    <div class="mobile-nav-floating">
+        <button class="nav-btn-float btn-prev" onclick="changeStep(-1)">➔ הקודם</button>
+        <button class="nav-btn-float btn-next" onclick="changeStep(1)">הבא ⬅</button>
     </div>
 
     <footer>YE - פתרונות חכמים לניהול הליכי חדלות פירעון &copy; 2026</footer>
 </div>
 
 <script>
+    const E = id => document.getElementById(id);
+    const parseVal = s => parseInt(String(s || '').replace(/[^\d]/g, '')) || 0;
+    const formatVal = n => new Intl.NumberFormat('he-IL').format(n) + (n > 0 ? ' ₪' : '');
+
     let currentStep = 1;
+
+    // פונקציות בסיסיות
+    function changeKids(n) {
+        const input = E('childrenCount');
+        input.value = Math.max(0, parseInt(input.value) + n);
+        calc();
+    }
 
     function changeStep(n) {
         if (window.innerWidth > 768) return;
         currentStep = Math.max(1, Math.min(3, currentStep + n));
         
-        document.getElementById('mobileStep1').classList.toggle('active', currentStep === 1);
-        document.getElementById('mobileStep2').parentElement.classList.toggle('active', currentStep === 2);
-        document.getElementById('mobileStep3').classList.toggle('active', currentStep === 3);
+        document.querySelectorAll('.step-content').forEach((s, i) => {
+            s.classList.toggle('active', (i + 1) === currentStep);
+        });
+
+        // הסתרת כפתורי ניווט בשלב התוצאות או ההתחלה אם רוצים
+        E('calcRoot').querySelector('.btn-prev').style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+        E('calcRoot').querySelector('.btn-next').style.display = currentStep === 3 ? 'none' : 'flex';
         
-        document.getElementById('progressFill').style.width = (currentStep * 33.33) + "%";
         window.scrollTo(0,0);
+        if(currentStep === 3) calc();
     }
 
-    // פונקציות בסיסיות (פורמט, חישוב וכו')
-    const parseVal = s => parseInt(String(s || '').replace(/[^\d]/g, '')) || 0;
-    const formatVal = n => new Intl.NumberFormat('he-IL').format(n) + (n > 0 ? ' ₪' : '');
+    // ניהול כפתורי בחירה (Chips)
+    function setupChips(className) {
+        document.querySelectorAll('.' + className).forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.' + className).forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                calc();
+            };
+        });
+    }
 
+    setupChips('family-btn');
+    setupChips('gender-btn');
+
+    // לוגיקת חישוב
     function calc() {
-        // לוגיקת חישוב בסיסית לצורך התצוגה
-        const dSal = parseVal(document.getElementById('salD').value);
-        const pSal = parseVal(document.getElementById('salP').value);
+        const dSal = parseVal(E('salD').value);
+        const pSal = parseVal(E('salP').value);
         const total = dSal + pSal;
-        document.getElementById('resIncome').textContent = formatVal(total);
-        document.getElementById('resFinalPay').textContent = formatVal(Math.max(0, (total - 5000) / 2));
+        
+        E('resIncome').textContent = formatVal(total);
+        
+        // יחס הכנסות
+        const ratioD = Math.round((dSal / (total || 1)) * 100);
+        E('barD').style.width = ratioD + "%";
+        E('barD').textContent = ratioD > 10 ? ratioD + "%" : "";
+        E('barP').style.width = (100 - ratioD) + "%";
+        E('barP').textContent = (100 - ratioD) > 10 ? (100 - ratioD) + "%" : "";
+        
+        E('txtRatioD').textContent = `חייב: ${ratioD}%`;
+        E('txtRatioP').textContent = `בן זוג: ${100 - ratioD}%`;
+
+        const pay = Math.max(0, Math.floor((total - 5000) / 2));
+        E('resFinalPay').textContent = formatVal(pay);
     }
 
+    // פורמט כסף בשידור חי
     document.querySelectorAll('.live-curr').forEach(el => {
         el.addEventListener('input', e => {
-            let raw = parseVal(e.target.value);
-            e.target.value = raw > 0 ? formatVal(raw) : '';
+            let v = parseVal(e.target.value);
+            e.target.value = v > 0 ? formatVal(v) : '';
             calc();
         });
     });
 
+    // התאמת מבנה למובייל בזמן טעינה
+    if (window.innerWidth <= 768) {
+        const additions = document.querySelector('.pc-only-additions');
+        E('mobileAdditionsGoHere').appendChild(additions);
+    }
+
     function resetData() { if(confirm("לאפס את כל הנתונים?")) location.reload(); }
+    E('btnShot').onclick = () => { html2canvas(E('calcRoot'), { backgroundColor: '#1a2233' }).then(c => { const a = document.createElement('a'); a.download = 'calc.png'; a.href = c.toDataURL(); a.click(); }); };
 </script>
 
 </body>
