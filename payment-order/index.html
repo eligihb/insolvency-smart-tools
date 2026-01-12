@@ -445,29 +445,7 @@
 
 
 
-    @media screen and (max-width: 768px) {
 
-      .main-container {
-        width: 95%;
-        padding: 15px;
-        margin: 10px auto;
-      }
-
-      .board {
-        grid-template-columns: 1fr;
-      }
-
-      .inputs-col,
-      .results-col {
-        display: none;
-      }
-
-      .inputs-col.active,
-      .results-col.active {
-        display: block;
-      }
-
-    }
 
 
 
@@ -597,7 +575,37 @@
         margin-top: 40px;
       }
 
-      /* Hide interactive elements */
+      /* Ratio Bar Fix */
+      .bar-d,
+      .bar-p {
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Basic Mobile Reset */
+      @media (max-width: 768px) {
+        .main-container {
+          width: 95%;
+          padding: 15px;
+          margin: 10px auto;
+          transform: none !important;
+        }
+
+        .board {
+          grid-template-columns: 1fr;
+        }
+
+        .top-bar {
+          display: none !important;
+        }
+
+        /* Hide top bar on mobile if requested, or keep? User said cancel definitions. I'll keep it simple/hidden if it was hidden before. Actually, let's keep it visible or revert to "mobile-only display none". */
+      }
+
       .top-controls,
       .btn-ctrl,
       .btn-manual-top,
@@ -669,6 +677,39 @@
           border-right: 6px solid #000 !important;
           color: #000 !important;
         }
+
+        input,
+        select,
+        textarea {
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          color: #000 !important;
+        }
+
+        .main-container {
+          transform: scale(1) !important;
+          width: 100%;
+          box-shadow: none;
+          margin: 0;
+        }
+
+        .mobile-nav,
+        .mobile-only {
+          display: none !important;
+        }
+
+        .m-slide {
+          display: contents !important;
+        }
+
+        /* Show all slides on print */
+        .inputs-col,
+        .results-col {
+          display: grid !important;
+        }
+
+        /* Restore Grid */
       }
     }
   </style>
@@ -709,219 +750,142 @@
 
     <div class="board">
 
-      <div class="inputs-col active" id="step1">
+      <div class="inputs-col active" id="inputColMain">
 
         <div class="section-title">👤 נתוני בסיס והכנסות</div>
 
         <div class="input-group">
-
-
-
           <div style="display:flex; gap:8px; width:100%;">
-
             <button class="chip family-type active" data-type="יחיד">יחיד (נשוי חי בנפרד)</button>
-
             <button class="chip family-type" data-type="זוג">זוג</button>
-
             <button class="chip family-type" data-type="רווק">רווק / גרוש / אלמן</button>
-
           </div>
-
         </div>
 
-
-
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
-
           <div class="input-group">
-
             <label><span class="info-trigger"
                 data-tip="כולל קטינים עד גיל 18. ניתן לכלול בני 18-21 המשרתים בשירות חובה/לאומי או מסיימים לימודים.">?</span>
               ילדים (עד 18)</label>
-
             <div style="display: flex; gap: 8px; align-items: center;">
-
               <button class="chip" style="font-size:1.3rem; padding:0 15px; min-height:40px; color:var(--danger);"
                 onclick="changeKids(-1)">-</button>
               <input id="childrenCount" type="number" value="0" min="0" oninput="calc()" style="width: 65px;">
               <button class="chip" style="font-size:1.3rem; padding:0 15px; min-height:40px;"
                 onclick="changeKids(1)">+</button>
-
             </div>
-
           </div>
-
           <div class="input-group"><label>מי בהליך?</label>
-
             <div style="display:flex; gap:8px; width:100%;"><button class="chip gender-btn active" data-gender="חייב"
                 onclick="setGender('חייב', this)">חייב</button><button class="chip gender-btn" data-gender="חייבת"
                 onclick="setGender('חייבת', this)">חייבת</button></div>
-
           </div>
-
         </div>
-
-
 
         <hr style="border:0; border-top:1.5px solid var(--border); margin: 20px 0;">
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-
           <div class="input-group"><label><span class="info-trigger"
                 data-tip="הכנסה נטו מעבודה או עסק לאחר ניכויי חובה: מס, פנסיה וביטוח לאומי.">?</span> הכנסה
               חייב/ת</label><input id="salD" type="text" class="amt-input live-curr" placeholder="0"></div>
-
           <div class="input-group"><label>הכנסה בן זוג</label><input id="salP" type="text" class="amt-input live-curr"
               placeholder="0"></div>
-
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
-
           <div class="input-group"><label>הכנסה נוספת (חייב)</label><input id="addD" type="text"
               class="amt-input live-curr" placeholder="0"></div>
-
           <div class="input-group"><label>הכנסה נוספת (בן זוג)</label><input id="addP" type="text"
               class="amt-input live-curr" placeholder="0"></div>
-
         </div>
 
-
-
+        <div class="section-title">➕ תוספות והוצאות</div>
         <div id="incomeAdditions" style="margin-top:15px;"></div>
-
         <div id="expenseAdditions"></div>
 
-
-
         <div class="category-btn-group">
-
           <button class="chip" onclick="toggleEntry('allowance')"><span class="info-trigger"
               data-tip="גמלאות מוגנות (נכות, זקנה, הבטחת הכנסה) אינן נכללות בנכסי הקופה.">?</span> קצבאות ➕</button>
-
           <button class="chip" onclick="toggleEntry('special')"><span class="info-trigger"
               data-tip="הוצאות חיוניות המגובות באסמכתאות (בריאות, תעסוקה, צהרונים עד 1,000 שח לילד).">?</span> הוצאות
             ➕</button>
-
           <button class="chip" onclick="toggleEntry('alimony')"><span class="info-trigger"
               data-tip="סכום ההקצבה לזכאי למזונות שנקבע לפי סעיף 179 לחוק.">?</span> מזונות ➕</button>
-
         </div>
 
-
-
         <div id="entryPanel">
-
           <span class="close-x" onclick="closeEntry()">✖</span>
-
           <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 10px; margin-bottom: 10px;">
-
             <select id="entryType" style="background:var(--secondary); color:#fff;"></select>
-
             <input id="entryAmt" type="text" class="live-curr" placeholder="₪">
-
           </div>
-
           <input id="entryNote" type="text" placeholder="הערה / פירוט" style="margin-bottom:10px;">
-
           <div style="display:flex; justify-content:center;">
-
             <span style="cursor:pointer; font-weight:700; color:var(--success); font-size:1.1rem;"
               onclick="commitEntry()">✅ עדכן</span>
-
           </div>
-
         </div>
 
       </div>
 
-
-
       <div class="results-col" id="step2">
-
         <div class="section-title">📊 תוצאות</div>
-
         <div class="result-grid">
-
           <div class="result-card">
             <div class="k">סה״כ הכנסות</div>
             <div id="resIncome" class="v">0 ₪</div>
           </div>
-
           <div class="result-card">
             <div class="k">קצבת ילדים</div>
             <div id="resKidsSS" class="v">0 ₪</div>
           </div>
-
           <div class="result-card">
             <div class="k">דמי מחייה</div>
             <div id="resBase" class="v">0 ₪</div>
           </div>
-
           <div class="result-card">
             <div class="k">סה״כ הוצאות</div>
             <div id="resExp" class="v">0 ₪</div>
           </div>
-
           <div class="result-card result-wide result-big">
             <div class="k">הכנסה פנויה</div>
             <div id="resDisp" class="v" style="font-size:0.85rem;">על פי הנתונים אין הכנסה פנויה</div>
           </div>
-
           <div class="result-card result-wide">
-
             <div class="k">יחס הכנסות חלוקת נטל</div>
-
             <div class="ratio-bar-container">
               <div id="barD" class="bar-d"></div>
               <div id="barP" class="bar-p"></div>
             </div>
-
-            <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:700;"><span
-                id="resRatioD" style="color:#ffffff!important">חייב: 0%</span><span id="resRatioP"
-                style="color:#ffffff!important">בן זוג: 0%</span></div>
-
+            <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:700;">
+              <span id="resRatioD" style="color:#ffffff!important">חייב: 0%</span>
+              <span id="resRatioP" style="color:#ffffff!important">בן זוג: 0%</span>
+            </div>
           </div>
-
           <div class="result-card result-wide result-big" style="border: 2px solid var(--accent);">
-
             <button class="btn-manual-top" onclick="toggleManual()">שנה סכום</button>
-
             <div class="k">תשלום חודשי מוצע</div>
-
             <div id="originalValLabel"
               style="font-size:1rem; color:var(--label); text-decoration:line-through; margin-bottom:5px; display:none;">
             </div>
-
             <div id="resFinalPay" class="v" style="color: var(--danger) !important">0 ₪</div>
-
             <div id="resManualNote"
               style="display:none; width:100%; font-size:0.85rem; color:#ffffff!important; font-style:italic; margin-top:8px; border-top:1px solid #444; padding-top:8px;">
             </div>
-
             <div id="manualBox"
               style="display:none; margin-top: 10px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px;">
-
               <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
-
                 <input id="manualAmt" type="text" class="amt-input live-curr" placeholder="חדש">
-
-                <button class="chip active" style="min-height:40px; flex:none" onclick="commitManual()">✅ עדכן</button>
-
+                <button class="chip active" style="min-height:40px; flex:none" onclick="commitManual()">✅
+                  עדכן</button>
                 <button class="chip" style="min-height:40px; flex:none; color:var(--danger)"
                   onclick="resetManual()">↺</button>
-
               </div>
-
               <textarea id="manualNote" placeholder="הסבר לשינוי..."
                 style="font-size:0.9rem; height:65px; width:100%; padding:10px; background:var(--secondary); color:#fff;"></textarea>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
 
     </div>
@@ -987,8 +951,6 @@
 
 
     window.onload = () => { E('dateTag').textContent = new Date().toLocaleDateString('he-IL'); };
-
-
 
     function changeKids(n) { E('childrenCount').value = Math.max(0, parseInt(E('childrenCount').value) + n); calc(); }
 
@@ -1244,6 +1206,7 @@
     }
 
     E('btnShot').onclick = () => { html2canvas(E('calcRoot'), { scale: 2, backgroundColor: '#1e293b' }).then(c => { const l = document.createElement('a'); l.download = 'ye-calc.png'; l.href = c.toDataURL(); l.click(); }); };
+
 
   </script>
 
