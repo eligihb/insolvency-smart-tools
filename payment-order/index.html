@@ -460,30 +460,51 @@
         color: #000 !important;
         height: auto;
         overflow: visible;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
 
+      /* Force White Background on EVERYTHING */
+      html,
+      body,
+      .main-container,
+      .board,
+      .inputs-col,
+      .results-col,
+      .result-card {
+        background-color: #ffffff !important;
+        background: #ffffff !important;
+      }
+
+      /* Scale to fit */
       .main-container {
         width: 100% !important;
         max-width: 100% !important;
         box-shadow: none !important;
         margin: 0 !important;
-        background: #fff !important;
         padding: 0 !important;
-        transform: none !important;
         border: none !important;
+        transform: scale(0.95) !important;
+        transform-origin: top center;
       }
 
       header {
+        position: static !important;
         border: 2px solid #000 !important;
         background: #fff !important;
         color: #000 !important;
-        box-shadow: none !important;
       }
 
       header h1 {
         color: #000 !important;
       }
 
+      /* Print Date Visibility */
+      #printDateTag {
+        display: block !important;
+      }
+
+      /* Layout */
       .board {
         width: 100% !important;
         grid-template-columns: 1fr 1fr !important;
@@ -494,62 +515,99 @@
       .results-col {
         display: block !important;
         border: 2px solid #000 !important;
-        background: #fff !important;
-        color: #000 !important;
-        box-shadow: none !important;
       }
 
       .result-card {
-        background: #fff !important;
         border: 1px solid #000 !important;
-        box-shadow: none !important;
         color: #000 !important;
+        box-shadow: none !important;
       }
 
+      /* TEXT VISIBILITY - The heavy artillery */
       .v,
       .k,
       label,
       .section-title,
-      .bar-d,
-      .bar-p,
       input,
-      select {
-        color: #000 !important;
+      select,
+      textarea,
+      .chip,
+      h1,
+      h2,
+      h3,
+      span,
+      div,
+      p {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        /* Force input value color */
         text-shadow: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
       }
 
+      /* Inputs specific */
       input,
       select,
       .chip {
-        background: #fff !important;
+        background: transparent !important;
         border: 1px solid #aaa !important;
+        color: #000 !important;
+        /* Fallback */
+      }
+
+      /* Specific selector for the Manual Amount box and Dynamic Inputs to kill dark background */
+      #manualAmt,
+      .btn-manual-top,
+      #resFinalPay,
+      #incomeAdditions input,
+      #expenseAdditions input,
+      .amt-input {
+        color: #000 !important;
+        -webkit-text-fill-color: #000 !important;
+        background: transparent !important;
+        text-shadow: none !important;
+        box-shadow: none !important;
+      }
+
+      /* Dynamic Rows (Allowances/Expenses) - Override inline JS styles */
+      #incomeAdditions div,
+      #expenseAdditions div {
+        background: #ffffff !important;
+        color: #000000 !important;
+        border: 1px solid #000 !important;
+        -webkit-text-fill-color: #000000 !important;
+      }
+
+      /* Hide the delete 'X' in print */
+      #incomeAdditions div span:last-child,
+      #expenseAdditions div span:last-child {
+        display: none !important;
       }
 
       .chip.active {
-        background: #e5e5e5 !important;
+        background: #eeeeee !important;
         color: #000 !important;
         border: 2px solid #000 !important;
         font-weight: 800;
       }
 
-      .amt-input {
-        color: #000 !important;
-        font-weight: 800;
-      }
-
+      /* Ratio Bars */
       .ratio-bar-container {
         border: 1px solid #000;
         background: #fff;
       }
 
       .bar-d {
-        background: #ddd !important;
+        background: #cccccc !important;
         color: #000 !important;
         border-right: 1px solid #000;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
 
       .bar-p {
-        background: #fff !important;
+        background: #ffffff !important;
         color: #000 !important;
       }
 
@@ -564,10 +622,10 @@
         color: #000 !important;
         border-top: 2px solid #000 !important;
         display: block !important;
-        margin-top: 40px;
+        margin-top: 20px;
       }
 
-      /* Hide elements in print */
+      /* Hide interactive elements in print BUT KEEP Gender/Family buttons */
       .top-controls,
       .btn-ctrl,
       .btn-manual-top,
@@ -576,11 +634,32 @@
       #entryPanel,
       .info-trigger,
       .close-x,
-      .input-group button.chip,
+      .close-x-mobile,
       .top-bar,
       .mobile-nav,
-      .mobile-only {
+      .mobile-only,
+      .mobile-fab-container,
+      .mobile-actions-bar {
         display: none !important;
+      }
+
+      /* Explicitly hide only the +/- chips */
+      .input-group button.chip:not(.gender-btn):not(.family-type) {
+        display: none !important;
+      }
+
+      /* Explicitly SHOW gender/family chips */
+      .gender-btn,
+      .family-type {
+        display: inline-block !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+      }
+
+      .gender-btn.active,
+      .family-type.active {
+        background: #ddd !important;
+        font-weight: bold !important;
       }
     }
 
@@ -595,13 +674,73 @@
       justify-content: center;
     }
 
-    /* Mobile Layout Fixes */
-    @media (max-width: 768px) {
+    /* Mobile Layout Fixes - SCREEN ONLY to prevent Print bleed */
+    @media screen and (max-width: 768px) {
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: auto;
+        padding-bottom: 20px;
+      }
+
+      /* Mobile Date */
+      .mobile-date {
+        font-size: 0.9rem;
+        color: var(--label);
+        font-weight: 600;
+        margin-left: auto;
+        padding-left: 10px;
+      }
+
+      /* Sticky Header - Compact */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        width: 100%;
+        border-bottom: 1px solid var(--border);
+        padding: 5px 0;
+      }
+
+      header h1 {
+        font-size: 1.2rem;
+        margin: 0;
+      }
+
+      .mobile-actions-bar {
+        display: flex !important;
+        /* Force visibility */
+        justify-content: space-between;
+        /* Split Date <-> Buttons */
+        align-items: center;
+        padding: 5px 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .mobile-actions-bar button {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+
       .main-container {
-        width: 95%;
-        padding: 15px;
-        margin: 10px auto;
+        width: 96%;
+        max-width: 100%;
+        margin: 5px 0;
+        padding: 10px;
         transform: none !important;
+        transform-origin: center center;
+        box-sizing: border-box;
+      }
+
+      .input-group>div {
+        flex-wrap: wrap;
       }
 
       .board {
@@ -612,31 +751,95 @@
         display: none !important;
       }
 
-      /* Fix overlapping button in mobile - Own line above title */
       .btn-manual-top {
-        position: static !important;
-        float: none !important;
-        display: block;
-        width: 100%;
-        margin-bottom: 10px;
-        text-align: right;
+        position: relative !important;
+        display: inline-block;
+        width: auto;
+        float: right;
+        margin-bottom: 25px;
+        top: auto !important;
+        right: auto !important;
       }
 
-      /* Ensure manual box pushes content down properly */
+      .close-x-mobile {
+        display: block !important;
+        position: absolute;
+        top: -10px;
+        left: -5px;
+        background: var(--secondary);
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        line-height: 25px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        z-index: 20;
+        border: 1px solid var(--border);
+      }
+
       #manualBox {
         clear: both;
         width: 100% !important;
         position: relative;
         z-index: 10;
+        padding-top: 20px;
       }
 
-      /* Ensure Insight Box flows correctly at bottom */
       .insight-box {
         margin-top: 30px;
         position: relative;
         z-index: 5;
       }
+
+      /* Mobile FAB Container */
+      .mobile-fab-container {
+        display: flex !important;
+        position: fixed;
+        bottom: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 10px 20px;
+        border-radius: 50px;
+        border: 1px solid var(--accent);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        z-index: 9999;
+        gap: 20px;
+      }
+
+      .fab-btn {
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 1.4rem;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        min-width: 45px;
+      }
+
+      .fab-btn span:last-child {
+        font-size: 0.7rem;
+        margin-top: 4px;
+        font-weight: bold;
+        color: var(--accent);
+      }
     }
+
+    .mobile-fab-container {
+      display: none;
+    }
+
+    /* Hidden on desktop */
+    .mobile-actions-bar {
+      display: none;
+    }
+
+    /* Hidden on desktop */
   </style>
 
 </head>
@@ -648,8 +851,9 @@
   <div class="main-container" id="calcRoot">
 
     <div class="top-bar">
-
       <div id="dateTag" class="date-tag">--/--/----</div>
+
+
 
       <div class="top-controls">
 
@@ -669,6 +873,22 @@
 
     <header>
       <h1>מחשבון צו תשלומים</h1>
+      <!-- Print Only Date -->
+      <div id="printDateTag" class="print-only"
+        style="display:none; position:absolute; left:20px; top:50%; transform:translateY(-50%); font-size:0.9rem; font-weight:700; color:#000;">
+        --/--/----</div>
+
+      <div class="mobile-actions-bar">
+        <span id="mobileDate" class="mobile-only mobile-date"
+          style="font-size:0.8rem; color:var(--accent)!important;">--/--</span>
+        <script>try { document.getElementById('mobileDate').textContent = new Date().toLocaleDateString('he-IL'); } catch (e) { }</script>
+        <div style="display:flex; gap:8px;">
+          <button onclick="window.print()" title="הדפס">🖨️</button>
+          <button id="btnShotMobileHeader" title="צילום">📸</button>
+          <button onclick="restoreFromStorage()" title="שחזר">↺</button>
+          <button onclick="resetData()" style="color:var(--danger)" title="אפס">✖</button>
+        </div>
+      </div>
     </header>
 
 
@@ -692,7 +912,7 @@
             <label><span class="info-trigger"
                 data-tip="כולל קטינים עד גיל 18. ניתן לכלול בני 18-21 המשרתים בשירות חובה/לאומי או מסיימים לימודים.">?</span>
               ילדים (עד 18)</label>
-            <div style="display: flex; gap: 8px; align-items: center;">
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: nowrap !important;">
               <button class="chip" style="font-size:1.3rem; padding:0 15px; min-height:40px; color:var(--danger);"
                 onclick="changeKids(-1)">-</button>
               <input id="childrenCount" type="number" value="0" min="0" oninput="calc()" style="width: 65px;">
@@ -777,7 +997,7 @@
             <div id="resDisp" class="v" style="font-size:0.85rem;">על פי הנתונים אין הכנסה פנויה</div>
           </div>
           <div class="result-card result-wide">
-            <div class="k">יחס הכנסות חלוקת נטל</div>
+            <div class="k">יחס הכנסות תא משפחתי</div>
             <div class="ratio-bar-container">
               <div id="barD" class="bar-d"></div>
               <div id="barP" class="bar-p"></div>
@@ -798,7 +1018,9 @@
               style="display:none; width:100%; font-size:0.85rem; color:#ffffff!important; font-style:italic; margin-top:8px; border-top:1px solid #444; padding-top:8px;">
             </div>
             <div id="manualBox"
-              style="display:none; margin-top: 10px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px;">
+              style="display:none; margin-top: 10px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; position:relative;">
+              <span class="close-x" onclick="E('manualBox').style.display='none'"
+                style="position:absolute; top:5px; left:10px; color:var(--danger); font-size:1.2rem; cursor:pointer;">✖</span>
               <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
                 <input id="manualAmt" type="text" class="amt-input live-curr" placeholder="חדש">
                 <button class="chip active" style="min-height:40px; flex:none" onclick="commitManual()">✅
@@ -1031,7 +1253,17 @@
 
       const prot = state.incomes.filter(i => ['נכות', 'זקנה', 'הבטחת הכנסה'].includes(i.type));
 
-      if (prot.length > 0) insights.push({ icon: "🏠", text: "התא מתקיים מגמלאות מוגנות (" + prot.map(p => p.type).join(', ') + ") שאינן חלק מנכסי הקופה." });
+      if (prot.length > 0) {
+        // Check if there are other incomes (Salary or non-protected allowances)
+        const allAllowancesAreProtected = state.incomes.every(i => ['נכות', 'זקנה', 'הבטחת הכנסה'].includes(i.type));
+        const hasOtherIncome = dSal > 0 || !allAllowancesAreProtected;
+
+        if (!hasOtherIncome) {
+          insights.push({ icon: "🏠", text: "התא מתקיים מגמלאות מוגנות (" + prot.map(p => p.type).join(', ') + ") שאינן חלק מנכסי הקופה." });
+        } else {
+          insights.push({ icon: "🏠", text: "היחיד מקבל קצבת " + prot.map(p => p.type).join(', ') + "." });
+        }
+      }
 
       if (spouseP > 0) insights.push({ icon: "📉", text: "הופחת תשלום בן זוג המנוהל כתיק ראשון בזמן." });
 
@@ -1131,6 +1363,15 @@
     }
 
     E('btnShot').onclick = () => { html2canvas(E('calcRoot'), { scale: 2, backgroundColor: '#1e293b' }).then(c => { const l = document.createElement('a'); l.download = 'ye-calc.png'; l.href = c.toDataURL(); l.click(); }); };
+
+    // Mobile Snapshot Handler
+    E('btnShotMobile').onclick = () => { html2canvas(E('calcRoot'), { scale: 2, backgroundColor: '#1e293b' }).then(c => { const l = document.createElement('a'); l.download = 'ye-mobile-calc.png'; l.href = c.toDataURL(); l.click(); }); };
+
+    // Init Date
+    const dStr = new Date().toLocaleDateString('he-IL', { day: 'numeric', month: 'numeric', year: 'numeric' });
+    if (E('dateTag')) E('dateTag').textContent = dStr;
+    if (E('mobileDate')) E('mobileDate').textContent = dStr;
+    if (E('printDateTag')) E('printDateTag').textContent = dStr;
 
 
   </script>
